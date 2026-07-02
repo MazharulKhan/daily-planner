@@ -39,11 +39,11 @@ The app must stay frontend-only for now.
 ## Build Process
 
 - Build one phase at a time.
-- Current phase: Phase 3A — Core Task Management Improvements (see `docs/task-management-spec.md`).
-- Phase 2 (Dashboard Foundation) is complete. Phase 3A extends the dashboard
-  with task editing, deletion, optional metadata controls, completed-task
-  grouping, and localStorage migration — all still inside the dashboard,
-  with no routing or new pages.
+- Current phase: Phase 3B — Task Organization (see `docs/task-organization-spec.md`).
+- Phase 2 (Dashboard Foundation) is complete. Phase 3A (Core Task Management
+  Improvements) is complete. Phase 3B extends the dashboard with category
+  filter chips and priority-colored left borders — all still inside the
+  dashboard, with no routing or new pages.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
@@ -57,24 +57,22 @@ The app must stay frontend-only for now.
 - Fall back to starter sample data only when no saved data exists.
 - Write back to `localStorage` after every user change.
 
-## Phase 3A Rule
+## Phase 3B Rule
 
-Phase 3A is dashboard-based task management only, as defined in
-`docs/task-management-spec.md`:
+Phase 3B is a small dashboard task-organization refinement only, as defined
+in `docs/task-organization-spec.md`:
 
-- Edit an existing task's title, priority, category, time, and due date from
-  the dashboard.
-- Delete a task with inline confirmation.
-- Add optional priority, category, due date, and time controls to the
-  add-task and edit-task flows.
-- Group completed tasks beneath a `Completed` divider in Today's Tasks and
+- Add category filter chips (`All`, `Work`, `Learning`, `Personal`, `Health`)
+  to the Today's Tasks card header. The filter is session-only React state,
+  never saved to localStorage.
+- Add a priority-colored 3px left border to task rows in Today's Tasks and
   Upcoming Tasks.
-- Migrate and persist all task data through `localStorage`.
-- Improve related task empty states and accessibility behavior.
 
-Do not build routing, full pages, search behavior, idea editing/deletion,
-custom category management, learning workflows, or reading workflows in this
-phase. Do not modify the Quick Ideas card beyond what Phase 2 already does.
+Do not build routing, full pages, search behavior, saved/persistent filters,
+multi-select, bulk actions, drag-and-drop, sort controls, category
+management, idea editing/deletion, learning workflows, or reading workflows
+in this phase. Do not modify the Quick Ideas card beyond what Phase 2
+already does. Do not weaken or redesign any Phase 3A behavior.
 
 ## Requirements Source
 
@@ -82,7 +80,8 @@ Treat these files as the primary requirements:
 
 - `docs/project-spec.md`
 - `docs/dashboard-spec.md`
-- `docs/task-management-spec.md` (Phase 3A active spec)
+- `docs/task-management-spec.md` (Phase 3A, complete)
+- `docs/task-organization-spec.md` (Phase 3B active spec)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

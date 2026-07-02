@@ -2,55 +2,50 @@
 
 ## Current Phase
 
-Phase 3A — Core Task Management Improvements, complete.
+Phase 3B — Task Organization, complete.
 
 ## Current State
 
 Phase 2 (Dashboard Foundation) is complete and committed (`ba662c0`).
-Phase 3A is now complete and implements everything in
-`docs/task-management-spec.md`:
+Phase 3A (Core Task Management Improvements) is complete and committed
+(`6baa8f6`). Phase 3B (Task Organization) is complete and implements
+everything in `docs/task-organization-spec.md`:
 
-- Inline editing of a task's title, priority, category, time, and due date
-  from the dashboard (no modal, no new page).
-- Inline delete with confirmation; delete is final (no undo in this phase).
-- Optional priority, category, time, and due date controls in the add-task
-  flow, collapsed behind a "More options" toggle.
-- `updatedAt` set on create, edit, complete, and uncomplete.
-- Completed-task grouping beneath a `Completed · N` divider in both Today's
-  Tasks and Upcoming Tasks; completed future-dated tasks stay visible and
-  reopenable in Upcoming.
-- `Any time` label in the reserved time column for tasks with `time: null`.
-- Automatic display sorting: overdue (oldest first) → today (time ascending)
-  → null due date, with `time: null` after timed tasks within each group.
-  Upcoming sorted by nearest due date then time ascending.
-- Overdue task display: `Overdue · N` divider above the overdue group; each
-  overdue row shows `Overdue · MMM D` or `Overdue · MMM D · HH:MM` in the
-  right-side metadata area with a restrained danger color.
-- Daily Progress calculated only from Today's Tasks (active + completed),
-  excludes Upcoming entirely, updates immediately after every change.
-- localStorage migration on load: normalizes/validates priority, category,
-  time, dueDate, completed, id, title, and updatedAt; leaves ideas untouched.
-- Accessibility: keyboard-reachable Edit/Delete with visible focus and
-  accessible labels; Edit focuses the title input; Delete confirmation
-  focuses Cancel; focus restored to the triggering control after save/cancel.
-- React, JavaScript, regular CSS, and localStorage only. No new packages,
-  no routing, no new pages, no backend, no Quick Ideas changes.
+- Category filter chips (`All`, `Work`, `Learning`, `Personal`, `Health`) in
+  the Today's Tasks card header. Session-only React state, never saved to
+  localStorage. Filters visible rows, count badge, overdue divider, completed
+  divider, and empty/completion messages.
+- Category-specific completion message: "All done for today" when `All` is
+  selected; "All {Category} tasks are complete." when a specific category is
+  filtered and all its tasks are done.
+- Filtered-empty message: "No {Category} tasks for today" when tasks exist
+  but none match the selected category.
+- Daily Progress remains based on all Today tasks, unaffected by the filter.
+- Upcoming Tasks and Quick Ideas are unaffected by the category filter.
+- Priority-colored 3px left marker on task rows in Today's Tasks and
+  Upcoming Tasks, implemented as an absolutely positioned `::before`
+  pseudo-element (not a real border) so it does not affect row alignment.
+  High → danger red, Medium → warn amber, Low → success green. Completed
+  rows show a dimmed marker using `--color-border`.
+- All Phase 3A behavior — editing, deletion, metadata controls, completed
+  grouping, sorting, overdue display, accessibility, and localStorage
+  migration — remains unchanged.
 
 ## Next Exact Step
 
-Connect the local repository to GitHub
-(`https://github.com/MazharulKhan/daily-planner.git`) and push. Then begin
-Phase 3B or Phase 4 planning per `docs/build-plan.md` — propose a plan only,
-no code changes, until approved.
+Commit the Phase 3B changes. Then begin Phase 4 (Learning and Reading
+Workflows) planning per `docs/build-plan.md` — propose a plan only, no code
+changes, until approved.
 
 ## Known Issues
 
 - OpenChamber's built-in browser preview is still unreliable; visual testing
   must be done in a normal browser at the Vite localhost URL.
 - No other known functional issues remain. The following are intentional
-  scope limits, not bugs: routing, full pages, global search, filtering/
-  grouping controls, idea edit/delete/conversion, custom category management,
-  learning/reading workflows, responsive/mobile redesign, and dark mode.
+  scope limits, not bugs: routing, full pages, global search, saved filters,
+  multi-select/bulk actions, idea edit/delete/conversion, custom category
+  management, learning/reading workflows, responsive/mobile redesign, and
+  dark mode.
 
 ## How to Run the App
 
@@ -77,6 +72,7 @@ docs/
 ├── project-spec.md
 ├── dashboard-spec.md
 ├── task-management-spec.md
+├── task-organization-spec.md
 ├── build-plan.md
 └── project-status.md
 ```
@@ -94,6 +90,59 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-02 — Phase 3B Implementation Complete
+
+- Implemented all approved Phase 3B work from `docs/task-organization-spec.md`.
+- Files changed:
+  - `src/components/TodayTasksCard.jsx` — category filter state, chip row UI,
+    filtered derivation for counts/dividers/empty states, category-specific
+    completion message.
+  - `src/components/TaskRow.jsx` — priority-based border class on row element.
+  - `src/components/UpcomingTasksCard.jsx` — same priority-based border class
+    on `UpcomingTaskRow`.
+  - `src/styles/task-row.css` — filter chip styles, priority marker
+    (`::before` pseudo-element at `left: -8px`, 3px wide), completed-row
+    dimming, filtered-empty message style.
+- Features delivered: category filter chips (session-only, never persisted),
+  filtered count badge, filtered overdue/completed dividers, filtered-empty
+  message, category-specific completion message, priority-colored left marker
+  on Today and Upcoming rows, Daily Progress unaffected by filter, all Phase
+  3A behavior preserved.
+- Priority marker alignment fix: replaced real `border-left` with an
+  absolutely positioned `::before` pseudo-element offset to `left: -8px` so
+  it sits in the card gutter without overlapping checkboxes, titles, or
+  metadata, and does not shift row alignment.
+- User-confirmed normal browser testing: the user manually tested the app in
+  a normal browser and confirmed category filters, priority markers, task
+  interactions, Daily Progress behavior, refresh behavior, and keyboard
+  accessibility all work correctly. (OpenCode did not perform browser testing.)
+- `npm run build` result: succeeded — `vite v8.1.2`, 44 modules transformed,
+  `dist/index.html` 0.46 kB, `dist/assets/index-*.css` ~20.60 kB,
+  `dist/assets/index-*.js` ~217.69 kB, built in ~248ms.
+- `npm run lint` result: passed clean — `eslint .` with no errors or warnings.
+- Real limitations still remaining: OpenChamber preview unreliable; deferred
+  items unbuilt by design (routing, full pages, search, saved filters,
+  multi-select, idea edits, custom categories, learning/reading, dark mode).
+- Next best step: commit Phase 3B changes, then begin Phase 4 planning.
+
+### 2026-07-02 — Phase 3B Spec Created and Approved
+
+- Created `docs/task-organization-spec.md` (Phase 3B — Task Organization)
+  covering exactly two features: category filter chips in the Today's Tasks
+  card header (session-only, never persisted) and priority-colored 3px left
+  borders on task rows in Today's Tasks and Upcoming Tasks.
+- The spec was reviewed and approved by the user.
+- Updated `AGENTS.md`: set the active phase to Phase 3B, noted Phase 3A is
+  complete, replaced the Phase 3A Rule with a Phase 3B Rule, and added
+  `task-organization-spec.md` to the requirements source.
+- Updated this file: Current Phase → Phase 3B, summarized the Phase 3B scope,
+  set the Next Exact Step to request a plan only, refreshed Known Issues,
+  and added `task-organization-spec.md` to the docs structure.
+- No application code, CSS, hooks, components, dependencies, or Git history
+  were changed.
+- Next best step: propose a Phase 3B implementation plan only (no code) and
+  wait for user approval.
 
 ### 2026-07-02 — Phase 3A Implementation Complete
 

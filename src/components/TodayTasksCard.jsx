@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import '../styles/cards.css';
 import '../styles/task-row.css';
 import TaskRow from './TaskRow';
@@ -6,6 +7,8 @@ import TaskDeleteConfirm from './TaskDeleteConfirm';
 import AddTaskForm from './AddTaskForm';
 import EmptyState from './EmptyState';
 import { sortTodayTasks, isOverdue } from '../utils/dateTime';
+
+const CATEGORIES = ['All', 'Work', 'Learning', 'Personal', 'Health'];
 
 export default function TodayTasksCard({
   tasks,
@@ -21,16 +24,36 @@ export default function TodayTasksCard({
   onDeleteConfirm,
   onActionCancel,
 }) {
-  const active = tasks.filter((t) => !t.completed).sort(sortTodayTasks);
-  const completed = tasks.filter((t) => t.completed).sort(sortTodayTasks);
-  const allDone = tasks.length > 0 && active.length === 0;
+  const [categoryFilter, setCategoryFilter] = useState('All');
+
+  const filteredTasks =
+    categoryFilter === 'All'
+      ? tasks
+      : tasks.filter((t) => t.category === categoryFilter);
+
+  const active = filteredTasks.filter((t) => !t.completed).sort(sortTodayTasks);
+  const completed = filteredTasks
+    .filter((t) => t.completed)
+    .sort(sortTodayTasks);
+  const allDone = filteredTasks.length > 0 && active.length === 0;
 
   const overdueActive = active.filter((t) => isOverdue(t.dueDate));
   const restActive = active.filter((t) => !isOverdue(t.dueDate));
 
+  const filteredEmpty = tasks.length > 0 && filteredTasks.length === 0;
+
+  const completionMessage = allDone
+    ? categoryFilter === 'All'
+      ? 'All done for today. Nice work!'
+      : `All ${categoryFilter} tasks are complete.`
+    : null;
+
   function renderRow(task) {
-    const isEditing = activeTaskAction?.taskId === task.id && activeTaskAction?.type === 'edit';
-    const isDeleting = activeTaskAction?.taskId === task.id && activeTaskAction?.type === 'delete';
+    const isEditing =
+      activeTaskAction?.taskId === task.id && activeTaskAction?.type === 'edit';
+    const isDeleting =
+      activeTaskAction?.taskId === task.id &&
+      activeTaskAction?.type === 'delete';
 
     if (isEditing) {
       return (
@@ -68,12 +91,35 @@ export default function TodayTasksCard({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Today&apos;s Tasks</h2>
-          <span className="card__count">{tasks.length}</span>
+          <span className="card__count">{filteredTasks.length}</span>
         </div>
         <button type="button" className="card__view-all">
           View all
         </button>
       </div>
+
+      {tasks.length > 0 && (
+        <div
+          className="filter-chips"
+          role="group"
+          aria-label="Filter tasks by category"
+        >
+          {CATEGORIES.map((cat) => {
+            const isActive = categoryFilter === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                className={`filter-chip${isActive ? ' filter-chip--active' : ''}`}
+                aria-pressed={isActive}
+                onClick={() => setCategoryFilter(cat)}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div className="card__body">
         {tasks.length === 0 ? (
@@ -83,6 +129,10 @@ export default function TodayTasksCard({
             actionLabel="+ Add a task"
             onAction={onRequestAdd}
           />
+        ) : filteredEmpty ? (
+          <div className="task-list__filtered-empty">
+            No {categoryFilter} tasks for today
+          </div>
         ) : (
           <div className="task-list">
             {overdueActive.length > 0 && (
@@ -112,10 +162,8 @@ export default function TodayTasksCard({
           onRequestOpen={onRequestAdd}
         />
 
-        {allDone && (
-          <div className="task-list__all-done">
-            All done for today. Nice work!
-          </div>
+        {completionMessage && (
+          <div className="task-list__all-done">{completionMessage}</div>
         )}
       </div>
     </div>

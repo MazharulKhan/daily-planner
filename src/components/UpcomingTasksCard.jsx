@@ -96,8 +96,13 @@ export default function UpcomingTasksCard({
 
 function UpcomingTaskRow({ task, onEdit, onDelete }) {
   const completed = !!task.completed;
+  const priorityBorderClass = task.priority
+    ? `task-row--priority-${task.priority.toLowerCase()}`
+    : '';
   return (
-    <div className={`task-row${completed ? ' task-row--completed' : ''}`}>
+    <div
+      className={`task-row${completed ? ' task-row--completed' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
+    >
       <div className="task-row__main">
         <span className="task-row__title">{task.title}</span>
       </div>

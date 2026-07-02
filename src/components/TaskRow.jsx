@@ -20,6 +20,10 @@ export default function TaskRow({
   const completed = !!task.completed;
   const overdue = !completed && isOverdue(task.dueDate);
 
+  const priorityBorderClass = task.priority
+    ? `task-row--priority-${task.priority.toLowerCase()}`
+    : '';
+
   const overdueLabel = overdue
     ? task.time
       ? `Overdue · ${formatShortDate(task.dueDate)} · ${task.time}`
@@ -27,7 +31,9 @@ export default function TaskRow({
     : null;
 
   return (
-    <div className={`task-row${completed ? ' task-row--completed' : ''}`}>
+    <div
+      className={`task-row${completed ? ' task-row--completed' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
+    >
       <button
         type="button"
         className="task-row__checkbox"
