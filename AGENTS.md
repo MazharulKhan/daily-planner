@@ -39,11 +39,16 @@ The app must stay frontend-only for now.
 ## Build Process
 
 - Build one phase at a time.
-- Current phase: Dashboard only (see `docs/dashboard-spec.md`).
+- Current phase: Phase 3A — Core Task Management Improvements (see `docs/task-management-spec.md`).
+- Phase 2 (Dashboard Foundation) is complete. Phase 3A extends the dashboard
+  with task editing, deletion, optional metadata controls, completed-task
+  grouping, and localStorage migration — all still inside the dashboard,
+  with no routing or new pages.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
 - Do not skip ahead to deferred features listed in `docs/project-spec.md`.
+- Do not treat a later phase as active unless the user explicitly approves it and `docs/project-status.md` is updated.
 
 ## Data Approach
 
@@ -52,24 +57,24 @@ The app must stay frontend-only for now.
 - Fall back to starter sample data only when no saved data exists.
 - Write back to `localStorage` after every user change.
 
-## Dashboard-First Rule
+## Phase 3A Rule
 
-The first implementation phase covers only the dashboard described in
-`docs/dashboard-spec.md`:
+Phase 3A is dashboard-based task management only, as defined in
+`docs/task-management-spec.md`:
 
-- Fixed sidebar shell with visual navigation placeholders
-- Dashboard header
-- Today's Tasks card
-- Upcoming Tasks card
-- Quick Ideas card
-- Daily Progress card
-- Add task, complete/uncomplete task
-- Add Quick Idea
-- localStorage persistence
-- Empty states
+- Edit an existing task's title, priority, category, time, and due date from
+  the dashboard.
+- Delete a task with inline confirmation.
+- Add optional priority, category, due date, and time controls to the
+  add-task and edit-task flows.
+- Group completed tasks beneath a `Completed` divider in Today's Tasks and
+  Upcoming Tasks.
+- Migrate and persist all task data through `localStorage`.
+- Improve related task empty states and accessibility behavior.
 
-Do not build routing, full pages, search behavior, task editing/deletion,
-idea editing/deletion, learning workflows, or reading workflows in this phase.
+Do not build routing, full pages, search behavior, idea editing/deletion,
+custom category management, learning workflows, or reading workflows in this
+phase. Do not modify the Quick Ideas card beyond what Phase 2 already does.
 
 ## Requirements Source
 
@@ -77,6 +82,7 @@ Treat these files as the primary requirements:
 
 - `docs/project-spec.md`
 - `docs/dashboard-spec.md`
+- `docs/task-management-spec.md` (Phase 3A active spec)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

@@ -1,11 +1,30 @@
 export function todayISO() {
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().slice(0, 10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 export function isToday(iso) {
   return iso === todayISO();
+}
+
+export function isTodayOrPast(iso) {
+  if (!iso) return true;
+  return iso <= todayISO();
+}
+
+export function isOverdue(iso) {
+  if (!iso) return false;
+  return iso < todayISO();
+}
+
+export function formatShortDate(iso) {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 export function isUpcoming(iso) {
@@ -13,20 +32,62 @@ export function isUpcoming(iso) {
   return iso > todayISO();
 }
 
+function todayGroupRank(dueDate, today) {
+  if (!dueDate) return 2;
+  if (dueDate < today) return 0;
+  if (dueDate === today) return 1;
+  return 3;
+}
+
+function timeRank(time) {
+  return time ? 0 : 1;
+}
+
+export function sortTodayTasks(a, b) {
+  const today = todayISO();
+  const ga = todayGroupRank(a.dueDate, today);
+  const gb = todayGroupRank(b.dueDate, today);
+  if (ga !== gb) return ga - gb;
+
+  if (ga === 0) {
+    const dc = (a.dueDate || '').localeCompare(b.dueDate || '');
+    if (dc !== 0) return dc;
+  }
+
+  const ta = timeRank(a.time);
+  const tb = timeRank(b.time);
+  if (ta !== tb) return ta - tb;
+  if (a.time && b.time) return a.time.localeCompare(b.time);
+  return 0;
+}
+
+export function sortUpcomingTasks(a, b) {
+  const dc = (a.dueDate || '').localeCompare(b.dueDate || '');
+  if (dc !== 0) return dc;
+
+  const ta = timeRank(a.time);
+  const tb = timeRank(b.time);
+  if (ta !== tb) return ta - tb;
+  if (a.time && b.time) return a.time.localeCompare(b.time);
+  return 0;
+}
+
 export function formatDueDate(iso) {
   if (!iso) return '';
   const today = todayISO();
   const tomorrow = new Date();
-  tomorrow.setHours(0, 0, 0, 0);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const tomorrowISO = tomorrow.toISOString().slice(0, 10);
+  const ty = tomorrow.getFullYear();
+  const tm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+  const td = String(tomorrow.getDate()).padStart(2, '0');
+  const tomorrowISO = `${ty}-${tm}-${td}`;
 
   if (iso === today) return 'Today';
   if (iso === tomorrowISO) return 'Tomorrow';
 
-  const d = new Date(`${iso}T00:00:00`);
-  const opts = { month: 'short', day: 'numeric' };
-  return d.toLocaleDateString(undefined, opts);
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 export function formatRelativeTime(iso) {

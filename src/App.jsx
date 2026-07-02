@@ -7,7 +7,8 @@ import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
 
 function App() {
-  const { tasks, addTask, toggleTask } = useTasks(makeSampleTasks());
+  const { tasks, addTask, editTask, toggleTask, deleteTask } =
+    useTasks(makeSampleTasks());
   const { ideas, addIdea } = useIdeas(makeSampleIdeas());
 
   const [taskAddOpen, setTaskAddOpen] = useState(false);
@@ -40,6 +41,8 @@ function App() {
             ideas={ideas}
             onToggleTask={toggleTask}
             onAddTask={addTask}
+            onEditTask={editTask}
+            onDeleteTask={deleteTask}
             onAddIdea={addIdea}
             taskAddOpen={taskAddOpen}
             ideaAddOpen={ideaAddOpen}

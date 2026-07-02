@@ -1,12 +1,62 @@
 import '../styles/cards.css';
 import '../styles/task-row.css';
+import TaskEditForm from './TaskEditForm';
+import TaskDeleteConfirm from './TaskDeleteConfirm';
 import EmptyState from './EmptyState';
-import { formatDueDate, isUpcoming } from '../utils/dateTime';
+import { formatDueDate, isUpcoming, sortUpcomingTasks } from '../utils/dateTime';
 
-export default function UpcomingTasksCard({ tasks }) {
+export default function UpcomingTasksCard({
+  tasks,
+  activeTaskAction,
+  onBeginEdit,
+  onBeginDelete,
+  onEditSave,
+  onDeleteConfirm,
+  onActionCancel,
+}) {
   const upcoming = tasks
     .filter((t) => isUpcoming(t.dueDate))
-    .sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
+    .sort(sortUpcomingTasks);
+
+  const active = upcoming.filter((t) => !t.completed);
+  const completed = upcoming.filter((t) => t.completed);
+
+  function renderRow(task) {
+    const isEditing =
+      activeTaskAction?.taskId === task.id && activeTaskAction?.type === 'edit';
+    const isDeleting =
+      activeTaskAction?.taskId === task.id &&
+      activeTaskAction?.type === 'delete';
+
+    if (isEditing) {
+      return (
+        <TaskEditForm
+          key={task.id}
+          task={task}
+          onSave={onEditSave}
+          onCancel={onActionCancel}
+        />
+      );
+    }
+    if (isDeleting) {
+      return (
+        <TaskDeleteConfirm
+          key={task.id}
+          task={task}
+          onConfirm={onDeleteConfirm}
+          onCancel={onActionCancel}
+        />
+      );
+    }
+    return (
+      <UpcomingTaskRow
+        key={task.id}
+        task={task}
+        onEdit={(t) => onBeginEdit(t, document.activeElement)}
+        onDelete={(t) => onBeginDelete(t, document.activeElement)}
+      />
+    );
+  }
 
   return (
     <div className="card">
@@ -28,21 +78,78 @@ export default function UpcomingTasksCard({ tasks }) {
           />
         ) : (
           <div className="task-list">
-            {upcoming.map((task) => (
-              <div className="task-row" key={task.id}>
-                <div className="task-row__main">
-                  <span className="task-row__title">{task.title}</span>
-                </div>
-                {task.category && (
-                  <div className="task-row__badges">
-                    <span className="badge badge--category">{task.category}</span>
-                  </div>
-                )}
-                <span className="task-row__due">{formatDueDate(task.dueDate)}</span>
+            {active.map(renderRow)}
+            {completed.length > 0 && (
+              <div className="completed-divider">
+                <span className="completed-divider__label">
+                  Completed · {completed.length}
+                </span>
               </div>
-            ))}
+            )}
+            {completed.map(renderRow)}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function UpcomingTaskRow({ task, onEdit, onDelete }) {
+  const completed = !!task.completed;
+  return (
+    <div className={`task-row${completed ? ' task-row--completed' : ''}`}>
+      <div className="task-row__main">
+        <span className="task-row__title">{task.title}</span>
+      </div>
+      {task.category && (
+        <div className="task-row__badges">
+          <span className="badge badge--category">{task.category}</span>
+        </div>
+      )}
+      <span className="task-row__due">{formatDueDate(task.dueDate)}</span>
+      <div className="task-row__actions">
+        <button
+          type="button"
+          className="task-row__action task-row__action--edit"
+          aria-label={`Edit task "${task.title}"`}
+          onClick={() => onEdit(task)}
+        >
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className="task-row__action task-row__action--delete"
+          aria-label={`Delete task "${task.title}"`}
+          onClick={() => onDelete(task)}
+        >
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+            <path d="M10 11v6M14 11v6" />
+          </svg>
+        </button>
       </div>
     </div>
   );

@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { storage } from '../data/storage';
+import { migrateTasks } from '../data/migrate';
 
 export function useTasks(initialTasks) {
   const [tasks, setTasks] = useState(() => {
     const saved = storage.loadTasks(null);
-    return saved && saved.length >= 0 ? saved : initialTasks;
+    if (saved && saved.length >= 0) {
+      const migrated = migrateTasks(saved);
+      storage.saveTasks(migrated);
+      return migrated;
+    }
+    return initialTasks;
   });
 
   useEffect(() => {
@@ -12,16 +18,31 @@ export function useTasks(initialTasks) {
   }, [tasks]);
 
   const addTask = useCallback((task) => {
-    setTasks((prev) => [...prev, task]);
+    const now = new Date().toISOString();
+    setTasks((prev) => [...prev, { ...task, updatedAt: now }]);
   }, []);
 
-  const toggleTask = useCallback((id) => {
+  const editTask = useCallback((id, patch) => {
+    const now = new Date().toISOString();
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
+      prev.map((t) => (t.id === id ? { ...t, ...patch, updatedAt: now } : t)),
     );
   }, []);
 
-  return { tasks, addTask, toggleTask };
+  const toggleTask = useCallback((id) => {
+    const now = new Date().toISOString();
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, completed: !t.completed, updatedAt: now } : t,
+      ),
+    );
+  }, []);
+
+  const deleteTask = useCallback((id) => {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  return { tasks, addTask, editTask, toggleTask, deleteTask };
 }
 
 export function useIdeas(initialIdeas) {

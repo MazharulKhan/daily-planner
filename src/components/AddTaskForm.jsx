@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { makeId, todayISO } from '../utils/dateTime';
+import { makeId } from '../utils/dateTime';
 
 const DEFAULT_PRIORITY = 'Medium';
 const DEFAULT_CATEGORY = 'Work';
-const DEFAULT_TIME = '09:00';
+
+const PRIORITIES = ['High', 'Medium', 'Low'];
+const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
 
 export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
   const [title, setTitle] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
+  const [priority, setPriority] = useState(DEFAULT_PRIORITY);
+  const [category, setCategory] = useState(DEFAULT_CATEGORY);
+  const [time, setTime] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -14,6 +21,15 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
       inputRef.current.focus();
     }
   }, [open]);
+
+  function resetFields() {
+    setTitle('');
+    setShowOptions(false);
+    setPriority(DEFAULT_PRIORITY);
+    setCategory(DEFAULT_CATEGORY);
+    setTime('');
+    setDueDate('');
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -23,17 +39,17 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
       id: makeId('task'),
       title: trimmed,
       completed: false,
-      priority: DEFAULT_PRIORITY,
-      category: DEFAULT_CATEGORY,
-      time: DEFAULT_TIME,
-      dueDate: todayISO(),
+      priority,
+      category,
+      time: time || null,
+      dueDate: dueDate || null,
     });
-    setTitle('');
+    resetFields();
     onClose?.();
   }
 
   function handleCancel() {
-    setTitle('');
+    resetFields();
     onClose?.();
   }
 
@@ -78,9 +94,67 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
         <button type="submit" className="add-task__submit">
           Add
         </button>
-        <button type="button" className="add-task__cancel" onClick={handleCancel}>
+        <button
+          type="button"
+          className="add-task__cancel"
+          onClick={handleCancel}
+        >
           Cancel
         </button>
+        <button
+          type="button"
+          className="add-task__more"
+          aria-expanded={showOptions}
+          onClick={() => setShowOptions((v) => !v)}
+        >
+          {showOptions ? 'Fewer options' : 'More options'}
+        </button>
+        {showOptions && (
+          <div className="add-task__options">
+            <label className="add-task__field">
+              <span className="add-task__label">Priority</span>
+              <select
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+              >
+                {PRIORITIES.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="add-task__field">
+              <span className="add-task__label">Category</span>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="add-task__field">
+              <span className="add-task__label">Time</span>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </label>
+            <label className="add-task__field">
+              <span className="add-task__label">Due date</span>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </label>
+          </div>
+        )}
       </form>
     </div>
   );

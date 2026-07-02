@@ -1,11 +1,17 @@
 function isoDate(daysFromToday) {
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + daysFromToday);
-  return d.toISOString().slice(0, 10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate() + daysFromToday).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function nowISO() {
+  return new Date().toISOString();
 }
 
 export function makeSampleTasks() {
+  const now = nowISO();
   return [
     {
       id: 'sample-1',
@@ -14,7 +20,8 @@ export function makeSampleTasks() {
       priority: 'High',
       category: 'Work',
       time: '09:00',
-      dueDate: isoDate(0),
+      dueDate: null,
+      updatedAt: now,
     },
     {
       id: 'sample-2',
@@ -24,6 +31,7 @@ export function makeSampleTasks() {
       category: 'Work',
       time: '11:00',
       dueDate: isoDate(0),
+      updatedAt: now,
     },
     {
       id: 'sample-3',
@@ -33,6 +41,7 @@ export function makeSampleTasks() {
       category: 'Health',
       time: '13:30',
       dueDate: isoDate(0),
+      updatedAt: now,
     },
     {
       id: 'sample-4',
@@ -42,6 +51,7 @@ export function makeSampleTasks() {
       category: 'Learning',
       time: '15:00',
       dueDate: isoDate(0),
+      updatedAt: now,
     },
     {
       id: 'sample-5',
@@ -51,6 +61,7 @@ export function makeSampleTasks() {
       category: 'Personal',
       time: '18:00',
       dueDate: isoDate(0),
+      updatedAt: now,
     },
     {
       id: 'sample-6',
@@ -60,6 +71,7 @@ export function makeSampleTasks() {
       category: 'Work',
       time: '10:00',
       dueDate: isoDate(2),
+      updatedAt: now,
     },
     {
       id: 'sample-7',
@@ -69,6 +81,7 @@ export function makeSampleTasks() {
       category: 'Health',
       time: '14:00',
       dueDate: isoDate(3),
+      updatedAt: now,
     },
   ];
 }

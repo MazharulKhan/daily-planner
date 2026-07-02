@@ -1,0 +1,48 @@
+import { makeId } from '../utils/dateTime';
+
+const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
+const VALID_CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
+const TIME_RE = /^\d{2}:\d{2}$/;
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function normalizeTask(task) {
+  const now = new Date().toISOString();
+
+  const id =
+    typeof task.id === 'string' && task.id.trim() ? task.id : makeId('task');
+
+  const title =
+    typeof task.title === 'string' && task.title.trim()
+      ? task.title
+      : 'Untitled';
+
+  const completed = task.completed === true;
+
+  const priority = VALID_PRIORITIES.includes(task.priority)
+    ? task.priority
+    : 'Medium';
+
+  const category = VALID_CATEGORIES.includes(task.category)
+    ? task.category
+    : 'Work';
+
+  const time =
+    typeof task.time === 'string' && TIME_RE.test(task.time) ? task.time : null;
+
+  const dueDate =
+    typeof task.dueDate === 'string' && DATE_RE.test(task.dueDate)
+      ? task.dueDate
+      : null;
+
+  const updatedAt =
+    typeof task.updatedAt === 'string' && task.updatedAt.trim()
+      ? task.updatedAt
+      : now;
+
+  return { id, title, completed, priority, category, time, dueDate, updatedAt };
+}
+
+export function migrateTasks(tasks) {
+  if (!Array.isArray(tasks)) return [];
+  return tasks.map(normalizeTask);
+}
