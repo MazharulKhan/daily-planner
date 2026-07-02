@@ -1,0 +1,110 @@
+.idea-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.idea-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--idea-tint, var(--color-idea-1));
+}
+
+.idea-row:nth-child(4n + 2) {
+  --idea-tint: var(--color-idea-2);
+}
+
+.idea-row:nth-child(4n + 3) {
+  --idea-tint: var(--color-idea-3);
+}
+
+.idea-row:nth-child(4n + 4) {
+  --idea-tint: var(--color-idea-4);
+}
+
+.idea-row__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--color-warn);
+  margin-top: 1px;
+}
+
+.idea-row__text {
+  flex: 1 1 auto;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.idea-row__time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-faint);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Add idea form */
+.add-idea {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-soft);
+  margin-bottom: var(--space-3);
+}
+
+.add-idea--closed {
+  border: 1px dashed var(--color-border);
+  background: transparent;
+  padding: var(--space-3);
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: var(--font-size-base);
+}
+
+.add-idea--closed:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent-border);
+  background: var(--color-surface-soft);
+}
+
+.add-idea__input {
+  flex: 1 1 auto;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  padding: var(--space-2);
+}
+
+.add-idea__input:focus {
+  outline: none;
+}
+
+.add-idea__submit {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.add-idea__submit:hover {
+  background: var(--color-accent-hover);
+}
+
+.ideas__footer {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-soft);
+  text-align: center;
+}
