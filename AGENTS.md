@@ -39,11 +39,13 @@ The app must stay frontend-only for now.
 ## Build Process
 
 - Build one phase at a time.
-- Current phase: Phase 3B — Task Organization (see `docs/task-organization-spec.md`).
-- Phase 2 (Dashboard Foundation) is complete. Phase 3A (Core Task Management
-  Improvements) is complete. Phase 3B extends the dashboard with category
-  filter chips and priority-colored left borders — all still inside the
-  dashboard, with no routing or new pages.
+- Current phase: No active implementation phase. Phase 3B — Task Organization
+  is complete (see `docs/task-organization-spec.md`).
+- Phase 2 (Dashboard Foundation), Phase 3A (Core Task Management Improvements),
+  and Phase 3B (Task Organization) are all complete.
+- The next candidate is Phase 4A — Quick Ideas Management, pending a focused
+  spec and explicit approval. Do not begin Phase 4A implementation without a
+  new approved spec and plan.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
@@ -59,8 +61,8 @@ The app must stay frontend-only for now.
 
 ## Phase 3B Rule
 
-Phase 3B is a small dashboard task-organization refinement only, as defined
-in `docs/task-organization-spec.md`:
+Phase 3B is complete. It was a small dashboard task-organization refinement
+only, as defined in `docs/task-organization-spec.md`:
 
 - Add category filter chips (`All`, `Work`, `Learning`, `Personal`, `Health`)
   to the Today's Tasks card header. The filter is session-only React state,
@@ -81,7 +83,7 @@ Treat these files as the primary requirements:
 - `docs/project-spec.md`
 - `docs/dashboard-spec.md`
 - `docs/task-management-spec.md` (Phase 3A, complete)
-- `docs/task-organization-spec.md` (Phase 3B active spec)
+- `docs/task-organization-spec.md` (Phase 3B, complete)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

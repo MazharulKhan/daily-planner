@@ -2,45 +2,57 @@
 
 ## Current Phase
 
-Phase 3B — Task Organization, complete.
+No active implementation phase. Phase 3B — Task Organization is complete and
+committed (`6cfadf8`), pushed to GitHub.
 
 ## Current State
 
 Phase 2 (Dashboard Foundation) is complete and committed (`ba662c0`).
 Phase 3A (Core Task Management Improvements) is complete and committed
-(`6baa8f6`). Phase 3B (Task Organization) is complete and implements
-everything in `docs/task-organization-spec.md`:
+(`6baa8f6`). Phase 3B (Task Organization) is complete and committed
+(`6cfadf8`), pushed to `origin/main`.
+
+Phase 3B delivered:
 
 - Category filter chips (`All`, `Work`, `Learning`, `Personal`, `Health`) in
   the Today's Tasks card header. Session-only React state, never saved to
   localStorage. Filters visible rows, count badge, overdue divider, completed
   divider, and empty/completion messages.
-- Category-specific completion message: "All done for today" when `All` is
-  selected; "All {Category} tasks are complete." when a specific category is
-  filtered and all its tasks are done.
-- Filtered-empty message: "No {Category} tasks for today" when tasks exist
+- Filtered task counts — the count badge reflects the filtered count.
+- Filtered overdue and completed dividers — reflect only matching tasks.
+- Filtered-empty state — "No {Category} tasks for today" when tasks exist
   but none match the selected category.
-- Daily Progress remains based on all Today tasks, unaffected by the filter.
-- Upcoming Tasks and Quick Ideas are unaffected by the category filter.
-- Priority-colored 3px left marker on task rows in Today's Tasks and
-  Upcoming Tasks, implemented as an absolutely positioned `::before`
-  pseudo-element (not a real border) so it does not affect row alignment.
-  High → danger red, Medium → warn amber, Low → success green. Completed
-  rows show a dimmed marker using `--color-border`.
+- Priority-colored left markers on task rows in Today's Tasks and Upcoming
+  Tasks, implemented as an absolutely positioned `::before` pseudo-element
+  (not a real border) so it does not affect row alignment. High → danger
+  red, Medium → warn amber, Low → success green. Completed rows show a
+  dimmed marker.
+- Final priority-marker alignment correction: the marker sits at `left: -8px`
+  in the card gutter, clear of checkboxes, titles, and metadata.
 - All Phase 3A behavior — editing, deletion, metadata controls, completed
   grouping, sorting, overdue display, accessibility, and localStorage
   migration — remains unchanged.
 
+## Deployment Milestone
+
+- A Vercel project is connected to the GitHub repository
+  (`https://github.com/MazharulKhan/daily-planner.git`).
+- Production deployment succeeded from the `main` branch.
+- Live test URL: https://daily-planner-olive-zeta.vercel.app
+- The app uses browser `localStorage`, so each tester has separate browser
+  data. There is no shared backend or cloud sync.
+
 ## Next Exact Step
 
-Commit the Phase 3B changes. Then begin Phase 4 (Learning and Reading
-Workflows) planning per `docs/build-plan.md` — propose a plan only, no code
-changes, until approved.
+Review brother's feedback, then decide whether to begin Phase 4A — Quick
+Ideas Management planning. Do not begin implementation without a new approved
+spec and plan.
 
 ## Known Issues
 
 - OpenChamber's built-in browser preview is still unreliable; visual testing
-  must be done in a normal browser at the Vite localhost URL.
+  must be done in a normal browser at the Vite localhost URL or the live
+  Vercel URL.
 - No other known functional issues remain. The following are intentional
   scope limits, not bugs: routing, full pages, global search, saved filters,
   multi-select/bulk actions, idea edit/delete/conversion, custom category
@@ -91,6 +103,29 @@ docs/
 
 ## Session History
 
+### 2026-07-02 — Phase 3B Commit, Push, and Deployment
+
+- Phase 3B changes were staged and committed as `6cfadf8`
+  (`feat: organize dashboard tasks`), 7 files / +527 / -68.
+- The commit was pushed to `origin/main` on GitHub
+  (`https://github.com/MazharulKhan/daily-planner.git`).
+- A Vercel project was connected to the GitHub repository; production
+  deployment succeeded from `main`.
+- Live test URL: https://daily-planner-olive-zeta.vercel.app
+- The app uses browser `localStorage`, so each tester has separate browser
+  data.
+- User-confirmed normal browser testing was completed for Phase 3B before
+  commit: category filters, filtered counts/dividers/empty state, priority
+  markers (including the final alignment correction), task interactions,
+  Daily Progress behavior, refresh/localStorage behavior, and keyboard
+  access all passed.
+- `npm run build` and `npm run lint` both passed before commit.
+- Documentation updated: `AGENTS.md` set to no active phase (Phase 3B
+  complete, Phase 4A pending spec/approval); `docs/project-status.md` updated
+  with Phase 3B completion, deployment milestone, and next step.
+- Next best step: review brother's feedback, then decide whether to begin
+  Phase 4A — Quick Ideas Management planning.
+
 ### 2026-07-02 — Phase 3B Implementation Complete
 
 - Implemented all approved Phase 3B work from `docs/task-organization-spec.md`.
@@ -124,7 +159,7 @@ docs/
 - Real limitations still remaining: OpenChamber preview unreliable; deferred
   items unbuilt by design (routing, full pages, search, saved filters,
   multi-select, idea edits, custom categories, learning/reading, dark mode).
-- Next best step: commit Phase 3B changes, then begin Phase 4 planning.
+- Next best step: commit and push Phase 3B changes, then deploy to Vercel.
 
 ### 2026-07-02 — Phase 3B Spec Created and Approved
 
