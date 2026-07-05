@@ -5,10 +5,7 @@ const NAV_ITEMS = [
   { id: 'today', label: 'Today' },
   { id: 'upcoming', label: 'Upcoming' },
   { id: 'completed', label: 'Completed' },
-  { id: 'learning', label: 'Learning' },
-  { id: 'reading', label: 'Reading' },
-  { id: 'ideas', label: 'Ideas' },
-  { id: 'categories', label: 'Categories' },
+  { id: 'quick-ideas', label: 'Quick Ideas' },
 ];
 
 function NavIcon() {
