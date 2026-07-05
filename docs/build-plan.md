@@ -98,27 +98,13 @@ Replace the Vite starter screen with a working Daily Planner dashboard.
 
 Make task management more practical without expanding into learning/reading workflows yet.
 
-### Candidate Work
+### Status
 
-- Edit task title
-- Delete task with confirmation
-- Add optional priority/category/time/due-date controls
-- Improve completed-task display
-- Improve task empty states
-- Add basic task filtering or grouping if required
-- Improve responsive behavior without making mobile the primary design target
+Phase 3 is complete. It was delivered in two sub-phases:
 
-### Notes
-
-This phase should still use localStorage and regular CSS.
-
-### Not Yet Included
-
-- Full Learning Tasks
-- Full Reading Tasks
-- Cloud sync
-- Authentication
-- Calendar features
+- **Phase 3A — Core Task Management Improvements** (complete): inline task editing and deletion, optional priority/category/time/due-date controls, completed-task grouping with dividers, automatic sorting, overdue display, `updatedAt` timestamps, localStorage migration, and keyboard/focus accessibility.
+- **Phase 3B — Task Organization** (complete): category filter chips in Today’s Tasks (session-only, never persisted), filtered counts/dividers/empty states, and priority-colored left markers on task rows in both Today and Upcoming.
+- **Phase 3C** was considered as an optional dashboard-polish checkpoint and is not needed; Phase 3 is complete.
 
 ---
 
@@ -128,27 +114,12 @@ This phase should still use localStorage and regular CSS.
 
 Add the planner’s learning-focused differentiation one workflow at a time.
 
-### Suggested Order
+### Chosen Order
 
-1. Standard task detail page
-2. Quick Ideas management page
-3. Learning Task foundation
-4. Reading Task foundation
-
-### Learning Task Candidate Features
-
-- Video link
-- Basic embedded video experience
-- Resume progress
-- Learning notes
-- Timestamp-related behavior only after the base flow is stable
-
-### Reading Task Candidate Features
-
-- Resource link
-- Progress tracking
-- Notes
-- Key takeaways
+1. Phase 4A — Quick Ideas Management
+2. Phase 4B — Standard Task Detail
+3. Phase 4C — Learning Task Foundation
+4. Phase 4D — Reading Task Foundation
 
 ### Caution
 
@@ -167,8 +138,7 @@ Finish remaining MVP pages, improve quality, and prepare a professional project 
 - Today page
 - Upcoming page
 - Completed page
-- Ideas page
-- Categories page
+- Quick Ideas page
 - Navigation between implemented pages
 - Light/dark mode, only after core workflow is stable
 - Responsive improvements

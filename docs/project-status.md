@@ -54,10 +54,11 @@ spec and plan.
   must be done in a normal browser at the Vite localhost URL or the live
   Vercel URL.
 - No other known functional issues remain. The following are intentional
-  scope limits, not bugs: routing, full pages, global search, saved filters,
-  multi-select/bulk actions, idea edit/delete/conversion, custom category
-  management, learning/reading workflows, responsive/mobile redesign, and
-  dark mode.
+  scope limits, not bugs: routing, full Today/Upcoming/Completed/Quick Ideas
+  pages, task detail views, global search, saved filters,
+  multi-select/bulk actions, Quick Idea editing/deletion/conversion, custom
+  category management, Learning and Reading task-type workflows,
+  responsive/mobile redesign, and dark mode.
 
 ## How to Run the App
 
@@ -102,6 +103,24 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-04 — Navigation and Task-Type Direction Approved
+
+- Approved sidebar navigation: Dashboard, Today, Upcoming, Completed, Quick Ideas.
+- Removed: Learning, Reading, and Categories as standalone sidebar destinations.
+- Learning and Reading are future task types, not standalone navigation sections.
+  Opening a task of either type will open a task-specific detail workspace; the
+  exact form (modal, overlay, route, or full page) is deferred to future
+  focused feature specs.
+- Categories remain fixed task metadata used for labels and filtering. No
+  Categories sidebar item or standalone Categories page is planned for the MVP.
+- “Quick Ideas” is now the consistent label for sidebar navigation and related
+  dashboard wording.
+- Current state remains “No active implementation phase.” Phase 4A — Quick Ideas
+  Management is still the next candidate and requires a focused spec, plan, and
+  explicit approval before implementation.
+- Documentation updated: `AGENTS.md`, `docs/build-plan.md`,
+  `docs/dashboard-spec.md`, `docs/project-spec.md`, `docs/project-status.md`.
 
 ### 2026-07-02 — Phase 3B Commit, Push, and Deployment
 

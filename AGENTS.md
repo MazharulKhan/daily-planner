@@ -59,22 +59,25 @@ The app must stay frontend-only for now.
 - Fall back to starter sample data only when no saved data exists.
 - Write back to `localStorage` after every user change.
 
-## Phase 3B Rule
+## Token-Efficient Context Use
 
-Phase 3B is complete. It was a small dashboard task-organization refinement
-only, as defined in `docs/task-organization-spec.md`:
+Use the smallest amount of repository context that still allows safe, correct work.
 
-- Add category filter chips (`All`, `Work`, `Learning`, `Personal`, `Health`)
-  to the Today's Tasks card header. The filter is session-only React state,
-  never saved to localStorage.
-- Add a priority-colored 3px left border to task rows in Today's Tasks and
-  Upcoming Tasks.
+- Always read `AGENTS.md`, `docs/project-status.md`, and the active approved feature spec before planning or implementing a medium or large change.
+- For a small, tightly scoped fix, read only the relevant component/style files plus any document directly governing that behavior.
+- Do not reread files already reviewed in the current session unless they may have changed or exact wording is needed.
+- Do not load unrelated historical specs, broad source documents, or UI references unless they are relevant to the current task.
+- Use targeted search, file paths, and focused diffs before reading whole files or the full repository.
+- Prefer `git status` and `git diff --stat` first. Inspect full diffs only for changed files relevant to the task.
+- Keep plans and progress updates concise. Do not repeat large file contents in chat unless necessary.
+- For a new feature, start with plan-only work. After approval, implement using the approved spec and only the files relevant to that feature.
+- Do not reduce required verification: browser testing, `npm run build`, and `npm run lint` still apply before declaring a phase complete.
 
-Do not build routing, full pages, search behavior, saved/persistent filters,
-multi-select, bulk actions, drag-and-drop, sort controls, category
-management, idea editing/deletion, learning workflows, or reading workflows
-in this phase. Do not modify the Quick Ideas card beyond what Phase 2
-already does. Do not weaken or redesign any Phase 3A behavior.
+## Completed Phase Reference
+
+Phases 2, 3A, and 3B are complete. Their specifications are historical references; completed behavior must not be accidentally broken by later changes.
+
+When a current approved feature spec or `docs/project-status.md` decision conflicts with older broad source material (`docs/source/`) or UI reference images, the current approved spec and project status take precedence.
 
 ## Requirements Source
 

@@ -54,10 +54,7 @@ Display these navigation items in order:
 2. Today
 3. Upcoming
 4. Completed
-5. Learning
-6. Reading
-7. Ideas
-8. Categories
+5. Quick Ideas
 
 ### Active State
 
@@ -76,7 +73,7 @@ Display these navigation items in order:
 - Main title: `Dashboard`
 - Short greeting/subtitle beneath it, such as: `Good morning! Here's your overview for today.`
 - Search field near the upper-right with placeholder text similar to:
-  `Search tasks, ideas, categories...`
+  `Search tasks and Quick Ideas...`
 - Blue `+ Add Task` button beside the search field.
 
 ### Search Scope
@@ -162,7 +159,7 @@ Each row should include:
 - Idea text
 - Timestamp or relative date aligned to the right
 
-Include a `View all ideas` text action at the bottom. It may be visual-only in this phase.
+Include a `View all Quick Ideas` text action at the bottom. It may be visual-only in this phase.
 
 ### First-Phase Behavior
 
@@ -179,7 +176,7 @@ Do not build:
 - Supporting notes
 - Expandable cards
 - Task conversion
-- A standalone Ideas page
+- A standalone Quick Ideas page
 
 ## Daily Progress Card
 
@@ -253,7 +250,8 @@ The dashboard phase is complete when:
 - Calendar sync
 - Recurring tasks
 - Full global search
-- Full Today, Upcoming, Completed, Learning, Reading, Ideas, or Categories pages
+- Full Today, Upcoming, Completed, or Quick Ideas pages (Learning and Reading
+  are task types, not standalone pages; no Categories page)
 - Task detail pages
 - Task editing or deletion
 - Full priority/category/date editing

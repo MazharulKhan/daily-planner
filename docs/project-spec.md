@@ -12,19 +12,15 @@ The initial user is a single person planning daily work, personal tasks, and lea
 
 ## Current Build Scope
 
-The active implementation scope is **Dashboard First**.
+Phases 2 (Dashboard Foundation), 3A (Core Task Management Improvements), and
+3B (Task Organization) are complete. There is currently no active
+implementation phase.
 
-The first coding phase must include only:
+The app remains frontend-only, with all data stored in browser `localStorage`.
 
-- A desktop-first dashboard shell
-- Persistent left sidebar navigation as visual placeholders
-- Today’s task list
-- Add-task interaction
-- Complete and uncomplete task interaction
-- Quick Idea capture
-- Daily progress based on completed tasks
-- Browser `localStorage` persistence for tasks and ideas
-- Regular CSS styling based on the written dashboard specification
+The next candidate is Phase 4A — Quick Ideas Management, pending a focused
+spec, plan, and explicit approval. Do not begin Phase 4A implementation
+without a new approved spec and plan.
 
 ## Current Technology
 
@@ -45,6 +41,11 @@ The broader product is a desktop-first productivity and learning planner with:
 - Lightweight categories, priorities, dates, and completion status
 - Future Learning Tasks for video-based learning and notes
 - Future Reading Tasks for resource links, progress, notes, and takeaways
+
+Learning and Reading are task types, not standalone sidebar sections; an
+individual Learning or Reading task will later open a task-specific detail
+view. The exact interface for those detail views (modal, overlay, route, or
+full page) remains deferred to future focused feature specs.
 
 The visual direction is clean and card-based:
 
@@ -82,7 +83,8 @@ Use starter sample data only when there is no saved local data yet.
 
 The following are part of the broader product direction but are not part of the first dashboard build:
 
-- Full Today, Upcoming, Completed, Learning, Reading, Ideas, and Categories pages
+- Full Today, Upcoming, Completed, or Quick Ideas pages; no separate Learning,
+  Reading, or Categories pages
 - Global search behavior
 - Task detail pages
 - Full task editing and deletion
