@@ -1,15 +1,21 @@
 import '../styles/header.css';
 import { greeting, todayLabel } from '../utils/dateTime';
 
-export default function Header({ onAddTask }) {
+export default function Header({ onAddTask, activeView }) {
+  const showTitle = activeView !== 'quick-ideas';
+
   return (
     <header className="header">
-      <div className="header__title-block">
-        <h1 className="header__title">Dashboard</h1>
-        <p className="header__subtitle">
-          {greeting()}! Here&apos;s your overview for today — {todayLabel()}.
-        </p>
-      </div>
+      {showTitle ? (
+        <div className="header__title-block">
+          <h1 className="header__title">Dashboard</h1>
+          <p className="header__subtitle">
+            {greeting()}! Here&apos;s your overview for today — {todayLabel()}.
+          </p>
+        </div>
+      ) : (
+        <div className="header__title-block header__title-block--hidden" aria-hidden="true" />
+      )}
 
       <div className="header__actions">
         <div className="header__search">

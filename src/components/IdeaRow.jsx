@@ -1,9 +1,14 @@
 import '../styles/ideas.css';
 import { formatRelativeTime } from '../utils/dateTime';
 
-export default function IdeaRow({ idea }) {
+export default function IdeaRow({ idea, onOpen }) {
   return (
-    <div className="idea-row">
+    <button
+      type="button"
+      className="idea-row"
+      onClick={onOpen}
+      aria-label={`Open idea: ${idea.text}`}
+    >
       <svg
         className="idea-row__icon"
         viewBox="0 0 24 24"
@@ -18,6 +23,6 @@ export default function IdeaRow({ idea }) {
       </svg>
       <span className="idea-row__text">{idea.text}</span>
       <span className="idea-row__time">{formatRelativeTime(idea.createdAt)}</span>
-    </div>
+    </button>
   );
 }

@@ -67,6 +67,24 @@
   font-weight: 600;
 }
 
+.sidebar__nav-item--button {
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+
+.sidebar__nav-item--button:focus-visible {
+  outline: 2px solid var(--color-accent-border);
+  outline-offset: 2px;
+}
+
+.sidebar__nav-item--placeholder {
+  opacity: 0.6;
+}
+
 .sidebar__nav-icon {
   width: 18px;
   height: 18px;

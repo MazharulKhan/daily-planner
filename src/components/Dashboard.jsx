@@ -14,6 +14,7 @@ export default function Dashboard({
   onEditTask,
   onDeleteTask,
   onAddIdea,
+  onOpenWorkspace,
   taskAddOpen,
   ideaAddOpen,
   requestAddTask,
@@ -99,6 +100,7 @@ export default function Dashboard({
           addOpen={ideaAddOpen}
           onRequestAdd={requestAddIdea}
           onCloseAdd={closeAddIdea}
+          onOpenWorkspace={onOpenWorkspace}
         />
       </div>
       <div className="dashboard__cell">

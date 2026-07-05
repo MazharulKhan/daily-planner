@@ -10,7 +10,15 @@ export default function QuickIdeasCard({
   addOpen,
   onRequestAdd,
   onCloseAdd,
+  onOpenWorkspace,
 }) {
+  const newest = [...ideas]
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
+    .slice(0, 3);
+
   return (
     <div className="card">
       <div className="card__header">
@@ -56,15 +64,23 @@ export default function QuickIdeasCard({
           />
         ) : (
           <div className="idea-list">
-            {ideas.map((idea) => (
-              <IdeaRow key={idea.id} idea={idea} />
+            {newest.map((idea) => (
+              <IdeaRow
+                key={idea.id}
+                idea={idea}
+                onOpen={() => onOpenWorkspace?.(idea.id)}
+              />
             ))}
           </div>
         )}
 
         <div className="ideas__footer">
-          <button type="button" className="card__view-all">
-            View all ideas
+          <button
+            type="button"
+            className="card__view-all"
+            onClick={() => onOpenWorkspace?.(null)}
+          >
+            View all Quick Ideas
           </button>
         </div>
       </div>

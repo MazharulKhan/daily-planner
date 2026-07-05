@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { storage } from '../data/storage';
-import { migrateTasks } from '../data/migrate';
+import { migrateTasks, migrateIdeas } from '../data/migrate';
 
 export function useTasks(initialTasks) {
   const [tasks, setTasks] = useState(() => {
@@ -48,7 +48,12 @@ export function useTasks(initialTasks) {
 export function useIdeas(initialIdeas) {
   const [ideas, setIdeas] = useState(() => {
     const saved = storage.loadIdeas(null);
-    return saved && saved.length >= 0 ? saved : initialIdeas;
+    if (saved && saved.length >= 0) {
+      const migrated = migrateIdeas(saved);
+      storage.saveIdeas(migrated);
+      return migrated;
+    }
+    return initialIdeas;
   });
 
   useEffect(() => {
@@ -56,8 +61,28 @@ export function useIdeas(initialIdeas) {
   }, [ideas]);
 
   const addIdea = useCallback((idea) => {
-    setIdeas((prev) => [idea, ...prev]);
+    const now = new Date().toISOString();
+    setIdeas((prev) => [
+      {
+        notes: '',
+        ...idea,
+        createdAt: idea.createdAt ?? now,
+        updatedAt: idea.updatedAt ?? now,
+      },
+      ...prev,
+    ]);
   }, []);
 
-  return { ideas, addIdea };
+  const editIdea = useCallback((id, patch) => {
+    const now = new Date().toISOString();
+    setIdeas((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, ...patch, updatedAt: now } : i)),
+    );
+  }, []);
+
+  const deleteIdea = useCallback((id) => {
+    setIdeas((prev) => prev.filter((i) => i.id !== id));
+  }, []);
+
+  return { ideas, addIdea, editIdea, deleteIdea };
 }

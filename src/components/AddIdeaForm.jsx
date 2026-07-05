@@ -16,10 +16,13 @@ export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
     e.preventDefault();
     const trimmed = text.trim();
     if (!trimmed) return;
+    const now = new Date().toISOString();
     onAdd({
       id: makeId('idea'),
       text: trimmed,
-      createdAt: new Date().toISOString(),
+      notes: '',
+      createdAt: now,
+      updatedAt: now,
     });
     setText('');
     onClose?.();
@@ -39,14 +42,14 @@ export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
 
   return (
     <form className="add-idea" onSubmit={handleSubmit}>
-      <input
+      <textarea
         ref={inputRef}
-        type="text"
         className="add-idea__input"
         placeholder="What's on your mind?"
         value={text}
         onChange={(e) => setText(e.target.value)}
         aria-label="Idea text"
+        rows={2}
       />
       <button type="submit" className="add-idea__submit">
         Save

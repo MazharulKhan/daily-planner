@@ -11,6 +11,23 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   background: var(--idea-tint, var(--color-idea-1));
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.idea-row:hover {
+  background: var(--idea-tint, var(--color-idea-1));
+  filter: brightness(0.97);
+}
+
+.idea-row:focus-visible {
+  outline: 2px solid var(--color-accent-border);
+  outline-offset: 2px;
 }
 
 .idea-row:nth-child(4n + 2) {
@@ -51,7 +68,7 @@
 /* Add idea form */
 .add-idea {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--space-2);
   padding: var(--space-2);
   border: 1px solid var(--color-border);
@@ -83,6 +100,10 @@
   font-size: var(--font-size-base);
   color: var(--color-text);
   padding: var(--space-2);
+  resize: vertical;
+  min-height: 44px;
+  line-height: 1.4;
+  font-family: inherit;
 }
 
 .add-idea__input:focus {

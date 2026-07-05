@@ -2,15 +2,17 @@
 
 ## Current Phase
 
-No active implementation phase. Phase 3B — Task Organization is complete and
-committed (`6cfadf8`), pushed to GitHub.
+No active implementation phase. Phase 4A — Quick Ideas Management is
+complete. The next candidate phase is Phase 4B — Standard Task Detail, which
+requires a focused spec, plan, and explicit approval before implementation.
 
 ## Current State
 
 Phase 2 (Dashboard Foundation) is complete and committed (`ba662c0`).
 Phase 3A (Core Task Management Improvements) is complete and committed
 (`6baa8f6`). Phase 3B (Task Organization) is complete and committed
-(`6cfadf8`), pushed to `origin/main`.
+(`6cfadf8`), pushed to `origin/main`. Phase 4A (Quick Ideas Management) is
+complete; its changes are implemented and verified but not yet committed.
 
 Phase 3B delivered:
 
@@ -44,9 +46,9 @@ Phase 3B delivered:
 
 ## Next Exact Step
 
-Review brother's feedback, then decide whether to begin Phase 4A — Quick
-Ideas Management planning. Do not begin implementation without a new approved
-spec and plan.
+Await approval and a focused spec/plan for Phase 4B — Standard Task Detail.
+`Convert to Task` for ideas stays deferred until Standard Task Detail provides a
+description/detail field that can safely receive an idea's notes.
 
 ## Known Issues
 
@@ -54,11 +56,10 @@ spec and plan.
   must be done in a normal browser at the Vite localhost URL or the live
   Vercel URL.
 - No other known functional issues remain. The following are intentional
-  scope limits, not bugs: routing, full Today/Upcoming/Completed/Quick Ideas
-  pages, task detail views, global search, saved filters,
-  multi-select/bulk actions, Quick Idea editing/deletion/conversion, custom
-  category management, Learning and Reading task-type workflows,
-  responsive/mobile redesign, and dark mode.
+  scope limits, not bugs: routing, full Today/Upcoming/Completed pages,
+  task detail views, global search, saved filters,
+  multi-select/bulk actions, custom category management, Learning and Reading
+  task-type workflows, responsive/mobile redesign, and dark mode.
 
 ## How to Run the App
 
@@ -86,6 +87,7 @@ docs/
 ├── dashboard-spec.md
 ├── task-management-spec.md
 ├── task-organization-spec.md
+├── quick-ideas-management-spec.md
 ├── build-plan.md
 └── project-status.md
 ```
@@ -103,6 +105,72 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-05 — Phase 4A Implementation Complete
+
+- Implemented all approved Phase 4A work from
+  `docs/quick-ideas-management-spec.md`.
+- Features delivered:
+  - Dedicated Quick Ideas workspace rendered in the existing `app-main` /
+    `app-content` area (React view state, no router, no URLs).
+  - Dashboard Quick Ideas card remains a compact quick-capture surface and now
+    shows only the three newest ideas (non-mutating newest-first `createdAt`
+    sort, sliced to 3).
+  - Selecting a dashboard idea opens the workspace with that idea expanded
+    (and scrolled into view); "View all Quick Ideas" opens the workspace with
+    no idea expanded.
+  - Sidebar Dashboard and Quick Ideas are real keyboard-accessible navigation
+    controls; Today, Upcoming, and Completed remain non-interactive
+    placeholders.
+  - When Quick Ideas is active, the global Dashboard heading and greeting are
+    hidden; search and + Add Task stay available. The workspace owns its own
+    "Quick Ideas" title and muted subtitle.
+  - Workspace has an always-visible multi-line capture form (Save submits,
+    Enter inserts a newline, empty-after-trim is rejected). New ideas are
+    inserted at the top.
+  - Each idea is a single-column full-width rounded card with collapsed
+    (lightbulb icon, truncated text, muted timestamp, dedicated expand
+    control) and expanded (full text, notes area with "No notes yet."
+    placeholder, separate Edit and Delete controls) states.
+  - Edit mode uses multi-line textareas for idea text and notes; Save commits
+    and updates `updatedAt`, Cancel reverts; Escape cancels and returns focus
+    to the Edit button. Only one idea may be in edit mode at a time.
+  - Delete requires inline confirmation ("Delete this idea permanently?");
+    confirming removes the idea permanently and persists to `localStorage`.
+  - During edit or delete confirmation, conflicting controls are disabled or
+    visually muted so unsaved input is never silently discarded.
+  - `migrateIdeas` adds `notes` and `updatedAt` to existing saved ideas,
+    preserves `id`/`text`, and is idempotent; migrated data is saved back to
+    `dp.ideas` on load.
+- `Convert to Task` remains deferred until Standard Task Detail provides a
+  description/detail field that can receive an idea's notes.
+- User-confirmed normal browser testing passed for Phase 4A functionality
+  (dashboard preview + navigation, workspace create, expand/collapse, notes,
+  edit/cancel, delete confirmation, localStorage migration/refresh, keyboard
+  access). OpenCode did not perform browser testing.
+- `npm run build` result: succeeded — `vite v8.1.2`, 49 modules transformed,
+  `dist/index.html` 0.46 kB, `dist/assets/index-*.css` ~27.75 kB,
+  `dist/assets/index-*.js` ~225.62 kB, built in ~254ms.
+- `npm run lint` result: passed clean — `eslint .` with no errors or warnings.
+- Documentation updated: `AGENTS.md` (Phase 4A complete, no active phase,
+  next candidate Phase 4B), `docs/project-status.md`.
+- Next best step: await approval and a focused spec/plan for Phase 4B —
+  Standard Task Detail before implementation.
+
+### 2026-07-05 — Phase 4A Spec and Plan Approved
+
+- `docs/quick-ideas-management-spec.md` reviewed and approved.
+- Approved implementation decisions recorded in the spec:
+  - Minimal header change: hide Dashboard title/greeting when Quick Ideas is active; workspace owns its own title.
+  - Separate workspace capture form (compact `AddIdeaForm` stays for dashboard).
+  - Only Dashboard and Quick Ideas are real keyboard-accessible sidebar nav items; Today, Upcoming, Completed remain visual placeholders.
+  - Non-mutating `createdAt` sort before slicing: dashboard shows three newest; workspace shows all.
+  - Edit/delete protection: disable or mute conflicting controls while an idea is being edited or has an active delete confirmation; never discard unsaved values automatically.
+- Scope includes: dedicated Quick Ideas workspace, dashboard preview navigation, expand/collapse, edit notes, delete with confirmation, safe localStorage migration.
+- `Convert to Task` remains deferred.
+- Phase 4A is now the active implementation phase.
+- Documentation updated: `AGENTS.md`, `docs/project-status.md`, `docs/quick-ideas-management-spec.md`.
+- Next step: implement Phase 4A from the approved spec.
 
 ### 2026-07-04 — Navigation and Task-Type Direction Approved
 

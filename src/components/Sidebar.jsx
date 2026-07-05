@@ -1,11 +1,11 @@
 import '../styles/sidebar.css';
 
 const NAV_ITEMS = [
-  { id: 'dashboard', label: 'Dashboard' },
-  { id: 'today', label: 'Today' },
-  { id: 'upcoming', label: 'Upcoming' },
-  { id: 'completed', label: 'Completed' },
-  { id: 'quick-ideas', label: 'Quick Ideas' },
+  { id: 'dashboard', label: 'Dashboard', interactive: true },
+  { id: 'today', label: 'Today', interactive: false },
+  { id: 'upcoming', label: 'Upcoming', interactive: false },
+  { id: 'completed', label: 'Completed', interactive: false },
+  { id: 'quick-ideas', label: 'Quick Ideas', interactive: true },
 ];
 
 function NavIcon() {
@@ -25,7 +25,7 @@ function NavIcon() {
   );
 }
 
-export default function Sidebar({ onAddTask }) {
+export default function Sidebar({ onAddTask, activeView, onNavigate }) {
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
@@ -36,18 +36,40 @@ export default function Sidebar({ onAddTask }) {
       </div>
 
       <nav className="sidebar__nav" aria-label="Main navigation">
-        {NAV_ITEMS.map((item) => (
-          <div
-            key={item.id}
-            className={`sidebar__nav-item${
-              item.id === 'dashboard' ? ' sidebar__nav-item--active' : ''
-            }`}
-            aria-current={item.id === 'dashboard' ? 'page' : undefined}
-          >
-            <NavIcon />
-            <span>{item.label}</span>
-          </div>
-        ))}
+        {NAV_ITEMS.map((item) => {
+          const isActive = item.id === activeView;
+          const className =
+            'sidebar__nav-item' +
+            (isActive ? ' sidebar__nav-item--active' : '') +
+            (item.interactive ? ' sidebar__nav-item--button' : ' sidebar__nav-item--placeholder');
+
+          if (item.interactive) {
+            return (
+              <button
+                key={item.id}
+                type="button"
+                className={className}
+                aria-current={isActive ? 'page' : undefined}
+                onClick={() => onNavigate?.(item.id)}
+              >
+                <NavIcon />
+                <span>{item.label}</span>
+              </button>
+            );
+          }
+
+          return (
+            <div
+              key={item.id}
+              className={className}
+              aria-disabled="true"
+              title="Coming soon"
+            >
+              <NavIcon />
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
       </nav>
 
       <div className="sidebar__spacer" />
