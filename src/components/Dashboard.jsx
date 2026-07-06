@@ -15,6 +15,7 @@ export default function Dashboard({
   onDeleteTask,
   onAddIdea,
   onOpenWorkspace,
+  onOpenDetail,
   taskAddOpen,
   ideaAddOpen,
   requestAddTask,
@@ -78,6 +79,7 @@ export default function Dashboard({
           onEditSave={handleEditSave}
           onDeleteConfirm={handleDeleteConfirm}
           onActionCancel={clearAction}
+          onOpenDetail={onOpenDetail}
           lastTriggerRef={lastTriggerRef}
         />
       </div>
@@ -90,7 +92,7 @@ export default function Dashboard({
           onEditSave={handleEditSave}
           onDeleteConfirm={handleDeleteConfirm}
           onActionCancel={clearAction}
-          lastTriggerRef={lastTriggerRef}
+          onOpenDetail={onOpenDetail}
         />
       </div>
       <div className="dashboard__cell">

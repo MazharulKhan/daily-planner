@@ -15,6 +15,7 @@ export default function TaskRow({
   onToggle,
   onEdit,
   onDelete,
+  onOpenDetail,
   editBtnRef,
 }) {
   const completed = !!task.completed;
@@ -60,9 +61,14 @@ export default function TaskRow({
         </svg>
       </button>
 
-      <div className="task-row__main">
-        <span className="task-row__title">{task.title}</span>
-      </div>
+      <button
+        type="button"
+        className="task-row__title-btn"
+        aria-label={`Open details for ${task.title}`}
+        onClick={() => onOpenDetail?.(task)}
+      >
+        {task.title}
+      </button>
 
       <div className="task-row__badges">
         {task.priority && (

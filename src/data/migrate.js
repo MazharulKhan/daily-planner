@@ -19,6 +19,8 @@ export function normalizeTask(task) {
       ? task.title
       : 'Untitled';
 
+  const description = typeof task.description === 'string' ? task.description : '';
+
   const completed = task.completed === true;
 
   const priority = VALID_PRIORITIES.includes(task.priority)
@@ -42,7 +44,7 @@ export function normalizeTask(task) {
       ? task.updatedAt
       : now;
 
-  return { id, title, completed, priority, category, time, dueDate, updatedAt };
+  return { id, title, description, completed, priority, category, time, dueDate, updatedAt };
 }
 
 export function migrateTasks(tasks) {

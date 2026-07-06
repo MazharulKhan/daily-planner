@@ -10,7 +10,7 @@ export function useTasks(initialTasks) {
       storage.saveTasks(migrated);
       return migrated;
     }
-    return initialTasks;
+    return migrateTasks(initialTasks);
   });
 
   useEffect(() => {

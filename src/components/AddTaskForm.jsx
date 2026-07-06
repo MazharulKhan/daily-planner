@@ -14,6 +14,7 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
   const [category, setCategory] = useState(DEFAULT_CATEGORY);
   const [time, setTime] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [description, setDescription] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -29,15 +30,18 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
     setCategory(DEFAULT_CATEGORY);
     setTime('');
     setDueDate('');
+    setDescription('');
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
+    const trimmedDesc = description.trim();
     onAdd({
       id: makeId('task'),
       title: trimmed,
+      description: trimmedDesc,
       completed: false,
       priority,
       category,
@@ -111,6 +115,16 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
         </button>
         {showOptions && (
           <div className="add-task__options">
+            <label className="add-task__field">
+              <span className="add-task__label">Description</span>
+              <textarea
+                className="add-task__textarea"
+                rows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Add details..."
+              />
+            </label>
             <label className="add-task__field">
               <span className="add-task__label">Priority</span>
               <select

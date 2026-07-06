@@ -43,14 +43,19 @@ The app must stay frontend-only for now.
 - Phase 2 (Dashboard Foundation), Phase 3A (Core Task Management
   Improvements), Phase 3B (Task Organization), and Phase 4A (Quick Ideas
   Management) are all complete.
-- The next candidate phase is Phase 4B — Standard Task Detail. Do not begin
-  Phase 4B implementation until the user explicitly approves it and a focused
-  spec, plan, and `docs/project-status.md` update are in place.
+- The next candidate phase is Phase 4C — Learning Task Foundation.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
 - Do not skip ahead to deferred features listed in `docs/project-spec.md`.
-- Do not treat a later phase as active unless the user explicitly approves it and `docs/project-status.md` is updated.
+- Do not treat a later phase as active unless the user explicitly approves it
+  and `docs/project-status.md` is updated.
+
+## Current Active Phase
+
+There is currently no active implementation phase.
+Phase 4B — Standard Task Detail is complete. The next candidate phase is
+Phase 4C — Learning Task Foundation.
 
 ## Data Approach
 
@@ -75,7 +80,7 @@ Use the smallest amount of repository context that still allows safe, correct wo
 
 ## Completed Phase Reference
 
-Phases 2, 3A, 3B, and 4A are complete. Their specifications are historical references; completed behavior must not be accidentally broken by later changes.
+Phases 2, 3A, 3B, 4A, and 4B are complete. Their specifications are historical references; completed behavior must not be accidentally broken by later changes.
 
 When a current approved feature spec or `docs/project-status.md` decision conflicts with older broad source material (`docs/source/`) or UI reference images, the current approved spec and project status take precedence.
 
@@ -88,6 +93,7 @@ Treat these files as the primary requirements:
 - `docs/task-management-spec.md` (Phase 3A, complete)
 - `docs/task-organization-spec.md` (Phase 3B, complete)
 - `docs/quick-ideas-management-spec.md` (Phase 4A, complete)
+- `docs/standard-task-detail-spec.md` (Phase 4B, complete)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

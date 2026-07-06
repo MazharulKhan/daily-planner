@@ -1,8 +1,8 @@
 import '../styles/header.css';
 import { greeting, todayLabel } from '../utils/dateTime';
 
-export default function Header({ onAddTask, activeView }) {
-  const showTitle = activeView !== 'quick-ideas';
+export default function Header({ onAddTask, activeView, detailOpen }) {
+  const showTitle = activeView !== 'quick-ideas' && !detailOpen;
 
   return (
     <header className="header">
@@ -13,6 +13,8 @@ export default function Header({ onAddTask, activeView }) {
             {greeting()}! Here&apos;s your overview for today — {todayLabel()}.
           </p>
         </div>
+      ) : detailOpen ? (
+        <div />
       ) : (
         <div className="header__title-block header__title-block--hidden" aria-hidden="true" />
       )}

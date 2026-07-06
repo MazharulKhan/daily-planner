@@ -101,6 +101,32 @@
   flex: 1 1 auto;
 }
 
+.task-row__title-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: 500;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.task-row__title-btn:hover {
+  color: var(--color-accent);
+}
+
+.task-row--completed .task-row__title-btn {
+  color: var(--color-text-faint);
+  text-decoration: line-through;
+}
+
 .task-row__title {
   font-size: var(--font-size-base);
   color: var(--color-text);
@@ -377,7 +403,8 @@
 }
 
 .add-task__field select,
-.add-task__field input {
+.add-task__field input,
+.add-task__field textarea {
   padding: var(--space-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -386,8 +413,14 @@
   color: var(--color-text);
 }
 
+.add-task__field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
 .add-task__field select:focus,
-.add-task__field input:focus {
+.add-task__field input:focus,
+.add-task__field textarea:focus {
   outline: none;
   border-color: var(--color-accent-border);
   box-shadow: 0 0 0 2px var(--color-accent-soft);

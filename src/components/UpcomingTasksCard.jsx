@@ -13,6 +13,7 @@ export default function UpcomingTasksCard({
   onEditSave,
   onDeleteConfirm,
   onActionCancel,
+  onOpenDetail,
 }) {
   const upcoming = tasks
     .filter((t) => isUpcoming(t.dueDate))
@@ -54,6 +55,7 @@ export default function UpcomingTasksCard({
         task={task}
         onEdit={(t) => onBeginEdit(t, document.activeElement)}
         onDelete={(t) => onBeginDelete(t, document.activeElement)}
+        onOpenDetail={onOpenDetail}
       />
     );
   }
@@ -94,7 +96,7 @@ export default function UpcomingTasksCard({
   );
 }
 
-function UpcomingTaskRow({ task, onEdit, onDelete }) {
+function UpcomingTaskRow({ task, onEdit, onDelete, onOpenDetail }) {
   const completed = !!task.completed;
   const priorityBorderClass = task.priority
     ? `task-row--priority-${task.priority.toLowerCase()}`
@@ -104,7 +106,9 @@ function UpcomingTaskRow({ task, onEdit, onDelete }) {
       className={`task-row${completed ? ' task-row--completed' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
     >
       <div className="task-row__main">
-        <span className="task-row__title">{task.title}</span>
+      <button type="button" className="task-row__title-btn" aria-label={`Open details for ${task.title}`} onClick={() => onOpenDetail?.(task)}>
+        {task.title}
+      </button>
       </div>
       {task.category && (
         <div className="task-row__badges">

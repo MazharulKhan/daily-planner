@@ -23,6 +23,7 @@ export default function TodayTasksCard({
   onEditSave,
   onDeleteConfirm,
   onActionCancel,
+  onOpenDetail,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
 
@@ -76,13 +77,14 @@ export default function TodayTasksCard({
       );
     }
     return (
-      <TaskRow
-        key={task.id}
-        task={task}
-        onToggle={onToggle}
-        onEdit={(t) => onBeginEdit(t, document.activeElement)}
-        onDelete={(t) => onBeginDelete(t, document.activeElement)}
-      />
+        <TaskRow
+          key={task.id}
+          task={task}
+          onToggle={onToggle}
+          onEdit={(t) => onBeginEdit(t, document.activeElement)}
+          onDelete={(t) => onBeginDelete(t, document.activeElement)}
+          onOpenDetail={onOpenDetail}
+        />
     );
   }
 

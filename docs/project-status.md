@@ -2,9 +2,8 @@
 
 ## Current Phase
 
-No active implementation phase. Phase 4A — Quick Ideas Management is
-complete. The next candidate phase is Phase 4B — Standard Task Detail, which
-requires a focused spec, plan, and explicit approval before implementation.
+Phase 4B — Standard Task Detail is complete. The next candidate phase is
+Phase 4C — Learning Task Foundation.
 
 ## Current State
 
@@ -12,7 +11,8 @@ Phase 2 (Dashboard Foundation) is complete and committed (`ba662c0`).
 Phase 3A (Core Task Management Improvements) is complete and committed
 (`6baa8f6`). Phase 3B (Task Organization) is complete and committed
 (`6cfadf8`), pushed to `origin/main`. Phase 4A (Quick Ideas Management) is
-complete; its changes are implemented and verified but not yet committed.
+complete and committed (`75b62b9`), pushed to `origin/main`. Phase 4B
+(Standard Task Detail) is complete and committed in a new commit.
 
 Phase 3B delivered:
 
@@ -46,9 +46,10 @@ Phase 3B delivered:
 
 ## Next Exact Step
 
-Await approval and a focused spec/plan for Phase 4B — Standard Task Detail.
-`Convert to Task` for ideas stays deferred until Standard Task Detail provides a
-description/detail field that can safely receive an idea's notes.
+Phase 4B implementation is complete and committed. The next candidate phase
+is Phase 4C — Learning Task Foundation.
+`Convert to Task` for ideas stays deferred until a future phase provides
+the appropriate conversion flow.
 
 ## Known Issues
 
@@ -57,7 +58,7 @@ description/detail field that can safely receive an idea's notes.
   Vercel URL.
 - No other known functional issues remain. The following are intentional
   scope limits, not bugs: routing, full Today/Upcoming/Completed pages,
-  task detail views, global search, saved filters,
+  global search, saved filters,
   multi-select/bulk actions, custom category management, Learning and Reading
   task-type workflows, responsive/mobile redesign, and dark mode.
 
@@ -88,6 +89,7 @@ docs/
 ├── task-management-spec.md
 ├── task-organization-spec.md
 ├── quick-ideas-management-spec.md
+├── standard-task-detail-spec.md
 ├── build-plan.md
 └── project-status.md
 ```
@@ -105,6 +107,72 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-05 — Phase 4B Implementation Complete
+
+- Implemented all approved Phase 4B work from
+  `docs/standard-task-detail-spec.md`.
+- Features delivered:
+  - Added optional `description` to task data. Existing saved tasks migrate
+    safely with `description: ''`.
+  - Add Task → More options includes an optional multi-line Description
+    field as the first item.
+  - Title-only tasks still create instantly without opening More options.
+  - Task titles in Today and Upcoming open the Standard Task Detail workspace.
+    Title buttons are separate from checkbox, Edit, and Delete controls.
+  - Detail workspace supports editing: title (required), description
+    (optional), priority, category, due date, time, and completion
+    (native checkbox, no `aria-checked`).
+  - Completion checkbox updates local draft state only. Save Changes
+    calls `editTask` with a patch including `completed`. Cancel and
+    Discard Changes leave saved task completion unchanged.
+  - The completion checkbox is the only editable completion control;
+    no separate editable Status dropdown was added.
+  - No `toggleTask` is called from inside the detail workspace.
+  - Save Changes appears in both the header and footer, calling the
+    same validation and save handler.
+  - Save Changes remains clickable. Blank-title submit shows inline
+    "Task title is required." and focuses the Title input.
+  - Title validation does not disable the Save button.
+  - Detail workspace has its own header (Back to Dashboard, Delete Task,
+    Save Changes). Global header title, greeting, search, and Add Task
+    button are hidden while detail is open.
+  - Dirty form detection: comparing local draft against saved task across
+    all editable fields. Back, Dashboard sidebar, and Quick Ideas sidebar
+    all show inline "Discard unsaved changes?" confirmation with
+    [Discard Changes] and [Keep Editing].
+  - Delete requires inline permanent-delete confirmation. Delete and
+    discard confirmations are mutually exclusive.
+  - Focus management: opening detail focuses Title input; delete
+    confirmation focuses Cancel; discard confirmation focuses Keep Editing.
+  - Dashboard sidebar stays visually active while detail is open.
+  - Dashboard inline edits preserve existing task descriptions
+    (patch-based `editTask` spread merge).
+  - View state uses React state only (`selectedTaskId`, `pendingNavTarget`).
+    No routing, URLs, or deep links.
+  - Sidebar navigation guards: both Dashboard and Quick Ideas clicks while
+    form is dirty trigger the discard confirmation before clearing
+    `selectedTaskId` or switching `view`.
+- Files changed (new): `src/components/StandardTaskDetail.jsx`,
+  `src/styles/task-detail.css`.
+- Files changed (modified): `src/App.jsx`, `src/components/Header.jsx`,
+  `src/components/Dashboard.jsx`, `src/components/TodayTasksCard.jsx`,
+  `src/components/UpcomingTasksCard.jsx`, `src/components/TaskRow.jsx`,
+  `src/components/AddTaskForm.jsx`, `src/data/migrate.js`,
+  `src/hooks/useLocalStorage.js`, `src/styles/task-row.css`.
+- All Phase 2, 3A, 3B, and 4A behavior preserved: sorting, overdue display,
+  completed groups, category filtering, priority markers, Daily Progress,
+  Quick Ideas workspace, and inline edit/delete.
+- `Convert to Task` for ideas remains deferred.
+- `npm run build` result: succeeded — `vite v8.1.2`, 51 modules transformed,
+  `dist/index.html` 0.46 kB, `dist/assets/index-*.css` ~32.94 kB,
+  `dist/assets/index-*.js` ~232.83 kB, built in ~245ms.
+- `npm run lint` result: passed clean — `eslint .` with no errors or warnings.
+- Documentation updated: `AGENTS.md`, `docs/project-status.md`,
+  `docs/standard-task-detail-spec.md`.
+- Next best step: await approval and spec/plan for Phase 4C — Learning Task
+  Foundation. Browser testing by the user is still required before the feature
+  can be considered fully verified.
 
 ### 2026-07-05 — Phase 4A Implementation Complete
 
