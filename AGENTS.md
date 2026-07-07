@@ -6,7 +6,8 @@ Follow these instructions for every change.
 ## Project Overview
 
 Daily Planner is a desktop-first personal planner built with React, JavaScript,
-Vite, and regular CSS. The first build phase is dashboard-only and frontend-only.
+Vite, and regular CSS. The current project remains local, frontend-only, and
+stored in browser `localStorage`.
 
 The main requirements source is the written Markdown specifications in `docs/`,
 not UI screenshots alone. Screenshots are visual comparison material only.
@@ -39,27 +40,38 @@ The app must stay frontend-only for now.
 ## Build Process
 
 - Build one phase at a time.
-- There is currently no active implementation phase.
 - Phase 2 (Dashboard Foundation), Phase 3A (Core Task Management
   Improvements), Phase 3B (Task Organization), Phase 4A (Quick Ideas
   Management), Phase 4B (Standard Task Detail), and Phase 4C (Task List
   Pages and Navigation) are all complete.
-- The next candidate phase is Phase 4D — Learning Task Foundation.
+- Phase 4D — YouTube Task Foundation is approved and active.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
 - Do not skip ahead to deferred features listed in `docs/project-spec.md`.
-- Do not treat a later phase as active unless the user explicitly approves it
-  and `docs/project-status.md` is updated.
+- Implementation must follow `docs/youtube-task-foundation-spec.md`.
+- Do not build deferred player/timestamp features during Phase 4D.
 
 ## Current Active Phase
 
-There is currently no active implementation phase.
-Phase 4C — Task List Pages and Navigation is complete. The next candidate
-phase is Phase 4D — Learning Task Foundation.
+Phase 4D — YouTube Task Foundation is approved and active.
+Phase 4C — Task List Pages and Navigation is complete.
 
-Phase 4D requires a focused spec, plan, and explicit user approval before
-implementation.
+Phase 4D must be implemented from `docs/youtube-task-foundation-spec.md`.
+
+## Phase 4D Product Model
+
+- `taskType` controls workflow: `standard` or `youtube`.
+- `category` remains independent organizational metadata: `Work`,
+  `Learning`, `Personal`, or `Health`.
+- Category must never choose the detail workspace.
+- Existing saved tasks migrate to `taskType: 'standard'`, including tasks
+  currently categorized as `Learning`.
+- Phase 4D includes the YouTube URL and notes foundation only.
+- Do not build embedded playback, YouTube Player API integration, playback
+  position tracking, resume behavior, timestamp insertion, clickable
+  timestamps/seeking, rich text, Reading Tasks, or YouTube/Learning sidebar
+  destinations in this phase.
 
 ## Data Approach
 
@@ -92,12 +104,14 @@ When a current approved feature spec or `docs/project-status.md` decision confli
 
 Treat these files as the primary requirements:
 
- - `docs/project-spec.md`
+- `docs/project-spec.md`
 - `docs/dashboard-spec.md`
 - `docs/task-management-spec.md` (Phase 3A, complete)
 - `docs/task-organization-spec.md` (Phase 3B, complete)
 - `docs/quick-ideas-management-spec.md` (Phase 4A, complete)
 - `docs/standard-task-detail-spec.md` (Phase 4B, complete)
+- `docs/task-list-pages-spec.md` (Phase 4C, complete)
+- `docs/youtube-task-foundation-spec.md` (Phase 4D, active)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

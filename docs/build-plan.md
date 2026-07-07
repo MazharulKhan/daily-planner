@@ -112,14 +112,33 @@ Phase 3 is complete. It was delivered in two sub-phases:
 
 ### Goal
 
-Add focused task workflows one at a time: quick idea capture, standard task detail, and dedicated list pages for Today, Upcoming, and Completed.
+Add focused task workflows one at a time: quick idea capture, standard task
+detail, dedicated list pages for Today, Upcoming, and Completed, then the
+YouTube task foundation.
 
 ### Chosen Order
 
 1. Phase 4A — Quick Ideas Management (complete)
 2. Phase 4B — Standard Task Detail (complete)
 3. Phase 4C — Task List Pages and Navigation (complete)
-4. Phase 4D — Learning Task Foundation (next candidate)
+4. Phase 4D — YouTube Task Foundation (approved and active)
+5. Next candidate after 4D — YouTube Player and Timestamp Workflow
+
+### Phase 4D — YouTube Task Foundation
+
+Phase 4D adds the task-type foundation, a dedicated YouTube Task Detail
+workspace, local YouTube URL and notes fields, safe localStorage migration,
+and Standard/YouTube task-type transition behavior.
+
+Phase 4D does not add an embedded player or playback controls.
+
+### Later Candidate — YouTube Player and Timestamp Workflow
+
+A later phase may consider embedded playback, YouTube Player API integration,
+saved playback position, resume behavior, timestamp insertion, and clickable
+timestamps that seek the video.
+
+Those features are deferred from Phase 4D.
 
 ### Caution
 

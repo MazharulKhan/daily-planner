@@ -2,11 +2,8 @@
 
 ## Current Phase
 
-Phase 4C — Task List Pages and Navigation is complete. The next candidate
-phase is Phase 4D — Learning Task Foundation.
-
-Phase 4D requires a focused spec, plan, and explicit user approval before
-implementation.
+Phase 4D — YouTube Task Foundation is active and approved for implementation.
+Phase 4C — Task List Pages and Navigation is complete.
 
 ## Current State
 
@@ -15,7 +12,29 @@ Phase 3A (Core Task Management Improvements) is complete and committed
 (`6baa8f6`). Phase 3B (Task Organization) is complete and committed
 (`6cfadf8`), pushed to `origin/main`. Phase 4A (Quick Ideas Management) is
 complete and committed (`75b62b9`), pushed to `origin/main`. Phase 4B
-(Standard Task Detail) is complete and committed (`380f0e1`), pushed to `origin/main`.
+(Standard Task Detail) is complete and committed (`380f0e1`), pushed to
+`origin/main`. Phase 4C (Task List Pages and Navigation) is complete and
+committed (`6856b7d`).
+
+Phase 4D — YouTube Task Foundation is approved in
+`docs/youtube-task-foundation-spec.md` and active for implementation. No Phase
+4D application code, build, lint, browser testing, Git staging, or commit has
+been completed yet.
+
+## Phase 4D Decision Record
+
+- `taskType` is now the workflow field with supported values `standard` and
+  `youtube`.
+- `category` remains independent organizational metadata with values `Work`,
+  `Learning`, `Personal`, and `Health`; category must never choose the detail
+  workspace.
+- Existing saved tasks safely migrate to `taskType: 'standard'`, including
+  tasks currently categorized as `Learning`.
+- Phase 4D includes the local YouTube URL and YouTube notes foundation plus a
+  dedicated YouTube Task Detail workspace.
+- Embedded player behavior, YouTube Player API integration, playback tracking,
+  resume behavior, timestamp insertion, clickable timestamps/seeking, rich
+  text, and Reading Tasks remain deferred.
 
 Phase 3B delivered:
 
@@ -49,8 +68,8 @@ Phase 3B delivered:
 
 ## Next Exact Step
 
-Phase 4C implementation is complete and committed. The next candidate phase
-is Phase 4D — Learning Task Foundation.
+Implement the approved Phase 4D — YouTube Task Foundation spec in
+`docs/youtube-task-foundation-spec.md`.
 `Convert to Task` for ideas stays deferred until a future phase provides
 the appropriate conversion flow.
 
@@ -60,9 +79,9 @@ the appropriate conversion flow.
   must be done in a normal browser at the Vite localhost URL or the live
   Vercel URL.
 - No other known functional issues remain. The following are intentional
-  scope limits, not bugs: routing (planned within Phase 4C), global search,
-  saved filters, multi-select/bulk actions, custom category management,
-  Learning task-type workflow, responsive/mobile redesign, and dark mode.
+  scope limits, not bugs: global search, saved filters, multi-select/bulk
+  actions, custom category management, embedded YouTube playback, player
+  controls, timestamp workflows, responsive/mobile redesign, and dark mode.
 
 ## How to Run the App
 
@@ -92,6 +111,8 @@ docs/
 ├── task-organization-spec.md
 ├── quick-ideas-management-spec.md
 ├── standard-task-detail-spec.md
+├── task-list-pages-spec.md
+├── youtube-task-foundation-spec.md
 ├── build-plan.md
 └── project-status.md
 ```
@@ -102,13 +123,29 @@ docs/
 - Use `localStorage` for saved app data.
 - Keep the app frontend-only.
 - Build one phase at a time.
-- Start with the dashboard only.
 - Use written Markdown specifications as the main requirements for GLM 5.2.
 - Do not put API keys or secrets in project files.
 - Do not add Firebase, authentication, backend APIs, a database, external
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-07 — Phase 4D YouTube Task Foundation Approved (Documentation Only)
+
+- Approved `docs/youtube-task-foundation-spec.md` as the Phase 4D source of
+  truth.
+- Phase 4D is active for implementation, pending an explicit implementation
+  prompt after this documentation checkpoint.
+- Product decision: `taskType` controls workflow (`standard` or `youtube`);
+  `category` remains independent metadata (`Work`, `Learning`, `Personal`,
+  `Health`) and never chooses the detail workspace.
+- Existing saved tasks will migrate safely to `taskType: 'standard'`,
+  including tasks currently categorized as `Learning`.
+- Phase 4D scope includes a YouTube Task Detail foundation with local YouTube
+  URL and notes fields. Embedded player, playback tracking, resume,
+  timestamps, rich text, and Reading Tasks remain deferred.
+- No application code, dependencies, build, lint, browser testing, staging,
+  commit, or push was completed in this documentation checkpoint.
 
 ### 2026-07-06 — Phase 4C Complete (Implementation, Bug Fix, Browser Verified)
 
@@ -153,14 +190,14 @@ docs/
   browser verification all passed.
 - Documentation updated: `AGENTS.md`, `docs/project-status.md`,
   `docs/build-plan.md`, `docs/task-list-pages-spec.md`.
-- Next best step: await approval and spec/plan for Phase 4D — Learning Task
-  Foundation.
+- Next best step was superseded by the approved Phase 4D — YouTube Task
+  Foundation documentation checkpoint.
 
 ### 2026-07-06 — Roadmap Realignment Checkpoint
 
-- Approved roadmap reorder: Phase 4C is now Task List Pages and Navigation
-  (Today, Upcoming, Completed pages and sidebar navigation), followed by
-  Phase 4D — Learning Task Foundation.
+- Approved roadmap reorder at that time: Phase 4C is now Task List Pages and
+  Navigation (Today, Upcoming, Completed pages and sidebar navigation). The
+  later Phase 4D direction is now YouTube Task Foundation.
 - Today, Upcoming, and Completed pages were moved ahead of Learning in the
   planning order. Their Phase 5 placement is removed.
 - Reading Tasks are removed from the planned MVP and future active roadmap.
