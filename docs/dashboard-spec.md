@@ -250,13 +250,12 @@ The dashboard phase is complete when:
 - Calendar sync
 - Recurring tasks
 - Full global search
-- Full Today, Upcoming, Completed, or Quick Ideas pages (Learning and Reading
-  are task types, not standalone pages; no Categories page)
+- Full Today, Upcoming, Completed, or Quick Ideas pages (Learning is a
+  future task type, not a standalone page; no Categories page)
 - Task detail pages
 - Task editing or deletion
 - Full priority/category/date editing
 - YouTube integration
-- Reading progress
 - Rich text editors
 - Idea conversion into tasks
 - Dark mode

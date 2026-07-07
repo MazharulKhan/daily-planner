@@ -5,6 +5,9 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import QuickIdeasWorkspace from './components/QuickIdeasWorkspace';
 import StandardTaskDetail from './components/StandardTaskDetail';
+import TodayPage from './components/TodayPage';
+import UpcomingPage from './components/UpcomingPage';
+import CompletedPage from './components/CompletedPage';
 import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
 
@@ -19,6 +22,8 @@ function App() {
   const [selectedIdeaId, setSelectedIdeaId] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [pendingNavTarget, setPendingNavTarget] = useState(null);
+
+  const [originView, setOriginView] = useState('dashboard');
 
   const selectedTask = useMemo(
     () => tasks.find((t) => t.id === selectedTaskId) || null,
@@ -51,7 +56,8 @@ function App() {
 
   const openTaskDetail = useCallback((task) => {
     setSelectedTaskId(task.id);
-  }, []);
+    setOriginView(view);
+  }, [view]);
 
   const confirmNavigation = useCallback((target) => {
     setPendingNavTarget(null);
@@ -60,7 +66,7 @@ function App() {
       setSelectedIdeaId(null);
       setView('quick-ideas');
     } else {
-      setView('dashboard');
+      setView(target);
     }
   }, []);
 
@@ -70,31 +76,28 @@ function App() {
 
   const navigate = useCallback(
     (id) => {
-      if (id === 'dashboard') {
-        if (detailOpen) {
-          setPendingNavTarget('dashboard');
-        } else {
-          setView('dashboard');
-          setSelectedTaskId(null);
-        }
-      } else if (id === 'quick-ideas') {
-        if (detailOpen) {
-          setPendingNavTarget('quick-ideas');
-        } else {
+      if (detailOpen) {
+        setPendingNavTarget(id);
+      } else {
+        setView(id);
+        setSelectedTaskId(null);
+        if (id === 'quick-ideas') {
           setSelectedIdeaId(null);
-          setView('quick-ideas');
-          setSelectedTaskId(null);
         }
       }
     },
     [detailOpen],
   );
 
+  const handleViewAllToday = useCallback(() => setView('today'), []);
+  const handleViewAllUpcoming = useCallback(() => setView('upcoming'), []);
+
   let content;
   if (detailOpen && selectedTask) {
     content = (
       <StandardTaskDetail
         task={selectedTask}
+        originView={originView}
         pendingNavTarget={pendingNavTarget}
         onConfirmNavigation={confirmNavigation}
         onCancelNavigation={cancelNavigation}
@@ -114,12 +117,53 @@ function App() {
         onAddIdea={addIdea}
         onOpenWorkspace={openWorkspace}
         onOpenDetail={openTaskDetail}
+        onViewAllToday={handleViewAllToday}
+        onViewAllUpcoming={handleViewAllUpcoming}
         taskAddOpen={taskAddOpen}
         ideaAddOpen={ideaAddOpen}
         requestAddTask={requestAddTask}
         requestAddIdea={requestAddIdea}
         closeAddTask={closeAddTask}
         closeAddIdea={closeAddIdea}
+      />
+    );
+  } else if (view === 'today') {
+    content = (
+      <TodayPage
+        tasks={tasks}
+        onToggle={toggleTask}
+        onAdd={addTask}
+        addOpen={taskAddOpen}
+        onRequestAdd={requestAddTask}
+        onCloseAdd={closeAddTask}
+        onOpenDetail={openTaskDetail}
+        onEditTask={editTask}
+        onDeleteTask={deleteTask}
+        onViewAllCompleted={() => setView('completed')}
+      />
+    );
+  } else if (view === 'upcoming') {
+    content = (
+      <UpcomingPage
+        tasks={tasks}
+        onToggle={toggleTask}
+        onAdd={addTask}
+        addOpen={taskAddOpen}
+        onRequestAdd={requestAddTask}
+        onCloseAdd={closeAddTask}
+        onOpenDetail={openTaskDetail}
+        onEditTask={editTask}
+        onDeleteTask={deleteTask}
+      />
+    );
+  } else if (view === 'completed') {
+    content = (
+      <CompletedPage
+        tasks={tasks}
+        onToggle={toggleTask}
+        onOpenDetail={openTaskDetail}
+        onEditTask={editTask}
+        onDeleteTask={deleteTask}
       />
     );
   } else {

@@ -2,9 +2,9 @@ import '../styles/sidebar.css';
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', interactive: true },
-  { id: 'today', label: 'Today', interactive: false },
-  { id: 'upcoming', label: 'Upcoming', interactive: false },
-  { id: 'completed', label: 'Completed', interactive: false },
+  { id: 'today', label: 'Today', interactive: true },
+  { id: 'upcoming', label: 'Upcoming', interactive: true },
+  { id: 'completed', label: 'Completed', interactive: true },
   { id: 'quick-ideas', label: 'Quick Ideas', interactive: true },
 ];
 

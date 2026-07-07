@@ -122,6 +122,44 @@ export function todayLabel() {
   });
 }
 
+export function completedDateISO(completedAt) {
+  if (!completedAt) return null;
+  const d = new Date(completedAt);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+export function isCompletedToday(completedAt) {
+  if (!completedAt) return false;
+  return completedDateISO(completedAt) === todayISO();
+}
+
+export function isCompletedYesterday(completedAt) {
+  if (!completedAt) return false;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const y = yesterday.getFullYear();
+  const m = String(yesterday.getMonth() + 1).padStart(2, '0');
+  const d = String(yesterday.getDate()).padStart(2, '0');
+  return completedDateISO(completedAt) === `${y}-${m}-${d}`;
+}
+
+export function formatCompletedGroup(completedAt) {
+  if (!completedAt) return '';
+  if (isCompletedToday(completedAt)) return 'Completed Today';
+  if (isCompletedYesterday(completedAt)) return 'Yesterday';
+  const dt = new Date(completedAt);
+  return dt.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+}
+
+export function sortCompletedTasks(a, b) {
+  const ta = a.completedAt ? new Date(a.completedAt).getTime() : 0;
+  const tb = b.completedAt ? new Date(b.completedAt).getTime() : 0;
+  return tb - ta;
+}
+
 export function makeId(prefix = 'id') {
   return `${prefix}-${Date.now().toString(36)}-${Math.random()
     .toString(36)

@@ -108,42 +108,38 @@ Phase 3 is complete. It was delivered in two sub-phases:
 
 ---
 
-## Phase 4 — Learning and Reading Workflows
+## Phase 4 — Task Detail Workflows and Task List Pages
 
 ### Goal
 
-Add the planner’s learning-focused differentiation one workflow at a time.
+Add focused task workflows one at a time: quick idea capture, standard task detail, and dedicated list pages for Today, Upcoming, and Completed.
 
 ### Chosen Order
 
-1. Phase 4A — Quick Ideas Management
-2. Phase 4B — Standard Task Detail
-3. Phase 4C — Learning Task Foundation
-4. Phase 4D — Reading Task Foundation
+1. Phase 4A — Quick Ideas Management (complete)
+2. Phase 4B — Standard Task Detail (complete)
+3. Phase 4C — Task List Pages and Navigation (complete)
+4. Phase 4D — Learning Task Foundation (next candidate)
 
 ### Caution
 
-The source document includes advanced ideas such as YouTube Player API behavior, rich-text notes, timestamp insertion, and reading highlights. Treat each as its own small sub-phase. Do not attempt all of them in a single build request.
+Do not attempt all sub-phases in a single build request. Each needs its own
+focused spec and approval.
 
 ---
 
-## Phase 5 — Remaining Pages, Polish, and GitHub Preparation
+## Phase 5 — Polish, Accessibility, and GitHub Preparation
 
 ### Goal
 
-Finish remaining MVP pages, improve quality, and prepare a professional project handoff.
+Improve quality and prepare a professional project handoff.
 
 ### Candidate Work
 
-- Today page
-- Upcoming page
-- Completed page
-- Quick Ideas page
-- Navigation between implemented pages
-- Light/dark mode, only after core workflow is stable
 - Responsive improvements
-- Accessibility review
+- Accessibility review and fixes
 - Better empty states and feedback messages
+- Light/dark mode, only after core workflow is stable
 - README update
 - Screenshots for GitHub
 - Final bug fixes

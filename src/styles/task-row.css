@@ -623,3 +623,14 @@
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;
 }
+
+/* Completed row context (CompletedPage only) */
+.completed-row__wrap {
+  /* acts as a block container; no layout disruption */
+}
+
+.completed-row__context {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-faint);
+  padding: var(--space-1) 0 var(--space-2) var(--space-10);
+}

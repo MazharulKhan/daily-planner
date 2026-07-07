@@ -6,6 +6,7 @@ const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
 
 export default function StandardTaskDetail({
   task,
+  originView,
   pendingNavTarget,
   onConfirmNavigation,
   onCancelNavigation,
@@ -60,7 +61,7 @@ export default function StandardTaskDetail({
       return;
     }
     setTitleError(false);
-    onEditTask(task.id, {
+    const patch = {
       title: trimmed,
       description: description.trim(),
       priority,
@@ -68,8 +69,14 @@ export default function StandardTaskDetail({
       dueDate: dueDate || null,
       time: time || null,
       completed,
-    });
-    onConfirmNavigation('dashboard');
+    };
+    if (!task.completed && completed) {
+      patch.completedAt = new Date().toISOString();
+    } else if (task.completed && !completed) {
+      patch.completedAt = null;
+    }
+    onEditTask(task.id, patch);
+    onConfirmNavigation(originView);
   }, [
     title,
     description,
@@ -79,8 +86,10 @@ export default function StandardTaskDetail({
     time,
     completed,
     task.id,
+    task.completed,
     onEditTask,
     onConfirmNavigation,
+    originView,
   ]);
 
   const handleBack = useCallback(() => {
@@ -88,9 +97,9 @@ export default function StandardTaskDetail({
       setShowDiscardConfirm(true);
       setShowDeleteConfirm(false);
     } else {
-      onConfirmNavigation('dashboard');
+      onConfirmNavigation(originView);
     }
-  }, [isDirty, onConfirmNavigation]);
+  }, [isDirty, onConfirmNavigation, originView]);
 
   const handleDeleteClick = useCallback(() => {
     setShowDeleteConfirm(true);
@@ -98,18 +107,18 @@ export default function StandardTaskDetail({
 
   const confirmDelete = useCallback(() => {
     onDeleteTask(task.id);
-    onConfirmNavigation('dashboard');
-  }, [onDeleteTask, task.id, onConfirmNavigation]);
+    onConfirmNavigation(originView);
+  }, [onDeleteTask, task.id, onConfirmNavigation, originView]);
 
   const cancelDelete = useCallback(() => {
     setShowDeleteConfirm(false);
   }, []);
 
   const discardAndNavigate = useCallback(() => {
-    const target = pendingNavTarget || 'dashboard';
+    const target = pendingNavTarget || originView;
     setShowDiscardConfirm(false);
     onConfirmNavigation(target);
-  }, [pendingNavTarget, onConfirmNavigation]);
+  }, [pendingNavTarget, onConfirmNavigation, originView]);
 
   useEffect(() => {
     if (showDeleteConfirm) {
@@ -134,7 +143,7 @@ export default function StandardTaskDetail({
           className="task-detail__back"
           onClick={handleBack}
         >
-          <svg
+            <svg
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -147,7 +156,7 @@ export default function StandardTaskDetail({
           >
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          Back to Dashboard
+          Back
         </button>
         <div className="task-detail__header-actions">
           <button

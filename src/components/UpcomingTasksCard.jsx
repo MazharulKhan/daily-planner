@@ -14,13 +14,11 @@ export default function UpcomingTasksCard({
   onDeleteConfirm,
   onActionCancel,
   onOpenDetail,
+  onViewAll,
 }) {
   const upcoming = tasks
-    .filter((t) => isUpcoming(t.dueDate))
+    .filter((t) => isUpcoming(t.dueDate) && !t.completed)
     .sort(sortUpcomingTasks);
-
-  const active = upcoming.filter((t) => !t.completed);
-  const completed = upcoming.filter((t) => t.completed);
 
   function renderRow(task) {
     const isEditing =
@@ -67,7 +65,7 @@ export default function UpcomingTasksCard({
           <h2 className="card__title">Upcoming Tasks</h2>
           <span className="card__count">{upcoming.length}</span>
         </div>
-        <button type="button" className="card__view-all">
+        <button type="button" className="card__view-all" onClick={onViewAll}>
           View all
         </button>
       </div>
@@ -80,15 +78,7 @@ export default function UpcomingTasksCard({
           />
         ) : (
           <div className="task-list">
-            {active.map(renderRow)}
-            {completed.length > 0 && (
-              <div className="completed-divider">
-                <span className="completed-divider__label">
-                  Completed · {completed.length}
-                </span>
-              </div>
-            )}
-            {completed.map(renderRow)}
+            {upcoming.map(renderRow)}
           </div>
         )}
       </div>

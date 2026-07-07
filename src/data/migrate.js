@@ -23,6 +23,17 @@ export function normalizeTask(task) {
 
   const completed = task.completed === true;
 
+  let completedAt = null;
+  if (completed) {
+    if (VALID_ISO(task.completedAt)) {
+      completedAt = task.completedAt;
+    } else if (VALID_ISO(task.updatedAt)) {
+      completedAt = task.updatedAt;
+    } else {
+      completedAt = now;
+    }
+  }
+
   const priority = VALID_PRIORITIES.includes(task.priority)
     ? task.priority
     : 'Medium';
@@ -44,7 +55,7 @@ export function normalizeTask(task) {
       ? task.updatedAt
       : now;
 
-  return { id, title, description, completed, priority, category, time, dueDate, updatedAt };
+  return { id, title, description, completed, completedAt, priority, category, time, dueDate, updatedAt };
 }
 
 export function migrateTasks(tasks) {

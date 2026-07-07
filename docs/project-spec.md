@@ -12,15 +12,16 @@ The initial user is a single person planning daily work, personal tasks, and lea
 
 ## Current Build Scope
 
-Phases 2 (Dashboard Foundation), 3A (Core Task Management Improvements), and
-3B (Task Organization) are complete. There is currently no active
-implementation phase.
+Phases 2 (Dashboard Foundation), 3A (Core Task Management Improvements),
+3B (Task Organization), 4A (Quick Ideas Management), and 4B (Standard
+Task Detail) are complete. There is currently no active implementation
+phase.
 
 The app remains frontend-only, with all data stored in browser `localStorage`.
 
-The next candidate is Phase 4A — Quick Ideas Management, pending a focused
-spec, plan, and explicit approval. Do not begin Phase 4A implementation
-without a new approved spec and plan.
+The next candidate is Phase 4C — Task List Pages and Navigation, pending a
+focused spec, plan, and explicit approval. Do not begin Phase 4C
+implementation without a new approved spec and plan.
 
 ## Current Technology
 
@@ -40,11 +41,10 @@ The broader product is a desktop-first productivity and learning planner with:
 - Quick Ideas kept separate from tasks
 - Lightweight categories, priorities, dates, and completion status
 - Future Learning Tasks for video-based learning and notes
-- Future Reading Tasks for resource links, progress, notes, and takeaways
 
-Learning and Reading are task types, not standalone sidebar sections; an
-individual Learning or Reading task will later open a task-specific detail
-view. The exact interface for those detail views (modal, overlay, route, or
+Learning is a task type, not a standalone sidebar section; an
+individual Learning task will later open a task-specific detail
+view. The exact interface for that detail view (modal, overlay, route, or
 full page) remains deferred to future focused feature specs.
 
 The visual direction is clean and card-based:
@@ -83,15 +83,14 @@ Use starter sample data only when there is no saved local data yet.
 
 The following are part of the broader product direction but are not part of the first dashboard build:
 
-- Full Today, Upcoming, Completed, or Quick Ideas pages; no separate Learning,
-  Reading, or Categories pages
+- Full Today, Upcoming, Completed, or Quick Ideas pages; no separate Learning
+  or Categories pages
 - Global search behavior
 - Task detail pages
 - Full task editing and deletion
 - Category management
 - Quick Idea editing, deletion, notes, and task conversion
 - YouTube embedding, timestamped notes, and resume playback
-- Reading progress, resource tracking, and takeaways
 - Dark mode
 - Firebase
 - Authentication

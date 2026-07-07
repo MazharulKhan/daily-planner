@@ -41,9 +41,10 @@ The app must stay frontend-only for now.
 - Build one phase at a time.
 - There is currently no active implementation phase.
 - Phase 2 (Dashboard Foundation), Phase 3A (Core Task Management
-  Improvements), Phase 3B (Task Organization), and Phase 4A (Quick Ideas
-  Management) are all complete.
-- The next candidate phase is Phase 4C — Learning Task Foundation.
+  Improvements), Phase 3B (Task Organization), Phase 4A (Quick Ideas
+  Management), Phase 4B (Standard Task Detail), and Phase 4C (Task List
+  Pages and Navigation) are all complete.
+- The next candidate phase is Phase 4D — Learning Task Foundation.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
@@ -54,8 +55,11 @@ The app must stay frontend-only for now.
 ## Current Active Phase
 
 There is currently no active implementation phase.
-Phase 4B — Standard Task Detail is complete. The next candidate phase is
-Phase 4C — Learning Task Foundation.
+Phase 4C — Task List Pages and Navigation is complete. The next candidate
+phase is Phase 4D — Learning Task Foundation.
+
+Phase 4D requires a focused spec, plan, and explicit user approval before
+implementation.
 
 ## Data Approach
 
@@ -80,7 +84,7 @@ Use the smallest amount of repository context that still allows safe, correct wo
 
 ## Completed Phase Reference
 
-Phases 2, 3A, 3B, 4A, and 4B are complete. Their specifications are historical references; completed behavior must not be accidentally broken by later changes.
+Phases 2, 3A, 3B, 4A, 4B, and 4C are complete. Their specifications are historical references; completed behavior must not be accidentally broken by later changes.
 
 When a current approved feature spec or `docs/project-status.md` decision conflicts with older broad source material (`docs/source/`) or UI reference images, the current approved spec and project status take precedence.
 
@@ -88,7 +92,7 @@ When a current approved feature spec or `docs/project-status.md` decision confli
 
 Treat these files as the primary requirements:
 
-- `docs/project-spec.md`
+ - `docs/project-spec.md`
 - `docs/dashboard-spec.md`
 - `docs/task-management-spec.md` (Phase 3A, complete)
 - `docs/task-organization-spec.md` (Phase 3B, complete)

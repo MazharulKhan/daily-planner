@@ -2,8 +2,11 @@
 
 ## Current Phase
 
-Phase 4B — Standard Task Detail is complete. The next candidate phase is
-Phase 4C — Learning Task Foundation.
+Phase 4C — Task List Pages and Navigation is complete. The next candidate
+phase is Phase 4D — Learning Task Foundation.
+
+Phase 4D requires a focused spec, plan, and explicit user approval before
+implementation.
 
 ## Current State
 
@@ -12,7 +15,7 @@ Phase 3A (Core Task Management Improvements) is complete and committed
 (`6baa8f6`). Phase 3B (Task Organization) is complete and committed
 (`6cfadf8`), pushed to `origin/main`. Phase 4A (Quick Ideas Management) is
 complete and committed (`75b62b9`), pushed to `origin/main`. Phase 4B
-(Standard Task Detail) is complete and committed in a new commit.
+(Standard Task Detail) is complete and committed (`380f0e1`), pushed to `origin/main`.
 
 Phase 3B delivered:
 
@@ -46,8 +49,8 @@ Phase 3B delivered:
 
 ## Next Exact Step
 
-Phase 4B implementation is complete and committed. The next candidate phase
-is Phase 4C — Learning Task Foundation.
+Phase 4C implementation is complete and committed. The next candidate phase
+is Phase 4D — Learning Task Foundation.
 `Convert to Task` for ideas stays deferred until a future phase provides
 the appropriate conversion flow.
 
@@ -57,10 +60,9 @@ the appropriate conversion flow.
   must be done in a normal browser at the Vite localhost URL or the live
   Vercel URL.
 - No other known functional issues remain. The following are intentional
-  scope limits, not bugs: routing, full Today/Upcoming/Completed pages,
-  global search, saved filters,
-  multi-select/bulk actions, custom category management, Learning and Reading
-  task-type workflows, responsive/mobile redesign, and dark mode.
+  scope limits, not bugs: routing (planned within Phase 4C), global search,
+  saved filters, multi-select/bulk actions, custom category management,
+  Learning task-type workflow, responsive/mobile redesign, and dark mode.
 
 ## How to Run the App
 
@@ -107,6 +109,69 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-06 — Phase 4C Complete (Implementation, Bug Fix, Browser Verified)
+
+- Implemented all approved Phase 4C work from
+  `docs/task-list-pages-spec.md`.
+- Features delivered:
+  - Today, Upcoming, and Completed sidebar views with real React-state
+    navigation.
+  - Today page with Overdue, Today, and Completed Today sections, category
+    filter chips, daily progress summary, and View Completed navigation.
+  - Upcoming page showing only incomplete future tasks, grouped by due date.
+  - Completed page showing all completed tasks grouped and sorted by
+    `completedAt` with completion context (time) beneath each row.
+  - Standard Task Detail origin tracking and return navigation to the
+    originating view (Dashboard, Today, Upcoming, Completed).
+  - `completedAt` field added to task data with safe localStorage migration:
+    existing incomplete tasks migrated to `null`, existing completed tasks
+    migrated to `updatedAt` or a shared migration timestamp.
+  - `toggleTask` sets/clears `completedAt`; Standard Task Detail Save
+    includes `completedAt` when completion state changes.
+  - Dirty-form navigation guards extended to Today, Upcoming, and Completed.
+  - Dashboard `View all` buttons for Today and Upcoming wired to their pages.
+  - Upcoming dashboard card now shows only incomplete future tasks.
+- Files changed (new): `src/components/TodayPage.jsx`,
+  `src/components/UpcomingPage.jsx`, `src/components/CompletedPage.jsx`.
+- Files changed (modified): `src/App.jsx`, `src/components/Sidebar.jsx`,
+  `src/components/Header.jsx`, `src/components/Dashboard.jsx`,
+  `src/components/TodayTasksCard.jsx`, `src/components/UpcomingTasksCard.jsx`,
+  `src/components/StandardTaskDetail.jsx`, `src/hooks/useLocalStorage.js`,
+  `src/data/migrate.js`, `src/data/sampleData.js`, `src/utils/dateTime.js`,
+  `src/styles/task-row.css`.
+- `npm run build` result: succeeded — `vite v8.1.2`, 54 modules transformed,
+  `dist/index.html` 0.46 kB, `dist/assets/index-*.css` ~33.08 kB,
+  `dist/assets/index-*.js` ~241.78 kB, built in ~245ms.
+- `npm run lint` result: passed clean — `eslint .` with no errors or warnings.
+- Post-implementation bug fix: `TodayPage.jsx` incorrectly passed the whole
+  task object to `isTodayOrPast` instead of `t.dueDate`, causing the Today
+  page pool to be empty. Corrected to `tasks.filter((t) =>
+  isTodayOrPast(t.dueDate))`.
+- User-confirmed normal browser testing passed for all Phase 4C functionality.
+- Phase 4C is fully complete: implementation, build, lint, and manual
+  browser verification all passed.
+- Documentation updated: `AGENTS.md`, `docs/project-status.md`,
+  `docs/build-plan.md`, `docs/task-list-pages-spec.md`.
+- Next best step: await approval and spec/plan for Phase 4D — Learning Task
+  Foundation.
+
+### 2026-07-06 — Roadmap Realignment Checkpoint
+
+- Approved roadmap reorder: Phase 4C is now Task List Pages and Navigation
+  (Today, Upcoming, Completed pages and sidebar navigation), followed by
+  Phase 4D — Learning Task Foundation.
+- Today, Upcoming, and Completed pages were moved ahead of Learning in the
+  planning order. Their Phase 5 placement is removed.
+- Reading Tasks are removed from the planned MVP and future active roadmap.
+  Reading-specific features are no longer in scope for this project.
+- No application code, CSS, dependencies, or historical source documents were
+  changed in this checkpoint.
+- Documentation updated: `AGENTS.md`, `docs/build-plan.md`,
+  `docs/project-status.md`, `docs/project-spec.md`,
+  `docs/dashboard-spec.md`.
+- Next step: plan a focused `docs/task-list-pages-spec.md` for review and
+  approval before Phase 4C implementation.
 
 ### 2026-07-05 — Phase 4B Implementation Complete
 
@@ -170,9 +235,9 @@ docs/
 - `npm run lint` result: passed clean — `eslint .` with no errors or warnings.
 - Documentation updated: `AGENTS.md`, `docs/project-status.md`,
   `docs/standard-task-detail-spec.md`.
-- Next best step: await approval and spec/plan for Phase 4C — Learning Task
-  Foundation. Browser testing by the user is still required before the feature
-  can be considered fully verified.
+- Next best step: await approval and spec/plan for Phase 4C — Task List
+  Pages and Navigation. Browser testing by the user is still required before the
+  feature can be considered fully verified.
 
 ### 2026-07-05 — Phase 4A Implementation Complete
 
@@ -244,8 +309,8 @@ docs/
 
 - Approved sidebar navigation: Dashboard, Today, Upcoming, Completed, Quick Ideas.
 - Removed: Learning, Reading, and Categories as standalone sidebar destinations.
-- Learning and Reading are future task types, not standalone navigation sections.
-  Opening a task of either type will open a task-specific detail workspace; the
+- Learning is a future task type, not a standalone navigation section.
+  Opening a Learning task will open a task-specific detail workspace; the
   exact form (modal, overlay, route, or full page) is deferred to future
   focused feature specs.
 - Categories remain fixed task metadata used for labels and filtering. No

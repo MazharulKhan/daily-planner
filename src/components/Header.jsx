@@ -1,17 +1,23 @@
 import '../styles/header.css';
 import { greeting, todayLabel } from '../utils/dateTime';
 
+const VIEW_TITLES = {
+  dashboard: { title: 'Dashboard', subtitle: `${greeting()}! Here\u0027s your overview for today — ${todayLabel()}.` },
+  today: { title: 'Today', subtitle: `${greeting()}! Here is what you need to focus on today.` },
+  upcoming: { title: 'Upcoming', subtitle: 'Your upcoming tasks and deadlines.' },
+  completed: { title: 'Completed', subtitle: 'Everything you have finished so far.' },
+};
+
 export default function Header({ onAddTask, activeView, detailOpen }) {
   const showTitle = activeView !== 'quick-ideas' && !detailOpen;
+  const page = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
 
   return (
     <header className="header">
       {showTitle ? (
         <div className="header__title-block">
-          <h1 className="header__title">Dashboard</h1>
-          <p className="header__subtitle">
-            {greeting()}! Here&apos;s your overview for today — {todayLabel()}.
-          </p>
+          <h1 className="header__title">{page.title}</h1>
+          <p className="header__subtitle">{page.subtitle}</p>
         </div>
       ) : detailOpen ? (
         <div />

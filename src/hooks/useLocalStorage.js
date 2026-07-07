@@ -19,7 +19,7 @@ export function useTasks(initialTasks) {
 
   const addTask = useCallback((task) => {
     const now = new Date().toISOString();
-    setTasks((prev) => [...prev, { ...task, updatedAt: now }]);
+    setTasks((prev) => [...prev, { ...task, completedAt: null, updatedAt: now }]);
   }, []);
 
   const editTask = useCallback((id, patch) => {
@@ -33,7 +33,14 @@ export function useTasks(initialTasks) {
     const now = new Date().toISOString();
     setTasks((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed, updatedAt: now } : t,
+        t.id === id
+          ? {
+              ...t,
+              completed: !t.completed,
+              completedAt: !t.completed ? now : null,
+              updatedAt: now,
+            }
+          : t,
       ),
     );
   }, []);

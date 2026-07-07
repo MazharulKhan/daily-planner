@@ -24,6 +24,7 @@ export default function TodayTasksCard({
   onDeleteConfirm,
   onActionCancel,
   onOpenDetail,
+  onViewAll,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
 
@@ -95,7 +96,7 @@ export default function TodayTasksCard({
           <h2 className="card__title">Today&apos;s Tasks</h2>
           <span className="card__count">{filteredTasks.length}</span>
         </div>
-        <button type="button" className="card__view-all">
+        <button type="button" className="card__view-all" onClick={onViewAll}>
           View all
         </button>
       </div>
