@@ -20,8 +20,7 @@ Detail), and 4C (Task List Pages and Navigation) are complete.
 
 The app remains frontend-only, with all data stored in browser `localStorage`.
 
-Phase 4D — YouTube Task Foundation is approved and active. It must follow
-`docs/youtube-task-foundation-spec.md`.
+Phase 4D — YouTube Task Foundation is complete.
 
 ## Current Technology
 
@@ -41,7 +40,7 @@ The broader product is a desktop-first productivity and learning planner with:
 - Quick Ideas kept separate from tasks
 - Lightweight categories, priorities, dates, and completion status
 - Standard Tasks and YouTube Tasks as task-type workflows
-- Local YouTube URL and notes support for YouTube Tasks
+- Completed local YouTube URL and plain-text notes support for YouTube Tasks
 
 Task workflow is controlled by `taskType`:
 
@@ -59,8 +58,10 @@ A Standard Task can use the Learning category. A YouTube Task can use the
 Learning, Personal, Work, or Health category. Category must never choose the
 detail workspace.
 
-There is no standalone Learning, YouTube, Reading, or Categories sidebar
-destination in the active roadmap.
+The completed YouTube workflow supports task type, YouTube URL storage,
+plain-text notes, and an external Open video link. There is no standalone
+Learning, YouTube, Reading, or Categories sidebar destination in the active
+roadmap.
 
 The visual direction is clean and card-based:
 
@@ -97,14 +98,14 @@ Use starter sample data only when there is no saved local data yet.
 
 ## Deferred Features
 
-The following are deferred beyond the currently active Phase 4D scope:
+The following are future planned work beyond the completed Phase 4D scope.
+See `docs/build-plan.md` for the detailed Phase 4E/4F/4G roadmap.
 
 - Global search behavior
 - Category management
 - Quick Idea task conversion
 - YouTube embedding, Player API integration, playback position tracking,
-  resume behavior, timestamp insertion, clickable timestamps, and rich-text
-  notes
+  resume behavior, timestamp insertion, clickable timestamps, and rich notes
 - Reading Tasks and Reading workflows
 - Dark mode
 - Firebase

@@ -1,5 +1,7 @@
 # Phase 4D — YouTube Task Foundation
-**Status: APPROVED — Phase 4D is active. Implementation may begin once this documentation checkpoint is committed.**
+**Status: Complete — implemented, build/lint passed, and manually browser-verified.**
+
+This spec is now a historical reference for the completed Phase 4D work.
 
 ## 1. Purpose
 
@@ -640,9 +642,7 @@ refactor:
 
 Do not modify row inline-edit components to expose Task Type.
 
-## 22. Do Not Build Yet
+## 22. Next-Step Boundary
 
-This specification is approved as the source of truth for Phase 4D.
-
-Do not implement Phase 4D until this documentation checkpoint is committed and
-the user explicitly requests implementation.
+Do not add embedded player, resume, timestamp, rich-text, or clickable
+timestamp features as a patch to Phase 4D. Those require separate future specs.

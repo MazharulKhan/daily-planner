@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import QuickIdeasWorkspace from './components/QuickIdeasWorkspace';
 import StandardTaskDetail from './components/StandardTaskDetail';
+import YouTubeTaskDetail from './components/YouTubeTaskDetail';
 import TodayPage from './components/TodayPage';
 import UpcomingPage from './components/UpcomingPage';
 import CompletedPage from './components/CompletedPage';
@@ -94,8 +95,10 @@ function App() {
 
   let content;
   if (detailOpen && selectedTask) {
+    const DetailComponent =
+      selectedTask.taskType === 'youtube' ? YouTubeTaskDetail : StandardTaskDetail;
     content = (
-      <StandardTaskDetail
+      <DetailComponent
         task={selectedTask}
         originView={originView}
         pendingNavTarget={pendingNavTarget}

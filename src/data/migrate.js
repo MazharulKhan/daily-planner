@@ -2,6 +2,7 @@ import { makeId } from '../utils/dateTime';
 
 const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
 const VALID_CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
+const VALID_TASK_TYPES = ['standard', 'youtube'];
 const TIME_RE = /^\d{2}:\d{2}$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -20,6 +21,15 @@ export function normalizeTask(task) {
       : 'Untitled';
 
   const description = typeof task.description === 'string' ? task.description : '';
+
+  const taskType = VALID_TASK_TYPES.includes(task.taskType)
+    ? task.taskType
+    : 'standard';
+
+  const youtubeUrl = typeof task.youtubeUrl === 'string' ? task.youtubeUrl : '';
+
+  const youtubeNotes =
+    typeof task.youtubeNotes === 'string' ? task.youtubeNotes : '';
 
   const completed = task.completed === true;
 
@@ -55,7 +65,21 @@ export function normalizeTask(task) {
       ? task.updatedAt
       : now;
 
-  return { id, title, description, completed, completedAt, priority, category, time, dueDate, updatedAt };
+  return {
+    id,
+    title,
+    description,
+    taskType,
+    youtubeUrl,
+    youtubeNotes,
+    completed,
+    completedAt,
+    priority,
+    category,
+    time,
+    dueDate,
+    updatedAt,
+  };
 }
 
 export function migrateTasks(tasks) {

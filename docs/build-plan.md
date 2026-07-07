@@ -121,25 +121,92 @@ YouTube task foundation.
 1. Phase 4A — Quick Ideas Management (complete)
 2. Phase 4B — Standard Task Detail (complete)
 3. Phase 4C — Task List Pages and Navigation (complete)
-4. Phase 4D — YouTube Task Foundation (approved and active)
-5. Next candidate after 4D — YouTube Player and Timestamp Workflow
+4. Phase 4D — YouTube Task Foundation (complete)
+5. Phase 4E — YouTube Player and Resume Foundation (next candidate)
+6. Phase 4F — Timestamped Notes (later candidate)
+7. Phase 4G — Clickable Timestamp Notes / Rich Notes Decision (later candidate)
 
 ### Phase 4D — YouTube Task Foundation
 
-Phase 4D adds the task-type foundation, a dedicated YouTube Task Detail
+Phase 4D added the task-type foundation, a dedicated YouTube Task Detail
 workspace, local YouTube URL and notes fields, safe localStorage migration,
 and Standard/YouTube task-type transition behavior.
 
-Phase 4D does not add an embedded player or playback controls.
+Phase 4D did not add an embedded player or playback controls.
 
-### Later Candidate — YouTube Player and Timestamp Workflow
+### Phase 4E — YouTube Player and Resume Foundation
 
-A later phase may consider embedded playback, YouTube Player API integration,
-saved playback position, resume behavior, timestamp insertion, and clickable
-timestamps that seek the video.
+Status: next candidate after Phase 4D; requires a focused spec and explicit
+approval.
 
-Those features are deferred from Phase 4D.
+Purpose: turn the current external-link YouTube workflow into an in-app
+video-learning workspace while keeping notes as plain text.
 
+Candidate scope:
+
+- Deliberately approve use of the YouTube IFrame Player API. No API key,
+  backend, package, cloud sync, or YouTube Data API is required for this
+  player-control workflow.
+- Convert accepted saved YouTube URLs into a usable video ID without rewriting
+  the original stored URL.
+- Render an embedded responsive YouTube player in the task workspace.
+- Keep Open video as a secondary external fallback link.
+- Add `lastWatchedSeconds` to YouTube Tasks with safe migration/defaults.
+- Persist playback position at sensible moments such as pause, video end,
+  detail exit, and a throttled periodic checkpoint rather than every second.
+- Add Resume from MM:SS only when a meaningful saved playback position exists.
+- Resume the embedded player from the saved position.
+- Handle invalid, private, removed, unavailable, or embedding-disabled videos
+  with a clear non-breaking fallback state.
+- Keep `youtubeNotes` as a plain textarea in this phase.
+- Consider revealing an optional YouTube video URL field immediately below Task
+  Type when Task Type is set to YouTube Task inside Add Task -> More options.
+  Keep the URL optional so fast capture remains possible. Do not add the large
+  YouTube Notes field to Add Task.
+
+Technical direction:
+
+Use the YouTube IFrame Player API for app-controlled playback events,
+current-time reads, and seeking. A static embed alone is not enough for the
+planned Resume and timestamp controls.
+
+Layout direction:
+
+Use a responsive 16:9 player. On desktop, aim for enough room to display
+YouTube controls comfortably; approximately 480 x 270 is the recommended
+minimum target where the layout allows.
+
+### Phase 4F — Timestamped Notes
+
+Status: later candidate after Phase 4E; requires a focused spec and approval.
+
+Candidate scope:
+
+- Add Insert Timestamp.
+- Read the current embedded player time.
+- Insert a plain-text timestamp such as `[12:45]` at the current notes cursor
+  position.
+- Preserve timestamps inside `youtubeNotes`.
+- Keep notes as plain text; do not add a rich-text editor yet.
+
+### Phase 4G — Clickable Timestamp Notes / Rich Notes Decision
+
+Status: later candidate after Phase 4F; requires a focused spec and approval.
+
+Preferred first option:
+
+- Keep the plain-text textarea editor.
+- Add a separate rendered notes preview/reading view.
+- Recognize valid timestamps in the preview and render them as clickable
+  controls that seek the player.
+- Prefer this no-package option first.
+
+Alternative, only if later justified:
+
+- Evaluate a richer editable notes editor with formatting toolbar, inline
+  timestamp controls, and cursor-aware inserts.
+- Do not hand-build a fragile rich-text editor.
+- Do not add an editor package without separate explicit approval.
 ### Caution
 
 Do not attempt all sub-phases in a single build request. Each needs its own

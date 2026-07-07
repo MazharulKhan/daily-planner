@@ -19,7 +19,17 @@ export function useTasks(initialTasks) {
 
   const addTask = useCallback((task) => {
     const now = new Date().toISOString();
-    setTasks((prev) => [...prev, { ...task, completedAt: null, updatedAt: now }]);
+    setTasks((prev) => [
+      ...prev,
+      {
+        taskType: 'standard',
+        youtubeUrl: '',
+        youtubeNotes: '',
+        ...task,
+        completedAt: null,
+        updatedAt: now,
+      },
+    ]);
   }, []);
 
   const editTask = useCallback((id, patch) => {

@@ -3,6 +3,10 @@ import '../styles/task-detail.css';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
 const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
+const TASK_TYPES = [
+  { value: 'standard', label: 'Standard Task' },
+  { value: 'youtube', label: 'YouTube Task' },
+];
 
 export default function StandardTaskDetail({
   task,
@@ -15,6 +19,9 @@ export default function StandardTaskDetail({
 }) {
   const [title, setTitle] = useState(task.title || '');
   const [description, setDescription] = useState(task.description || '');
+  const [taskType, setTaskType] = useState(
+    task.taskType === 'youtube' ? 'youtube' : 'standard',
+  );
   const [priority, setPriority] = useState(task.priority || 'Medium');
   const [category, setCategory] = useState(task.category || 'Work');
   const [dueDate, setDueDate] = useState(task.dueDate || '');
@@ -31,6 +38,7 @@ export default function StandardTaskDetail({
   const isDirty = (() => {
     if (title.trim() !== (task.title || '').trim()) return true;
     if (description !== (task.description || '')) return true;
+    if (taskType !== (task.taskType || 'standard')) return true;
     if (priority !== (task.priority || 'Medium')) return true;
     if (category !== (task.category || 'Work')) return true;
     if ((dueDate || '') !== (task.dueDate || '')) return true;
@@ -64,6 +72,7 @@ export default function StandardTaskDetail({
     const patch = {
       title: trimmed,
       description: description.trim(),
+      taskType,
       priority,
       category,
       dueDate: dueDate || null,
@@ -80,6 +89,7 @@ export default function StandardTaskDetail({
   }, [
     title,
     description,
+    taskType,
     priority,
     category,
     dueDate,
@@ -134,6 +144,8 @@ export default function StandardTaskDetail({
 
   const dueDateValue = dueDate || '';
   const timeValue = time || '';
+  const showTaskTypeMessage =
+    (task.taskType || 'standard') === 'standard' && taskType === 'youtube';
 
   return (
     <div className="task-detail">
@@ -283,6 +295,12 @@ export default function StandardTaskDetail({
 
         <div className="task-detail__divider" />
 
+        {showTaskTypeMessage && (
+          <div className="task-detail__helper">
+            Save changes to use the YouTube Task workspace.
+          </div>
+        )}
+
         <div>
           <label className="task-detail__label" htmlFor={`task-detail-desc-${task.id}`}>
             Description
@@ -298,6 +316,20 @@ export default function StandardTaskDetail({
         </div>
 
         <div className="task-detail__grid">
+          <div className="task-detail__field">
+            <label htmlFor={`task-detail-type-${task.id}`}>Task Type</label>
+            <select
+              id={`task-detail-type-${task.id}`}
+              value={taskType}
+              onChange={(e) => setTaskType(e.target.value)}
+            >
+              {TASK_TYPES.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="task-detail__field">
             <label htmlFor={`task-detail-priority-${task.id}`}>Priority</label>
             <select

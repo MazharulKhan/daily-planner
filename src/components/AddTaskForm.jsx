@@ -3,15 +3,21 @@ import { makeId } from '../utils/dateTime';
 
 const DEFAULT_PRIORITY = 'Medium';
 const DEFAULT_CATEGORY = 'Work';
+const DEFAULT_TASK_TYPE = 'standard';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
 const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
+const TASK_TYPES = [
+  { value: 'standard', label: 'Standard Task' },
+  { value: 'youtube', label: 'YouTube Task' },
+];
 
 export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
   const [title, setTitle] = useState('');
   const [showOptions, setShowOptions] = useState(false);
   const [priority, setPriority] = useState(DEFAULT_PRIORITY);
   const [category, setCategory] = useState(DEFAULT_CATEGORY);
+  const [taskType, setTaskType] = useState(DEFAULT_TASK_TYPE);
   const [time, setTime] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [description, setDescription] = useState('');
@@ -28,6 +34,7 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
     setShowOptions(false);
     setPriority(DEFAULT_PRIORITY);
     setCategory(DEFAULT_CATEGORY);
+    setTaskType(DEFAULT_TASK_TYPE);
     setTime('');
     setDueDate('');
     setDescription('');
@@ -42,6 +49,9 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
       id: makeId('task'),
       title: trimmed,
       description: trimmedDesc,
+      taskType,
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       priority,
       category,
@@ -124,6 +134,19 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add details..."
               />
+            </label>
+            <label className="add-task__field">
+              <span className="add-task__label">Task Type</span>
+              <select
+                value={taskType}
+                onChange={(e) => setTaskType(e.target.value)}
+              >
+                {TASK_TYPES.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
             </label>
             <label className="add-task__field">
               <span className="add-task__label">Priority</span>

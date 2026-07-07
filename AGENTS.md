@@ -44,20 +44,27 @@ The app must stay frontend-only for now.
   Improvements), Phase 3B (Task Organization), Phase 4A (Quick Ideas
   Management), Phase 4B (Standard Task Detail), and Phase 4C (Task List
   Pages and Navigation) are all complete.
-- Phase 4D — YouTube Task Foundation is approved and active.
+- Phase 4D — YouTube Task Foundation is complete.
+- There is currently no active implementation phase.
+- The next candidate phase is Phase 4E — YouTube Player and Resume
+  Foundation.
 - Plan first before making broad changes.
 - List files before editing them.
 - Follow `docs/build-plan.md` for implementation order.
 - Do not skip ahead to deferred features listed in `docs/project-spec.md`.
-- Implementation must follow `docs/youtube-task-foundation-spec.md`.
-- Do not build deferred player/timestamp features during Phase 4D.
+- Phase 4E requires a focused spec, plan, explicit user approval, and a
+  deliberate exception/approval for the YouTube IFrame Player API before code
+  is written.
 
 ## Current Active Phase
 
-Phase 4D — YouTube Task Foundation is approved and active.
-Phase 4C — Task List Pages and Navigation is complete.
+There is currently no active implementation phase.
+Phase 4D — YouTube Task Foundation is complete.
 
-Phase 4D must be implemented from `docs/youtube-task-foundation-spec.md`.
+The next candidate is Phase 4E — YouTube Player and Resume Foundation.
+Phase 4E requires a focused spec, plan, explicit user approval, and a
+deliberate exception/approval for the YouTube IFrame Player API before code is
+written.
 
 ## Phase 4D Product Model
 
@@ -67,11 +74,11 @@ Phase 4D must be implemented from `docs/youtube-task-foundation-spec.md`.
 - Category must never choose the detail workspace.
 - Existing saved tasks migrate to `taskType: 'standard'`, including tasks
   currently categorized as `Learning`.
-- Phase 4D includes the YouTube URL and notes foundation only.
-- Do not build embedded playback, YouTube Player API integration, playback
-  position tracking, resume behavior, timestamp insertion, clickable
+- Phase 4D includes the completed YouTube URL and notes foundation only.
+- Embedded playback, YouTube Player API integration, playback position
+  tracking, resume behavior, timestamp insertion, clickable
   timestamps/seeking, rich text, Reading Tasks, or YouTube/Learning sidebar
-  destinations in this phase.
+  destinations require future approved phases.
 
 ## Data Approach
 
@@ -111,7 +118,7 @@ Treat these files as the primary requirements:
 - `docs/quick-ideas-management-spec.md` (Phase 4A, complete)
 - `docs/standard-task-detail-spec.md` (Phase 4B, complete)
 - `docs/task-list-pages-spec.md` (Phase 4C, complete)
-- `docs/youtube-task-foundation-spec.md` (Phase 4D, active)
+- `docs/youtube-task-foundation-spec.md` (Phase 4D, complete)
 - `docs/build-plan.md`
 - `docs/project-status.md`
 - `docs/source/daily-planner-mvp-source.md`

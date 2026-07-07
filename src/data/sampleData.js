@@ -16,6 +16,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-1',
       title: 'Review morning standup notes',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'High',
@@ -27,6 +30,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-2',
       title: 'Draft dashboard spec outline',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'Medium',
@@ -38,6 +44,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-3',
       title: '30 min walk after lunch',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: true,
       completedAt: now,
       priority: 'Low',
@@ -49,6 +58,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-4',
       title: 'Read React docs: hooks',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'Medium',
@@ -60,6 +72,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-5',
       title: 'Plan weekend trip',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'Low',
@@ -71,6 +86,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-6',
       title: 'Submit expense report',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'High',
@@ -82,6 +100,9 @@ export function makeSampleTasks() {
     {
       id: 'sample-7',
       title: 'Dentist appointment',
+      taskType: 'standard',
+      youtubeUrl: '',
+      youtubeNotes: '',
       completed: false,
       completedAt: null,
       priority: 'Medium',
