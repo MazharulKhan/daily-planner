@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import '../styles/task-detail.css';
-import { parseYouTubeVideoId, formatSeconds, validateYouTubeUrl } from '../utils/youtube';
+import { parseYouTubeVideoId, formatSeconds, validateYouTubeUrl, parseTimestampNotes } from '../utils/youtube';
 import { useYouTubePlayer } from '../hooks/useYouTubePlayer';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
@@ -36,11 +36,13 @@ export default function YouTubeTaskDetail({
   const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
   const [playerError, setPlayerError] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [previewCollapsed, setPreviewCollapsed] = useState(false);
 
   const titleRef = useRef(null);
   const keepEditingRef = useRef(null);
   const cancelDeleteRef = useRef(null);
   const notesRef = useRef(null);
+  const notesFocusedRef = useRef(false);
 
   const isDirty = (() => {
     if (title.trim() !== (task.title || '').trim()) return true;
@@ -246,6 +248,83 @@ export default function YouTubeTaskDetail({
   }, [task.lastWatchedSeconds, seekAndPlay]);
 
   const insertTimestampEnabled = !!savedVideoId && !playerError;
+  const timestampClickEnabled = insertTimestampEnabled;
+
+  const previewSegments = useMemo(
+    () => parseTimestampNotes(youtubeNotes),
+    [youtubeNotes],
+  );
+
+  const handleTimestampClick = useCallback(
+    (seconds) => {
+      if (!timestampClickEnabled) return;
+      try {
+        seekAndPlay(seconds);
+      } catch {
+        /* ignore seek errors */
+      }
+    },
+    [seekAndPlay, timestampClickEnabled],
+  );
+
+  const handleNotesKeyDown = useCallback(
+    (e) => {
+      if (e.key !== 'Enter' || e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+      const textarea = notesRef.current;
+      if (!textarea) return;
+
+      const start = textarea.selectionStart ?? 0;
+      const end = textarea.selectionEnd ?? 0;
+      if (start !== end) return;
+
+      const value = youtubeNotes;
+      const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+      const currentLine = value.slice(lineStart, start);
+
+      if (!currentLine.startsWith('-')) {
+        return;
+      }
+
+      const afterDash = currentLine.slice(1);
+
+      if (afterDash.trim().length === 0) {
+        e.preventDefault();
+        const next = value.slice(0, lineStart) + value.slice(start);
+        setYoutubeNotes(next);
+        requestAnimationFrame(() => {
+          if (textarea) {
+            textarea.focus();
+            try {
+              textarea.setSelectionRange(lineStart, lineStart);
+            } catch {
+              /* ignore */
+            }
+          }
+        });
+        return;
+      }
+
+      e.preventDefault();
+      const insertText = '\n- ';
+      const next =
+        value.slice(0, start) + insertText + value.slice(end);
+      setYoutubeNotes(next);
+      const caret = start + insertText.length;
+      requestAnimationFrame(() => {
+        if (textarea) {
+          textarea.focus();
+          try {
+            textarea.setSelectionRange(caret, caret);
+          } catch {
+            /* ignore */
+          }
+        }
+      });
+    },
+    [youtubeNotes],
+  );
 
   const handleInsertTimestamp = useCallback(() => {
     let currentSeconds = NaN;
@@ -271,11 +350,14 @@ export default function YouTubeTaskDetail({
 
     const token = `[${formatSeconds(currentSeconds)}] `;
     const textarea = notesRef.current;
-    let start = 0;
-    let end = 0;
-    if (textarea) {
+    let start;
+    let end;
+    if (textarea && notesFocusedRef.current) {
       start = textarea.selectionStart ?? 0;
       end = textarea.selectionEnd ?? 0;
+    } else {
+      start = youtubeNotes.length;
+      end = youtubeNotes.length;
     }
 
     const atLineStart = start === 0 || youtubeNotes[start - 1] === '\n';
@@ -602,8 +684,60 @@ export default function YouTubeTaskDetail({
               className="youtube-detail__notes"
               value={youtubeNotes}
               onChange={(e) => setYoutubeNotes(e.target.value)}
+              onFocus={() => {
+                notesFocusedRef.current = true;
+              }}
+              onKeyDown={handleNotesKeyDown}
               placeholder="Add YouTube notes..."
             />
+            <div
+              className="youtube-detail__preview"
+              role="region"
+              aria-label="Clickable timestamp preview"
+            >
+              <div className="youtube-detail__preview-heading">
+                <span>Clickable Preview</span>
+                <button
+                  type="button"
+                  className="youtube-detail__preview-toggle"
+                  onClick={() => setPreviewCollapsed((prev) => !prev)}
+                  aria-label={previewCollapsed ? 'Expand clickable preview' : 'Collapse clickable preview'}
+                  aria-expanded={!previewCollapsed}
+                >
+                  {previewCollapsed ? 'Show' : 'Hide'}
+                </button>
+              </div>
+              {!previewCollapsed &&
+                (previewSegments.length === 0 ? (
+                  <p className="youtube-detail__preview-empty">
+                    Timestamped notes will appear here.
+                  </p>
+                ) : (
+                  <div className="youtube-detail__preview-body">
+                    {previewSegments.map((segment, index) => {
+                      if (segment.type === 'timestamp') {
+                        return (
+                          <button
+                            key={`ts-${index}`}
+                            type="button"
+                            className="youtube-detail__preview-chip"
+                            onClick={() => handleTimestampClick(segment.seconds)}
+                            disabled={!timestampClickEnabled}
+                            aria-label={`Seek video to ${segment.label} and play`}
+                          >
+                            {segment.label}
+                          </button>
+                        );
+                      }
+                      return (
+                        <span key={`txt-${index}`} className="youtube-detail__preview-text">
+                          {segment.value}
+                        </span>
+                      );
+                    })}
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </form>

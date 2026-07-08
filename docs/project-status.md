@@ -2,14 +2,13 @@
 
 ## Current Phase
 
-Phase 4F — Timestamped Notes is complete.
-Phase 4G — Clickable Timestamp Notes / Rich Notes Decision is the next
-candidate.
+Phase 4G — Clickable Timestamp Notes is complete.
+Phase 4H — Rich Notes Editor / Formatting Toolbar Decision is the next
+candidate, but has no spec yet.
 
 ## Next Exact Step
 
-Wait for approval of a focused Phase 4G spec — Clickable Timestamp Notes
-/ Rich Notes Decision.
+A Phase 4H spec must be drafted and approved before any implementation.
 `Convert to Task` for ideas stays deferred until a future phase provides
 the appropriate conversion flow.
 
@@ -27,11 +26,13 @@ the appropriate conversion flow.
 | 4D | YouTube Task Foundation | Complete |
 | 4E | YouTube Player and Resume Foundation | Complete |
 | 4F | Timestamped Notes | Complete |
+| 4G | Clickable Timestamp Notes | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/clickable-timestamp-notes-spec.md` | Phase 4G completed spec (historical) |
 | `docs/timestamped-notes-spec.md` | Phase 4F completed spec (historical) |
 | `docs/youtube-player-spec.md` | Phase 4E completed spec (historical) |
 | `docs/youtube-task-foundation-spec.md` | Phase 4D completed spec (historical) |
@@ -58,8 +59,13 @@ When sources conflict, active approved feature specs take precedence (see
 - `lastWatchedSeconds` is background state only — does not bump `updatedAt` or trigger dirty-form.
 - `youtubeNotes` stays plain text. Phase 4F adds an Insert Timestamp
   control that inserts a bracketed plain-text token (e.g. `[12:45] `)
-  starting on its own line. Clickable timestamps, notes preview, and
-  rich-text are deferred to Phase 4G.
+  starting on its own line. Phase 4G adds a clickable rendered preview
+  below the notes textarea: valid `[M:SS]` and `[H:MM:SS]` tokens render
+  as blue pill chips that seek-and-play the embedded player, a
+  collapsible preview with 240px max-height internal scroll, and
+  Markdown-style bullet continuation (Enter on `- note` / `-note`
+  continues the list; Enter on empty `-` ends it). Rich-text editing
+  and a formatting toolbar remain deferred.
 
 ### Data Shape
 
@@ -95,10 +101,9 @@ Open the Vite localhost URL in a normal browser (usually `http://localhost:5173/
 testing must use a normal browser.
 
 **Intentionally deferred (not bugs):** global search, saved filters,
-multi-select/bulk actions, custom category management, clickable timestamp
-notes, notes preview, seeking from notes, rich-text notes, responsive/mobile
-redesign, dark mode, Reading Tasks, notifications, recurring tasks, AI
-features, cloud sync, authentication, backend APIs.
+multi-select/bulk actions, custom category management, rich-text notes,
+responsive/mobile redesign, dark mode, Reading Tasks, notifications,
+recurring tasks, AI features, cloud sync, authentication, backend APIs.
 
 ## Current Constraints
 

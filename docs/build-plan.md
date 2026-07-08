@@ -124,7 +124,7 @@ YouTube task foundation.
 4. Phase 4D — YouTube Task Foundation (complete)
 5. Phase 4E — YouTube Player and Resume Foundation (complete)
 6. Phase 4F — Timestamped Notes (complete)
-7. Phase 4G — Clickable Timestamp Notes / Rich Notes Decision (next candidate)
+7. Phase 4G — Clickable Timestamp Notes (complete)
 
 ### Phase 4D — YouTube Task Foundation
 
@@ -153,24 +153,32 @@ with one trailing space, at the notes textarea cursor. `youtubeNotes`
 remains plain text; no rich-text, clickable timestamps, notes preview,
 parsing, or styling was added.
 
-### Phase 4G — Clickable Timestamp Notes / Rich Notes Decision
+### Phase 4G — Clickable Timestamp Notes
 
-Status: next candidate after Phase 4F; requires a focused spec and approval.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-Preferred first option:
+The spec `docs/clickable-timestamp-notes-spec.md` is now a historical
+reference for the completed Phase 4G work.
 
-- Keep the plain-text textarea editor.
-- Add a separate rendered notes preview/reading view.
-- Recognize valid timestamps in the preview and render them as clickable
-  controls that seek the player.
-- Prefer this no-package option first.
+Phase 4G added a read-only rendered notes preview below the YouTube Notes
+textarea. Valid bracketed timestamps (`[0:15]`, `[12:45]`, `[1:02:15]`)
+render as clickable blue pill chips that seek-and-play the embedded player.
+The preview is collapsible (local state, default expanded, 240px max-height
+internal scroll). Additional polish includes Markdown-style bullet
+continuation in the textarea and a refined Insert Timestamp default
+position (end of notes when textarea is unfocused). Notes remain plain
+text; no rich-text editor or formatting toolbar was added.
 
-Alternative, only if later justified:
+### Phase 4H — Rich Notes Editor / Formatting Toolbar Decision
 
-- Evaluate a richer editable notes editor with formatting toolbar, inline
-  timestamp controls, and cursor-aware inserts.
-- Do not hand-build a fragile rich-text editor.
-- Do not add an editor package without separate explicit approval.
+Status: future candidate; no spec yet.
+
+May evaluate Markdown-style formatting, a formatting toolbar, inline
+timestamp controls, or a proper editor package. Do not hand-build a
+fragile rich-text editor. Do not add an editor package without separate
+explicit approval. Phase 4H has no spec yet and is not approved for
+implementation.
+
 ### Caution
 
 Do not attempt all sub-phases in a single build request. Each needs its own

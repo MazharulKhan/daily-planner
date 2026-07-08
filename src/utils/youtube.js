@@ -77,3 +77,56 @@ export function formatSeconds(totalSeconds) {
   }
   return `${minutes}:${pad(secs)}`;
 }
+
+const TIMESTAMP_TOKEN_PATTERN = /\[\s*(\d+):([0-5]\d)(?::([0-5]\d))?\s*\]/g;
+
+function tokenToSeconds(group1, group2, group3) {
+  if (group3 !== undefined) {
+    const hours = parseInt(group1, 10);
+    const minutes = parseInt(group2, 10);
+    const secs = parseInt(group3, 10);
+    return hours * 3600 + minutes * 60 + secs;
+  }
+  const minutes = parseInt(group1, 10);
+  const secs = parseInt(group2, 10);
+  return minutes * 60 + secs;
+}
+
+export function parseTimestampNotes(text) {
+  if (typeof text !== 'string' || text.length === 0) return [];
+
+  const segments = [];
+  let lastIndex = 0;
+  TIMESTAMP_TOKEN_PATTERN.lastIndex = 0;
+
+  let match = TIMESTAMP_TOKEN_PATTERN.exec(text);
+  while (match !== null) {
+    if (match.index > lastIndex) {
+      segments.push({
+        type: 'text',
+        value: text.slice(lastIndex, match.index),
+      });
+    }
+
+    const seconds = tokenToSeconds(match[1], match[2], match[3]);
+    if (Number.isFinite(seconds) && seconds >= 0) {
+      segments.push({
+        type: 'timestamp',
+        token: match[0],
+        seconds,
+        label: formatSeconds(seconds),
+      });
+    } else {
+      segments.push({ type: 'text', value: match[0] });
+    }
+
+    lastIndex = match.index + match[0].length;
+    match = TIMESTAMP_TOKEN_PATTERN.exec(text);
+  }
+
+  if (lastIndex < text.length) {
+    segments.push({ type: 'text', value: text.slice(lastIndex) });
+  }
+
+  return segments;
+}
