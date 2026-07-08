@@ -2,12 +2,14 @@
 
 ## Current Phase
 
-Phase 4E — YouTube Player and Resume Foundation is complete.
-Phase 4F — Timestamped Notes is the next candidate.
+Phase 4F — Timestamped Notes is complete.
+Phase 4G — Clickable Timestamp Notes / Rich Notes Decision is the next
+candidate.
 
 ## Next Exact Step
 
-Wait for approval of a focused Phase 4F spec — Timestamped Notes.
+Wait for approval of a focused Phase 4G spec — Clickable Timestamp Notes
+/ Rich Notes Decision.
 `Convert to Task` for ideas stays deferred until a future phase provides
 the appropriate conversion flow.
 
@@ -24,11 +26,13 @@ the appropriate conversion flow.
 | 4C | Task List Pages and Navigation | Complete |
 | 4D | YouTube Task Foundation | Complete |
 | 4E | YouTube Player and Resume Foundation | Complete |
+| 4F | Timestamped Notes | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/timestamped-notes-spec.md` | Phase 4F completed spec (historical) |
 | `docs/youtube-player-spec.md` | Phase 4E completed spec (historical) |
 | `docs/youtube-task-foundation-spec.md` | Phase 4D completed spec (historical) |
 | `docs/task-list-pages-spec.md` | Phase 4C completed spec (historical) |
@@ -52,7 +56,10 @@ When sources conflict, active approved feature specs take precedence (see
 - YouTube IFrame Player API approved for embedding, current-time reads, and seeking.
 - No API key, no YouTube Data API, no packages required.
 - `lastWatchedSeconds` is background state only — does not bump `updatedAt` or trigger dirty-form.
-- `youtubeNotes` stays plain text. Timestamps, clickable notes, and rich-text are deferred.
+- `youtubeNotes` stays plain text. Phase 4F adds an Insert Timestamp
+  control that inserts a bracketed plain-text token (e.g. `[12:45] `)
+  starting on its own line. Clickable timestamps, notes preview, and
+  rich-text are deferred to Phase 4G.
 
 ### Data Shape
 
@@ -88,8 +95,8 @@ Open the Vite localhost URL in a normal browser (usually `http://localhost:5173/
 testing must use a normal browser.
 
 **Intentionally deferred (not bugs):** global search, saved filters,
-multi-select/bulk actions, custom category management, timestamp
-insertion, clickable timestamp notes, rich-text notes, responsive/mobile
+multi-select/bulk actions, custom category management, clickable timestamp
+notes, notes preview, seeking from notes, rich-text notes, responsive/mobile
 redesign, dark mode, Reading Tasks, notifications, recurring tasks, AI
 features, cloud sync, authentication, backend APIs.
 

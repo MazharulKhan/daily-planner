@@ -40,6 +40,7 @@ export default function YouTubeTaskDetail({
   const titleRef = useRef(null);
   const keepEditingRef = useRef(null);
   const cancelDeleteRef = useRef(null);
+  const notesRef = useRef(null);
 
   const isDirty = (() => {
     if (title.trim() !== (task.title || '').trim()) return true;
@@ -204,7 +205,7 @@ export default function YouTubeTaskDetail({
     [onEditPlaybackPosition, task.id],
   );
 
-  const { seekAndPlay } = useYouTubePlayer({
+  const { playerRef, positionRef, seekAndPlay } = useYouTubePlayer({
     containerId,
     videoId: savedVideoId,
     enabled: !!savedVideoId,
@@ -243,6 +244,58 @@ export default function YouTubeTaskDetail({
       seekAndPlay(seconds);
     }
   }, [task.lastWatchedSeconds, seekAndPlay]);
+
+  const insertTimestampEnabled = !!savedVideoId && !playerError;
+
+  const handleInsertTimestamp = useCallback(() => {
+    let currentSeconds = NaN;
+    try {
+      const player = playerRef.current;
+      if (player && typeof player.getCurrentTime === 'function') {
+        currentSeconds = player.getCurrentTime();
+      }
+    } catch {
+      currentSeconds = NaN;
+    }
+
+    if (!Number.isFinite(currentSeconds)) {
+      const fallback = positionRef.current;
+      if (typeof fallback === 'number' && Number.isFinite(fallback)) {
+        currentSeconds = fallback;
+      }
+    }
+
+    if (!Number.isFinite(currentSeconds)) {
+      return;
+    }
+
+    const token = `[${formatSeconds(currentSeconds)}] `;
+    const textarea = notesRef.current;
+    let start = 0;
+    let end = 0;
+    if (textarea) {
+      start = textarea.selectionStart ?? 0;
+      end = textarea.selectionEnd ?? 0;
+    }
+
+    const atLineStart = start === 0 || youtubeNotes[start - 1] === '\n';
+    const prefix = atLineStart ? '' : '\n';
+    const insertText = prefix + token;
+    const next = youtubeNotes.slice(0, start) + insertText + youtubeNotes.slice(end);
+    setYoutubeNotes(next);
+
+    const caret = start + insertText.length;
+    requestAnimationFrame(() => {
+      if (textarea) {
+        textarea.focus();
+        try {
+          textarea.setSelectionRange(caret, caret);
+        } catch {
+          /* ignore */
+        }
+      }
+    });
+  }, [playerRef, positionRef, youtubeNotes]);
 
   return (
     <div className="task-detail task-detail--youtube">
@@ -529,10 +582,22 @@ export default function YouTubeTaskDetail({
           </div>
 
           <div className="youtube-detail__column">
-            <label className="task-detail__label" htmlFor={`youtube-task-notes-${task.id}`}>
-              YouTube Notes
-            </label>
+            <div className="youtube-detail__notes-header">
+              <label className="task-detail__label" htmlFor={`youtube-task-notes-${task.id}`}>
+                YouTube Notes
+              </label>
+              <button
+                type="button"
+                className="youtube-detail__insert-timestamp"
+                onClick={handleInsertTimestamp}
+                disabled={!insertTimestampEnabled}
+                aria-label="Insert current video timestamp into notes"
+              >
+                Insert Timestamp
+              </button>
+            </div>
             <textarea
+              ref={notesRef}
               id={`youtube-task-notes-${task.id}`}
               className="youtube-detail__notes"
               value={youtubeNotes}

@@ -316,6 +316,45 @@
   resize: vertical;
 }
 
+.youtube-detail__notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.youtube-detail__notes-header .task-detail__label {
+  margin-bottom: 0;
+}
+
+.youtube-detail__insert-timestamp {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.youtube-detail__insert-timestamp:hover:not(:disabled) {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.youtube-detail__insert-timestamp:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
+.youtube-detail__insert-timestamp:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .youtube-detail__notes:focus {
   outline: none;
   border-color: var(--color-accent-border);

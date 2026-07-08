@@ -123,8 +123,8 @@ YouTube task foundation.
 3. Phase 4C — Task List Pages and Navigation (complete)
 4. Phase 4D — YouTube Task Foundation (complete)
 5. Phase 4E — YouTube Player and Resume Foundation (complete)
-6. Phase 4F — Timestamped Notes (next candidate)
-7. Phase 4G — Clickable Timestamp Notes / Rich Notes Decision (later candidate)
+6. Phase 4F — Timestamped Notes (complete)
+7. Phase 4G — Clickable Timestamp Notes / Rich Notes Decision (next candidate)
 
 ### Phase 4D — YouTube Task Foundation
 
@@ -141,20 +141,21 @@ completed Phase 4E work.
 
 ### Phase 4F — Timestamped Notes
 
-Status: next candidate after Phase 4E; requires a focused spec and approval.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-Candidate scope:
+The spec `docs/timestamped-notes-spec.md` is now a historical reference for
+the completed Phase 4F work.
 
-- Add Insert Timestamp.
-- Read the current embedded player time.
-- Insert a plain-text timestamp such as `[12:45]` at the current notes cursor
-  position.
-- Preserve timestamps inside `youtubeNotes`.
-- Keep notes as plain text; do not add a rich-text editor yet.
+Phase 4F added an Insert Timestamp control to the YouTube Task Detail
+notes card. It reads the current embedded player time and inserts a
+bracketed plain-text token (e.g. `[12:45] `) starting on its own line,
+with one trailing space, at the notes textarea cursor. `youtubeNotes`
+remains plain text; no rich-text, clickable timestamps, notes preview,
+parsing, or styling was added.
 
 ### Phase 4G — Clickable Timestamp Notes / Rich Notes Decision
 
-Status: later candidate after Phase 4F; requires a focused spec and approval.
+Status: next candidate after Phase 4F; requires a focused spec and approval.
 
 Preferred first option:
 
