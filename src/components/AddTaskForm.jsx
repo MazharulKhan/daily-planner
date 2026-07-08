@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { makeId } from '../utils/dateTime';
+import { validateYouTubeUrl } from '../utils/youtube';
 
 const DEFAULT_PRIORITY = 'Medium';
 const DEFAULT_CATEGORY = 'Work';
@@ -21,6 +22,8 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
   const [time, setTime] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [description, setDescription] = useState('');
+  const [youtubeUrl, setYoutubeUrl] = useState('');
+  const [urlError, setUrlError] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -38,19 +41,31 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
     setTime('');
     setDueDate('');
     setDescription('');
+    setYoutubeUrl('');
+    setUrlError(false);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
+
+    if (taskType === 'youtube') {
+      const urlCheck = validateYouTubeUrl(youtubeUrl);
+      if (!urlCheck.valid) {
+        setUrlError(true);
+        return;
+      }
+      setUrlError(false);
+    }
+
     const trimmedDesc = description.trim();
     onAdd({
       id: makeId('task'),
       title: trimmed,
       description: trimmedDesc,
       taskType,
-      youtubeUrl: '',
+      youtubeUrl: taskType === 'youtube' ? validateYouTubeUrl(youtubeUrl).url : '',
       youtubeNotes: '',
       completed: false,
       priority,
@@ -139,7 +154,10 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
               <span className="add-task__label">Task Type</span>
               <select
                 value={taskType}
-                onChange={(e) => setTaskType(e.target.value)}
+                onChange={(e) => {
+                  setTaskType(e.target.value);
+                  setUrlError(false);
+                }}
               >
                 {TASK_TYPES.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -148,6 +166,26 @@ export default function AddTaskForm({ open, onAdd, onClose, onRequestOpen }) {
                 ))}
               </select>
             </label>
+            {taskType === 'youtube' && (
+              <label className="add-task__field">
+                <span className="add-task__label">YouTube video URL (optional)</span>
+                <input
+                  type="text"
+                  value={youtubeUrl}
+                  onChange={(e) => {
+                    setYoutubeUrl(e.target.value);
+                    setUrlError(false);
+                  }}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  aria-label="YouTube video URL"
+                />
+                {urlError && (
+                  <span className="task-detail__validation">
+                    Enter a valid YouTube URL or leave this blank.
+                  </span>
+                )}
+              </label>
+            )}
             <label className="add-task__field">
               <span className="add-task__label">Priority</span>
               <select

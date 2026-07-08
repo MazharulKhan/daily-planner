@@ -25,6 +25,7 @@ export function useTasks(initialTasks) {
         taskType: 'standard',
         youtubeUrl: '',
         youtubeNotes: '',
+        lastWatchedSeconds: 0,
         ...task,
         completedAt: null,
         updatedAt: now,
@@ -59,7 +60,29 @@ export function useTasks(initialTasks) {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  return { tasks, addTask, editTask, toggleTask, deleteTask };
+  const editPlaybackPosition = useCallback((id, seconds) => {
+    const floored =
+      typeof seconds === 'number' &&
+      Number.isFinite(seconds) &&
+      seconds >= 0
+        ? Math.floor(seconds)
+        : 0;
+    setTasks((prev) =>
+      prev.map((t) => {
+        if (t.id !== id) return t;
+        const current =
+          typeof t.lastWatchedSeconds === 'number' &&
+          Number.isFinite(t.lastWatchedSeconds) &&
+          t.lastWatchedSeconds >= 0
+            ? Math.floor(t.lastWatchedSeconds)
+            : 0;
+        if (current === floored) return t;
+        return { ...t, lastWatchedSeconds: floored };
+      }),
+    );
+  }, []);
+
+  return { tasks, addTask, editTask, toggleTask, deleteTask, editPlaybackPosition };
 }
 
 export function useIdeas(initialIdeas) {

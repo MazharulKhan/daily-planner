@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import '../styles/task-detail.css';
+import { parseYouTubeVideoId, formatSeconds, validateYouTubeUrl } from '../utils/youtube';
+import { useYouTubePlayer } from '../hooks/useYouTubePlayer';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
 const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
@@ -7,21 +9,6 @@ const TASK_TYPES = [
   { value: 'standard', label: 'Standard Task' },
   { value: 'youtube', label: 'YouTube Task' },
 ];
-const YOUTUBE_HOSTS = ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtu.be'];
-
-function validateYouTubeUrl(value) {
-  const trimmed = value.trim();
-  if (!trimmed) return { valid: true, url: '' };
-
-  try {
-    const parsed = new URL(trimmed);
-    const protocolValid = parsed.protocol === 'http:' || parsed.protocol === 'https:';
-    const hostValid = YOUTUBE_HOSTS.includes(parsed.hostname.toLowerCase());
-    return { valid: protocolValid && hostValid, url: trimmed };
-  } catch {
-    return { valid: false, url: trimmed };
-  }
-}
 
 export default function YouTubeTaskDetail({
   task,
@@ -31,6 +18,7 @@ export default function YouTubeTaskDetail({
   onCancelNavigation,
   onEditTask,
   onDeleteTask,
+  onEditPlaybackPosition,
 }) {
   const [title, setTitle] = useState(task.title || '');
   const [description, setDescription] = useState(task.description || '');
@@ -46,6 +34,8 @@ export default function YouTubeTaskDetail({
   const [titleError, setTitleError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
+  const [playerError, setPlayerError] = useState(false);
+  const [duration, setDuration] = useState(0);
 
   const titleRef = useRef(null);
   const keepEditingRef = useRef(null);
@@ -109,6 +99,13 @@ export default function YouTubeTaskDetail({
       completed,
     };
 
+    if (
+      urlCheck.url.trim() !== (task.youtubeUrl || '').trim() &&
+      urlCheck.url.trim() !== ''
+    ) {
+      patch.lastWatchedSeconds = 0;
+    }
+
     if (!task.completed && completed) {
       patch.completedAt = new Date().toISOString();
     } else if (task.completed && !completed) {
@@ -130,6 +127,7 @@ export default function YouTubeTaskDetail({
     completed,
     task.id,
     task.completed,
+    task.youtubeUrl,
     onEditTask,
     onConfirmNavigation,
     originView,
@@ -180,6 +178,71 @@ export default function YouTubeTaskDetail({
   const savedUrl = validateYouTubeUrl(task.youtubeUrl || '');
   const hasOpenVideoLink = savedUrl.valid && savedUrl.url;
   const showTaskTypeMessage = task.taskType === 'youtube' && taskType === 'standard';
+
+  const containerId = `youtube-player-${task.id}`;
+  const savedVideoId = useMemo(
+    () => (savedUrl.valid ? parseYouTubeVideoId(savedUrl.url) : null),
+    [savedUrl.valid, savedUrl.url],
+  );
+
+  const urlDraftChanged =
+    (youtubeUrl || '').trim() !== (task.youtubeUrl || '').trim();
+
+  const meaningfulResume =
+    typeof task.lastWatchedSeconds === 'number' &&
+    Number.isFinite(task.lastWatchedSeconds) &&
+    task.lastWatchedSeconds >= 5 &&
+    !urlDraftChanged &&
+    (duration <= 0 || task.lastWatchedSeconds < duration - 3);
+
+  const persistPosition = useCallback(
+    (seconds) => {
+      if (onEditPlaybackPosition) {
+        onEditPlaybackPosition(task.id, seconds);
+      }
+    },
+    [onEditPlaybackPosition, task.id],
+  );
+
+  const { seekAndPlay } = useYouTubePlayer({
+    containerId,
+    videoId: savedVideoId,
+    enabled: !!savedVideoId,
+    startSeconds: typeof task.lastWatchedSeconds === 'number' ? task.lastWatchedSeconds : 0,
+    onReady: (target) => {
+      try {
+        const d = target.getDuration();
+        if (typeof d === 'number' && Number.isFinite(d)) {
+          setDuration(d);
+        }
+      } catch {
+        /* ignore */
+      }
+      setPlayerError(false);
+    },
+    onPositionChange: (seconds) => {
+      persistPosition(seconds);
+    },
+    onPaused: (seconds) => {
+      persistPosition(seconds);
+    },
+    onEnded: () => {
+      persistPosition(0);
+    },
+    onLeave: (seconds) => {
+      persistPosition(seconds);
+    },
+    onError: () => {
+      setPlayerError(true);
+    },
+  });
+
+  const handleResume = useCallback(() => {
+    const seconds = typeof task.lastWatchedSeconds === 'number' ? task.lastWatchedSeconds : 0;
+    if (seconds >= 5) {
+      seekAndPlay(seconds);
+    }
+  }, [task.lastWatchedSeconds, seekAndPlay]);
 
   return (
     <div className="task-detail task-detail--youtube">
@@ -350,17 +413,44 @@ export default function YouTubeTaskDetail({
                   Enter a valid YouTube URL or leave this blank.
                 </span>
               )}
-              {hasOpenVideoLink && (
-                <a
-                  className="youtube-detail__open-link"
-                  href={savedUrl.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open video
-                </a>
-              )}
             </div>
+
+            {savedVideoId && (
+              <div className="youtube-detail__video-card">
+                {playerError ? (
+                  <div className="youtube-detail__player-error">
+                    <p className="youtube-detail__player-error-text">
+                      This video can't be played here.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="youtube-detail__player-wrapper">
+                    <div id={containerId} className="youtube-detail__player-frame" />
+                  </div>
+                )}
+
+                {!playerError && meaningfulResume && (
+                  <button
+                    type="button"
+                    className="youtube-detail__resume"
+                    onClick={handleResume}
+                  >
+                    Resume from {formatSeconds(task.lastWatchedSeconds)}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {hasOpenVideoLink && (
+              <a
+                className="youtube-detail__open-link"
+                href={savedUrl.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open video
+              </a>
+            )}
 
             <div className="task-detail__grid youtube-detail__meta-grid">
               <div className="task-detail__field">

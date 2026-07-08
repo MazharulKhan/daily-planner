@@ -13,7 +13,7 @@ import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
 
 function App() {
-  const { tasks, addTask, editTask, toggleTask, deleteTask } =
+  const { tasks, addTask, editTask, toggleTask, deleteTask, editPlaybackPosition } =
     useTasks(makeSampleTasks());
   const { ideas, addIdea, editIdea, deleteIdea } = useIdeas(makeSampleIdeas());
 
@@ -106,6 +106,7 @@ function App() {
         onCancelNavigation={cancelNavigation}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
+        onEditPlaybackPosition={editPlaybackPosition}
       />
     );
   } else if (view === 'dashboard') {

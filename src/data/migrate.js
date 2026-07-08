@@ -31,6 +31,13 @@ export function normalizeTask(task) {
   const youtubeNotes =
     typeof task.youtubeNotes === 'string' ? task.youtubeNotes : '';
 
+  const lastWatchedSeconds =
+    typeof task.lastWatchedSeconds === 'number' &&
+    Number.isFinite(task.lastWatchedSeconds) &&
+    task.lastWatchedSeconds >= 0
+      ? task.lastWatchedSeconds
+      : 0;
+
   const completed = task.completed === true;
 
   let completedAt = null;
@@ -72,6 +79,7 @@ export function normalizeTask(task) {
     taskType,
     youtubeUrl,
     youtubeNotes,
+    lastWatchedSeconds,
     completed,
     completedAt,
     priority,

@@ -2,7 +2,9 @@
 
 ## Current Phase
 
-No active implementation phase.
+Phase 4E — YouTube Player and Resume Foundation is complete.
+Phase 4F — Timestamped Notes is the next candidate.
+
 Phase 4D — YouTube Task Foundation is complete.
 
 ## Current State
@@ -66,8 +68,7 @@ Phase 3B delivered:
 
 ## Next Exact Step
 
-Create a focused plan/spec for Phase 4E — YouTube Player and Resume
-Foundation. Do not implement it until explicitly approved.
+Wait for approval of a focused Phase 4F spec — Timestamped Notes.
 `Convert to Task` for ideas stays deferred until a future phase provides
 the appropriate conversion flow.
 
@@ -78,9 +79,8 @@ the appropriate conversion flow.
   Vercel URL.
 - No other known functional issues remain. The following are intentional
   scope limits, not bugs: global search, saved filters, multi-select/bulk
-  actions, custom category management, embedded YouTube playback, player
-  controls, saved position, resume, timestamps, clickable timestamp notes,
-  rich-text notes, responsive/mobile redesign, and dark mode.
+  actions, custom category management, timestamps, clickable timestamp
+  notes, rich-text notes, responsive/mobile redesign, and dark mode.
 
 ## How to Run the App
 
@@ -112,6 +112,7 @@ docs/
 ├── standard-task-detail-spec.md
 ├── task-list-pages-spec.md
 ├── youtube-task-foundation-spec.md
+├── youtube-player-spec.md
 ├── build-plan.md
 └── project-status.md
 ```
@@ -128,6 +129,58 @@ docs/
   APIs, or extra packages without explicit approval.
 
 ## Session History
+
+### 2026-07-08 — Phase 4E Complete (Implementation, Browser Verified)
+
+- Implemented all approved Phase 4E work from
+  `docs/youtube-player-spec.md`.
+- Features delivered:
+  - YouTube IFrame Player API approved and used for embedded playback,
+    current-time reads, and seeking (no API key, no package, no backend).
+  - `lastWatchedSeconds` field added to every task with safe migration
+    (finite ≥0 preserved, otherwise 0).
+  - Dedicated `editPlaybackPosition(id, seconds)` setter writes only
+    `lastWatchedSeconds` without changing `updatedAt`; skips no-op writes
+    when floored position hasn't changed.
+  - `parseYouTubeVideoId` parses approved YouTube URL formats into a
+    usable video ID without rewriting the stored URL.
+  - `formatSeconds` helper formats playback position as MM:SS or H:MM:SS.
+  - `useYouTubePlayer` hook manages IFrame API script load (idempotent),
+    player create/destroy, throttled 5-second position checkpoint, and
+    pause/end/leave persistence.
+  - On video end, the latest playback-position ref is set to 0 before
+    calling `editPlaybackPosition(0)`, and unmount cleanup does not
+    overwrite the ended-state reset with the video duration.
+  - YouTube Task Detail renders a responsive 16:9 embedded player in a
+    white video card when a valid saved URL yields a video ID.
+  - Resume from MM:SS button appears only when meaningful (≥5s,
+    <duration−3 if duration known) and seeks + auto-plays.
+  - Invalid, private, removed, or embed-disabled videos show a
+    non-breaking fallback card and keep the Open video link.
+  - Open video link retained as a secondary external fallback.
+  - `youtubeNotes` remains a plain textarea.
+  - Add Task -> More options reveals an optional YouTube video URL field
+    only when Task Type is YouTube Task; validation mirrors detail; no
+    YouTube notes field added to Add Task.
+  - Changing `youtubeUrl` to a different video on Save resets
+    `lastWatchedSeconds` to 0.
+  - Playback position saves do not trigger dirty-form state and do not
+    change `updatedAt`.
+- Files changed (new): `src/utils/youtube.js`,
+  `src/hooks/useYouTubePlayer.js`,
+  `docs/youtube-player-spec.md`.
+- Files changed (modified): `src/components/YouTubeTaskDetail.jsx`,
+  `src/components/AddTaskForm.jsx`, `src/App.jsx`,
+  `src/data/migrate.js`, `src/data/sampleData.js`,
+  `src/hooks/useLocalStorage.js`, `src/styles/task-detail.css`.
+- Files likely unchanged: `StandardTaskDetail.jsx`, row components, page
+  components.
+- No package, dependency, configuration, backend, auth, API, router,
+  Firebase, YouTube Data API, or cloud sync changes were made.
+- `npm run build` result: passed.
+- `npm run lint` result: passed.
+- User-confirmed normal browser testing passed for implemented Phase 4E
+  behavior.
 
 ### 2026-07-07 — Phase 4D Complete (Implementation, Browser Verified)
 

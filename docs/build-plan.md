@@ -122,8 +122,8 @@ YouTube task foundation.
 2. Phase 4B — Standard Task Detail (complete)
 3. Phase 4C — Task List Pages and Navigation (complete)
 4. Phase 4D — YouTube Task Foundation (complete)
-5. Phase 4E — YouTube Player and Resume Foundation (next candidate)
-6. Phase 4F — Timestamped Notes (later candidate)
+5. Phase 4E — YouTube Player and Resume Foundation (complete)
+6. Phase 4F — Timestamped Notes (next candidate)
 7. Phase 4G — Clickable Timestamp Notes / Rich Notes Decision (later candidate)
 
 ### Phase 4D — YouTube Task Foundation
@@ -136,49 +136,14 @@ Phase 4D did not add an embedded player or playback controls.
 
 ### Phase 4E — YouTube Player and Resume Foundation
 
-Status: next candidate after Phase 4D; requires a focused spec and explicit
-approval.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-Purpose: turn the current external-link YouTube workflow into an in-app
-video-learning workspace while keeping notes as plain text.
-
-Candidate scope:
-
-- Deliberately approve use of the YouTube IFrame Player API. No API key,
-  backend, package, cloud sync, or YouTube Data API is required for this
-  player-control workflow.
-- Convert accepted saved YouTube URLs into a usable video ID without rewriting
-  the original stored URL.
-- Render an embedded responsive YouTube player in the task workspace.
-- Keep Open video as a secondary external fallback link.
-- Add `lastWatchedSeconds` to YouTube Tasks with safe migration/defaults.
-- Persist playback position at sensible moments such as pause, video end,
-  detail exit, and a throttled periodic checkpoint rather than every second.
-- Add Resume from MM:SS only when a meaningful saved playback position exists.
-- Resume the embedded player from the saved position.
-- Handle invalid, private, removed, unavailable, or embedding-disabled videos
-  with a clear non-breaking fallback state.
-- Keep `youtubeNotes` as a plain textarea in this phase.
-- Consider revealing an optional YouTube video URL field immediately below Task
-  Type when Task Type is set to YouTube Task inside Add Task -> More options.
-  Keep the URL optional so fast capture remains possible. Do not add the large
-  YouTube Notes field to Add Task.
-
-Technical direction:
-
-Use the YouTube IFrame Player API for app-controlled playback events,
-current-time reads, and seeking. A static embed alone is not enough for the
-planned Resume and timestamp controls.
-
-Layout direction:
-
-Use a responsive 16:9 player. On desktop, aim for enough room to display
-YouTube controls comfortably; approximately 480 x 270 is the recommended
-minimum target where the layout allows.
+The spec `docs/youtube-player-spec.md` is now a historical reference for the
+completed Phase 4E work.
 
 ### Phase 4F — Timestamped Notes
 
-Status: later candidate after Phase 4E; requires a focused spec and approval.
+Status: next candidate after Phase 4E; requires a focused spec and approval.
 
 Candidate scope:
 
