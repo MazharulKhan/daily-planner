@@ -132,8 +132,6 @@ Phase 4D added the task-type foundation, a dedicated YouTube Task Detail
 workspace, local YouTube URL and notes fields, safe localStorage migration,
 and Standard/YouTube task-type transition behavior.
 
-Phase 4D did not add an embedded player or playback controls.
-
 ### Phase 4E — YouTube Player and Resume Foundation
 
 Status: complete — implemented, build/lint passed, manually browser-verified.
