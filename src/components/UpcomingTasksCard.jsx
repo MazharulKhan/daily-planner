@@ -95,11 +95,9 @@ function UpcomingTaskRow({ task, onEdit, onDelete, onOpenDetail }) {
     <div
       className={`task-row${completed ? ' task-row--completed' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
     >
-      <div className="task-row__main">
       <button type="button" className="task-row__title-btn" aria-label={`Open details for ${task.title}`} onClick={() => onOpenDetail?.(task)}>
         {task.title}
       </button>
-      </div>
       {task.category && (
         <div className="task-row__badges">
           <span className="badge badge--category">{task.category}</span>

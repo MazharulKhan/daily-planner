@@ -25,7 +25,7 @@ export default function DailyProgressCard({ tasks }) {
       <div className="card__body">
         <div className="progress">
           <div
-            className="progress__ring"
+            className={`progress__ring${total === 0 ? ' progress__ring--empty' : ''}`}
             style={{ '--pct': pct }}
             role="img"
             aria-label={`${pct}% complete, ${done} of ${total} tasks done`}
@@ -37,6 +37,15 @@ export default function DailyProgressCard({ tasks }) {
           <div className="progress__summary">
             <strong>{done}</strong> of <strong>{total}</strong> tasks completed
             today
+          </div>
+          <div className="progress__legend">
+            <span className="progress__legend-item">
+              <span
+                className="progress__legend-dot progress__legend-dot--completed"
+                aria-hidden="true"
+              />
+              <span>Completed</span>
+            </span>
           </div>
           <div className="progress__note">{encouragement(pct)}</div>
         </div>

@@ -65,6 +65,15 @@
   white-space: nowrap;
 }
 
+@media (max-width: 760px) {
+  .idea-row {
+    flex-wrap: wrap;
+  }
+  .idea-row__time {
+    display: none;
+  }
+}
+
 /* Add idea form */
 .add-idea {
   display: flex;

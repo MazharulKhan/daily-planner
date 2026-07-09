@@ -11,6 +11,18 @@
 }
 
 .app-content {
-  padding: var(--space-6) var(--space-8);
+  padding: var(--space-5) var(--space-6);
   flex: 1 1 auto;
+}
+
+@media (max-width: 1100px) {
+  .app-content {
+    padding: var(--space-5) var(--space-5);
+  }
+}
+
+@media (max-width: 900px) {
+  .app-content {
+    padding: var(--space-4) var(--space-4);
+  }
 }

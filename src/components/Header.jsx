@@ -8,6 +8,33 @@ const VIEW_TITLES = {
   completed: { title: 'Completed', subtitle: 'Everything you have finished so far.' },
 };
 
+function DateChip() {
+  const now = new Date();
+  const weekday = now.toLocaleDateString(undefined, { weekday: 'short' });
+  const monthDay = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return (
+    <div className="header__date" aria-label={`Today is ${weekday}, ${monthDay}`}>
+      <svg
+        className="header__date-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="4" width="18" height="17" rx="2" />
+        <path d="M3 9h18M8 2v4M16 2v4" />
+      </svg>
+      <span className="header__date-text">
+        <span className="header__date-weekday">{weekday}</span>
+        <span className="header__date-monthday">{monthDay}</span>
+      </span>
+    </div>
+  );
+}
+
 export default function Header({ onAddTask, activeView, detailOpen }) {
   const showTitle = activeView !== 'quick-ideas' && !detailOpen;
   const page = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
@@ -27,6 +54,8 @@ export default function Header({ onAddTask, activeView, detailOpen }) {
 
       {!detailOpen && (
         <div className="header__actions">
+          <DateChip />
+
           <div className="header__search">
             <svg
               className="header__search-icon"

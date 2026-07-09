@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: var(--space-6);
-  max-width: 1180px;
+  gap: var(--space-5);
+  max-width: 1280px;
   margin: 0 auto;
 }
 

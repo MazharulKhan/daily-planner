@@ -14,6 +14,57 @@ const TASK_TYPES = [
   { value: 'youtube', label: 'YouTube Task' },
 ];
 
+function FieldIcon({ name }) {
+  const common = {
+    className: 'add-task-modal__field-icon',
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  };
+  switch (name) {
+    case 'task-type':
+      return (
+        <svg {...common}>
+          <rect x="3" y="4" width="18" height="6" rx="1" />
+          <rect x="3" y="14" width="18" height="6" rx="1" />
+        </svg>
+      );
+    case 'category':
+      return (
+        <svg {...common}>
+          <path d="M20.59 13.41 13.42 20.59a2 2 0 0 1-2.83 0L3 13V3h10l7.59 7.59a2 2 0 0 1 0 2.82Z" />
+          <circle cx="7.5" cy="7.5" r="1.2" />
+        </svg>
+      );
+    case 'priority':
+      return (
+        <svg {...common}>
+          <path d="M4 21V4M4 4l13 4-6 3 6 3-13 1" />
+        </svg>
+      );
+    case 'due-date':
+      return (
+        <svg {...common}>
+          <rect x="3" y="4" width="18" height="17" rx="2" />
+          <path d="M3 9h18M8 2v4M16 2v4" />
+        </svg>
+      );
+    case 'time':
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function initialFieldState() {
   return {
     title: '',
@@ -265,7 +316,10 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
 
           <div className="add-task-modal__grid">
             <label className="add-task-modal__field">
-              <span className="add-task-modal__label">Task Type</span>
+              <span className="add-task-modal__label">
+                <FieldIcon name="task-type" />
+                Task Type
+              </span>
               <select
                 value={fields.taskType}
                 onChange={(e) => {
@@ -282,7 +336,10 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             </label>
 
             <label className="add-task-modal__field">
-              <span className="add-task-modal__label">Category</span>
+              <span className="add-task-modal__label">
+                <FieldIcon name="category" />
+                Category
+              </span>
               <select
                 value={fields.category}
                 onChange={(e) => updateField('category', e.target.value)}
@@ -296,7 +353,10 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             </label>
 
             <label className="add-task-modal__field">
-              <span className="add-task-modal__label">Priority</span>
+              <span className="add-task-modal__label">
+                <FieldIcon name="priority" />
+                Priority
+              </span>
               <select
                 value={fields.priority}
                 onChange={(e) => updateField('priority', e.target.value)}
@@ -310,7 +370,10 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             </label>
 
             <label className="add-task-modal__field">
-              <span className="add-task-modal__label">Due date</span>
+              <span className="add-task-modal__label">
+                <FieldIcon name="due-date" />
+                Due date
+              </span>
               <input
                 type="date"
                 value={fields.dueDate}
@@ -319,7 +382,10 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             </label>
 
             <label className="add-task-modal__field">
-              <span className="add-task-modal__label">Time</span>
+              <span className="add-task-modal__label">
+                <FieldIcon name="time" />
+                Time
+              </span>
               <div className="add-task-modal__time-row">
                 <input
                   type="time"
@@ -408,8 +474,11 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
               <circle cx="12" cy="12" r="10" />
               <path d="M12 16v-4M12 8h.01" />
             </svg>
-            <span>
-              Today + Any time + Medium + Work + Standard Task
+            <span className="add-task-modal__defaults-text">
+              <span className="add-task-modal__defaults-label">Defaults</span>
+              <span className="add-task-modal__defaults-value">
+                Today + Any time + Medium + Work + Standard Task
+              </span>
             </span>
           </div>
 

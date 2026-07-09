@@ -126,6 +126,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .qi-idea__expand {
@@ -570,4 +571,23 @@
 .qi-idea__delete-title:disabled:hover {
   color: var(--color-text-faint);
   background: none;
+}
+
+@media (max-width: 760px) {
+  .qi-workspace {
+    gap: var(--space-4);
+  }
+  .qi-idea {
+    padding: var(--space-3) var(--space-4);
+  }
+  .qi-idea__time {
+    display: none;
+  }
+  .qi-idea__actions {
+    flex-wrap: wrap;
+  }
+  .qi-edit__actions,
+  .qi-idea__notes-actions {
+    flex-wrap: wrap;
+  }
 }
