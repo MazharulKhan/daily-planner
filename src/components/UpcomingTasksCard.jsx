@@ -5,6 +5,15 @@ import TaskDeleteConfirm from './TaskDeleteConfirm';
 import EmptyState from './EmptyState';
 import { formatDueDate, isUpcoming, sortUpcomingTasks } from '../utils/dateTime';
 
+function priorityClass(priority) {
+  if (!priority) return '';
+  const p = priority.toLowerCase();
+  if (p === 'high') return 'badge--high';
+  if (p === 'medium') return 'badge--medium';
+  if (p === 'low') return 'badge--low';
+  return '';
+}
+
 export default function UpcomingTasksCard({
   tasks,
   activeTaskAction,
@@ -98,9 +107,16 @@ function UpcomingTaskRow({ task, onEdit, onDelete, onOpenDetail }) {
       <button type="button" className="task-row__title-btn" aria-label={`Open details for ${task.title}`} onClick={() => onOpenDetail?.(task)}>
         {task.title}
       </button>
-      {task.category && (
+      {(task.priority || task.category) && (
         <div className="task-row__badges">
-          <span className="badge badge--category">{task.category}</span>
+          {task.priority && (
+            <span className={`badge ${priorityClass(task.priority)}`}>
+              {task.priority}
+            </span>
+          )}
+          {task.category && (
+            <span className="badge badge--category">{task.category}</span>
+          )}
         </div>
       )}
       <span className="task-row__due">{formatDueDate(task.dueDate)}</span>
