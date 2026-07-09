@@ -1,10 +1,12 @@
-# Phase 5A — Global Task Creation Flow (Draft Spec)
+# Phase 5A — Global Task Creation Flow
 
-**Status: Draft spec — not yet approved. No implementation.**
+**Status: Complete — implemented, build/lint passed, manually browser-verified,
+committed and pushed (`164d83b`).**
 
-This is a focused sub-phase spec for Phase 5A only. It must be reviewed and
-approved before any code changes. It follows the hard constraints in
-`AGENTS.md` and the workflow in `docs/phase-5-ux-backlog.md`.
+This spec is now a historical reference for the completed Phase 5A work. It
+describes the global Add Task modal that replaced the inline/shared Add Task
+form. See `docs/project-status.md` for the current project state and
+`docs/phase-5-ux-backlog.md` for remaining Phase 5 sub-phases.
 
 ---
 

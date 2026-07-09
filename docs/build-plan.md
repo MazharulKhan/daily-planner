@@ -189,23 +189,32 @@ focused spec and approval.
 
 ### Status
 
-Next planned phase after completed Phase 4 work. No active spec yet.
-A focused Phase 5 sub-phase spec must be drafted and approved before
-implementation. See `docs/phase-5-ux-backlog.md` for the full UX backlog
-and planning notes.
+Phase 5A — Global Task Creation Flow is complete. Remaining Phase 5
+sub-phases are proposed and require their own focused spec and approval
+before implementation. See `docs/phase-5-ux-backlog.md` for the full UX
+backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-These are proposed sub-phases only, not approved implementation specs.
-Each requires its own focused spec and approval before coding.
+Phase 5A is complete. The remaining sub-phases are proposed only, not
+approved implementation specs. Each requires its own focused spec and
+approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
-- Reusable Add Task panel/modal that works from Dashboard, Today,
-  Upcoming, Completed, Quick Ideas, and other normal views.
-- Fixes confusing global + Add Task behavior outside Dashboard.
-- Includes task creation defaults: Today + Any time + Medium + Work +
-  Standard, with visible defaults in the compact form.
+Status: complete — implemented, build/lint passed, manually browser-verified.
+
+The spec `docs/phase-5a-global-task-creation-spec.md` is now a historical
+reference for the completed Phase 5A work.
+
+Phase 5A replaced the inline/shared Add Task form with a single centered
+Add Task modal that opens from the Sidebar, Header, and inline "+ Add a
+task" triggers (Dashboard/Today). One live create surface; the user stays
+on the current workspace after saving. Task creation defaults: Today +
+Any time + Medium + Work + Standard. The modal supports Standard and
+YouTube task types, reuses the existing `validateYouTubeUrl` validation,
+and includes a dirty-state discard confirmation. The Sidebar "+ Add
+Task" button is visually disabled while a task detail is open.
 
 #### Phase 5B — Persist Current Workspace After Refresh
 

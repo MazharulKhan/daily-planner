@@ -18,12 +18,14 @@ Phases 2 (Dashboard Foundation), 3A (Core Task Management Improvements),
 3B (Task Organization), 4A (Quick Ideas Management), 4B (Standard Task
 Detail), 4C (Task List Pages and Navigation), 4D (YouTube Task
 Foundation), 4E (YouTube Player and Resume Foundation), 4F (Timestamped
-Notes), and 4G (Clickable Timestamp Notes) are complete.
+Notes), 4G (Clickable Timestamp Notes), and 5A (Global Task Creation
+Flow) are complete.
 
 The app remains frontend-only, with all data stored in browser `localStorage`.
 
-Phase 5 — Polish, Accessibility, and GitHub Preparation is the next
-planned phase but has no active spec yet.
+Phase 5 — Polish, Accessibility, and GitHub Preparation continues with
+the remaining sub-phases (5B onward). Each requires its own focused spec
+and approval before implementation. See `docs/phase-5-ux-backlog.md`.
 
 ## Current Technology
 

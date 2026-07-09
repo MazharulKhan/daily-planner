@@ -2,10 +2,11 @@
 
 ## Current Phase
 
-Phase 4G — Clickable Timestamp Notes is complete.
-Phase 5 — Polish, Accessibility, and GitHub Preparation is the next
-planned phase but has no active spec yet. See
-`docs/phase-5-ux-backlog.md` for the UX backlog / planning notes.
+Phase 5A — Global Task Creation Flow is complete.
+Phase 5 — Polish, Accessibility, and GitHub Preparation continues with the
+remaining sub-phases. See `docs/phase-5-ux-backlog.md` for the UX backlog /
+planning notes and `docs/phase-5a-global-task-creation-spec.md` for the
+completed Phase 5A spec.
 
 Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
 It will start fresh with a clean Firestore data model (Option A).
@@ -14,8 +15,9 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. A Phase 5 plan/spec must be drafted and
-approved before any implementation.
+No active implementation phase. The next candidate is Phase 5B — Persist
+Current Workspace After Refresh, which requires its own focused spec and
+approval before any implementation.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -35,14 +37,16 @@ until a future phase provides the appropriate conversion flow.
 | 4E | YouTube Player and Resume Foundation | Complete |
 | 4F | Timestamped Notes | Complete |
 | 4G | Clickable Timestamp Notes | Complete |
+| 5A | Global Task Creation Flow | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |
+| `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/clickable-timestamp-notes-spec.md` | Phase 4G completed spec (historical) |
 | `docs/timestamped-notes-spec.md` | Phase 4F completed spec (historical) |
-| `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/youtube-player-spec.md` | Phase 4E completed spec (historical) |
 | `docs/youtube-task-foundation-spec.md` | Phase 4D completed spec (historical) |
 | `docs/task-list-pages-spec.md` | Phase 4C completed spec (historical) |

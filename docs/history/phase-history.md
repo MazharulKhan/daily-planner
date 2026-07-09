@@ -15,10 +15,12 @@ Phase 3A (Core Task Management Improvements) is complete and committed
 complete and committed (`75b62b9`), pushed to `origin/main`. Phase 4B
 (Standard Task Detail) is complete and committed (`380f0e1`), pushed to
 `origin/main`. Phase 4C (Task List Pages and Navigation) is complete and
-committed (`6856b7d`).
-
-Phase 4D — YouTube Task Foundation is complete. Implementation, build, lint,
-and user manual browser verification passed successfully.
+committed (`6856b7d`). Phase 4D (YouTube Task Foundation) is complete.
+Phase 4E (YouTube Player and Resume Foundation) is complete.
+Phase 4F (Timestamped Notes) is complete.
+Phase 4G (Clickable Timestamp Notes) is complete.
+Phase 5A (Global Task Creation Flow) is complete and committed
+(`164d83b`), pushed to `origin/main`.
 
 ## Phase 4D Decision Record
 
@@ -180,6 +182,28 @@ Phase 3B delivered:
   with dirty-form protection, origin return, delete confirmation.
 - `npm run build` and `npm run lint` passed.
 - User-confirmed normal browser testing passed.
+
+### 2026-07-08 — Phase 5A Implementation Complete
+
+- Implemented all approved Phase 5A work from
+  `docs/phase-5a-global-task-creation-spec.md`.
+- Global Add Task modal replaces the inline/shared Add Task form.
+- One live create surface; modal opens from Sidebar, Header, and
+  Dashboard/Today inline "+ Add a task" triggers from all normal
+  workspaces (Dashboard, Today, Upcoming, Completed, Quick Ideas).
+- Upcoming inline trigger removed during cleanup (modal defaults
+  to Today; Upcoming relies on global Sidebar/Header controls).
+- Dirty close confirmation added: pristine → immediate close;
+  dirty → overlay click ignored, Cancel/X/Escape show discard
+  confirmation, Keep editing preserves fields, Discard closes and
+  resets, Save bypasses confirmation.
+- Sidebar "+ Add Task" visually disabled while Standard Task Detail
+  or YouTube Task Detail is open, with App-level `detailOpen` guard.
+- Visual polish ideas for Phase 5E captured in
+  `docs/phase-5-ux-backlog.md`.
+- `npm run build` and `npm run lint` passed.
+- User-confirmed normal browser testing passed.
+- Committed (`164d83b`) and pushed to `origin/main`.
 
 ### 2026-07-05 — Phase 4A Implementation Complete
 
