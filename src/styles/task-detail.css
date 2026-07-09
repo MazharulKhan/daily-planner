@@ -480,6 +480,106 @@
   }
 }
 
+@media (max-width: 760px) {
+  .task-detail,
+  .task-detail--youtube {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    gap: var(--space-4);
+  }
+
+  .task-detail__header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .task-detail__header-actions,
+  .task-detail__footer,
+  .task-detail__confirm-actions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .task-detail__back,
+  .task-detail__delete,
+  .task-detail__save,
+  .task-detail__cancel,
+  .task-delete__confirm,
+  .task-delete__cancel {
+    justify-content: center;
+    min-height: 38px;
+  }
+
+  .task-detail__header-actions .task-detail__delete,
+  .task-detail__header-actions .task-detail__save,
+  .task-detail__footer .task-detail__cancel,
+  .task-detail__footer .task-detail__save,
+  .task-detail__confirm-actions .task-delete__confirm,
+  .task-detail__confirm-actions .task-delete__cancel {
+    flex: 1 1 140px;
+  }
+
+  .task-detail__confirm-banner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .task-detail__meta {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    line-height: 1.4;
+  }
+
+  .task-detail__title-input {
+    min-width: 0;
+    font-size: var(--font-size-md);
+  }
+
+  .task-detail__grid,
+  .youtube-detail__meta-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .youtube-detail__workspace {
+    gap: var(--space-4);
+  }
+
+  .youtube-detail__video-card {
+    padding: var(--space-3);
+  }
+
+  .youtube-detail__notes {
+    min-height: 220px;
+  }
+
+  .youtube-detail__notes-header,
+  .youtube-detail__preview-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .youtube-detail__insert-timestamp {
+    min-height: 34px;
+  }
+
+  .youtube-detail__preview {
+    padding: var(--space-3);
+  }
+
+  .youtube-detail__preview-body {
+    overflow-wrap: anywhere;
+  }
+
+  .youtube-detail__preview-chip {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+}
+
 .youtube-detail__video-card {
   display: flex;
   flex-direction: column;

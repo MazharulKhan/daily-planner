@@ -178,3 +178,33 @@
   outline: 2px solid var(--color-accent-border);
   outline-offset: 2px;
 }
+
+@media (max-width: 760px) {
+  .header {
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .header__title-block {
+    width: 100%;
+  }
+
+  .header__subtitle {
+    line-height: 1.45;
+  }
+
+  .header__actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header__search {
+    display: none;
+  }
+
+  .header__add {
+    min-height: 42px;
+    justify-content: center;
+  }
+}

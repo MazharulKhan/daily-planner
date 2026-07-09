@@ -575,19 +575,56 @@
 
 @media (max-width: 760px) {
   .qi-workspace {
+    width: 100%;
+    max-width: none;
     gap: var(--space-4);
+  }
+  .qi-workspace__title {
+    font-size: var(--font-size-xl);
+  }
+  .qi-capture {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+  }
+  .qi-capture__actions {
+    justify-content: stretch;
+  }
+  .qi-capture__save {
+    width: 100%;
+    min-height: 42px;
   }
   .qi-idea {
     padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+  }
+  .qi-idea__expand {
+    min-width: 0;
+  }
+  .qi-idea__text {
+    white-space: normal;
+    line-height: 1.4;
   }
   .qi-idea__time {
     display: none;
   }
   .qi-idea__actions {
+    justify-content: stretch;
     flex-wrap: wrap;
   }
   .qi-edit__actions,
   .qi-idea__notes-actions {
     flex-wrap: wrap;
+  }
+  .qi-idea__action,
+  .qi-edit__save,
+  .qi-edit__cancel,
+  .qi-confirm__delete,
+  .qi-confirm__cancel {
+    flex: 1 1 130px;
+    min-height: 38px;
+  }
+  .qi-confirm__actions {
+    flex-wrap: wrap;
+    width: 100%;
   }
 }

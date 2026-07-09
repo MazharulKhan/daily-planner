@@ -101,3 +101,27 @@
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;
 }
+
+@media (max-width: 760px) {
+  .card {
+    border-radius: var(--radius-md);
+  }
+
+  .card__header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: var(--space-3);
+  }
+
+  .card__title-row {
+    flex: 1 1 auto;
+  }
+
+  .card__title {
+    white-space: normal;
+  }
+
+  .card__body {
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+}

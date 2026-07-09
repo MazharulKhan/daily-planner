@@ -16,3 +16,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 760px) {
+  .dashboard {
+    width: 100%;
+    max-width: none;
+    gap: var(--space-3);
+    margin: 0;
+  }
+}
