@@ -4,8 +4,9 @@
 
 Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
 Phase 5F — Dark Mode Preference is complete.
-Phase 5 — Polish, Accessibility, and GitHub Preparation continues with
-Phase 5G — Mobile Layout Polish (planning only; spec required before coding).
+Phase 5G — Mobile Layout Polish is complete.
+Phase 5H — README, Screenshots, and Portfolio Handoff is the next
+planning-only sub-phase.
 See `docs/phase-5-ux-backlog.md` for the UX backlog / planning notes, and
 `docs/phase-5a-global-task-creation-spec.md`,
 `docs/phase-5b-current-workspace-persistence-spec.md`,
@@ -21,10 +22,10 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. Phase 5F — Dark Mode Preference is complete.
-The next candidate is Phase 5G — Mobile Layout Polish. It is not implemented
-yet and needs its own focused spec and approval before coding. README /
-Screenshots / Portfolio Handoff moves to Phase 5H.
+No active implementation phase. Phase 5F — Dark Mode Preference and
+Phase 5G — Mobile Layout Polish are complete. The next candidate is
+Phase 5H — README / Screenshots / Portfolio Handoff. It is not
+implemented yet and needs its own focused spec and approval before coding.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -50,11 +51,13 @@ until a future phase provides the appropriate conversion flow.
 | 5D | Quick Idea Notes Capture Refinement | Complete |
 | 5E | Responsive, Accessibility, and Visual Polish | Complete |
 | 5F | Dark Mode Preference | Complete |
+| 5G | Mobile Layout Polish | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5g-mobile-layout-polish-spec.md` | Phase 5G completed spec (historical) |
 | `docs/phase-5f-dark-mode-preference-spec.md` | Phase 5F completed spec (historical) |
 | `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
 | `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
@@ -128,8 +131,7 @@ Open the Vite localhost URL in a normal browser (usually `http://localhost:5173/
 ## Known Issues / Deferred
 
 **Known issues:** OpenChamber built-in browser preview is unreliable; visual
-testing must use a normal browser. Mobile layout usability needs a focused
-Phase 5G spec before implementation.
+testing must use a normal browser.
 
 **Intentionally deferred (not bugs):** global search, saved filters,
 multi-select/bulk actions, custom category management, rich-text notes,

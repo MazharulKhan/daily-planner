@@ -26,6 +26,7 @@ Phase 5C (Completed Task Display Refinement) is complete.
 Phase 5D (Quick Idea Notes Capture Refinement) is complete.
 Phase 5E (Responsive, Accessibility, and Visual Polish Pass) is complete.
 Phase 5F (Dark Mode Preference) is complete.
+Phase 5G (Mobile Layout Polish) is complete.
 
 ## Phase 4D Decision Record
 
@@ -202,6 +203,47 @@ Phase 3B delivered:
   collapsed/default state.
 - Completed page remains the full, uncollapsed completion history.
 - `npm run build` and `npm run lint` passed.
+- User-confirmed normal browser testing passed.
+
+### 2026-07-09 — Phase 5G Implementation Complete
+
+- Implemented all approved Phase 5G work from
+  `docs/phase-5g-mobile-layout-polish-spec.md`.
+- Features delivered:
+  - Mobile single-column layout: `.app-shell` converted from two-column
+    desktop grid on phone widths. Sidebar became a top mobile navigation
+    area with brand, Add Task, nav destinations, and dark mode toggle
+    fitting within phone width. `.app-main` and `.app-content` use full
+    viewport width. No body-level horizontal overflow.
+  - Sidebar mobile: brand in top row with Add Task; nav items in a
+    wrapping row below; dark mode toggle kept accessible.
+  - Header mobile: visual-only search and date chip hidden; title and
+    greeting remain readable. Header Add Task hidden on mobile.
+  - Dashboard cards stack in one column; Today's Tasks no longer clipped.
+  - Task rows reflow: title wraps, badges wrap below title, overdue/time
+    wraps to own line, edit/delete visible and touch-friendly.
+  - Category chips wrap or scroll cleanly within their area.
+  - Add Task modal uses bottom-sheet style on mobile with internal scroll.
+  - Quick Ideas workspace fits mobile width; expanded notes editor
+    comfortable to type in.
+  - Standard Task Detail and YouTube Task Detail stack to single column;
+    video stays 16:9 and contained.
+  - Dark mode preserved across all mobile surfaces.
+  - Desktop/laptop layout preserved above 760px breakpoint.
+- Files changed (modified):
+  `src/styles/layout.css`,
+  `src/styles/sidebar.css`,
+  `src/styles/header.css`,
+  `src/styles/dashboard.css`,
+  `src/styles/cards.css`,
+  `src/styles/task-row.css`,
+  `src/styles/add-task-modal.css`,
+  `src/styles/quick-ideas-workspace.css`,
+  `src/styles/task-detail.css`.
+- No packages, dependencies, configuration, backend, auth, API, router,
+  Firebase, data-shape changes, migrations, or new localStorage keys.
+- `npm run build` result: passed.
+- `npm run lint` result: passed.
 - User-confirmed normal browser testing passed.
 
 ### 2026-07-09 — Phase 5F Implementation Complete

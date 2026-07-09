@@ -36,7 +36,7 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
 5. **Phase 5E** — Responsive / Accessibility / Visual Polish ✓
 6. **Phase 5F** — Dark Mode Preference ✓
-7. **Phase 5G** — Mobile Layout Polish
+7. **Phase 5G** — Mobile Layout Polish ✓
 8. **Phase 5H** — README / Screenshots / Portfolio Handoff
 
 ---
@@ -320,27 +320,22 @@ no Firebase.
 
 ### 9. Mobile Layout Polish (Phase 5G)
 
-**Status:** Planning only — not implemented. Requires its own focused spec
-and approval before coding.
+**Status: Complete.** See `docs/phase-5g-mobile-layout-polish-spec.md`
+for the completed Phase 5G spec.
 
-**Problem:**
-The deployed Vercel app needs focused mobile usability and layout polish
-before portfolio screenshots and README handoff. Mobile viewing currently
-does not present the app well unless Chrome desktop view is enabled.
-
-**Proposed behavior:**
-- Draft and approve a focused Phase 5G mobile layout polish spec before
-  making code changes.
-- Improve mobile usability and layout for the existing app without adding
-  new product features.
-- Preserve existing task, idea, YouTube, dark mode, and localStorage
-  behavior unless the approved spec explicitly changes it.
-
-**Priority:** High
-**Complexity:** Medium
-**Scope boundary:** No app code changes from this backlog note alone. No
-new packages, no router, no backend/Firebase/auth, and no data-shape
-changes without explicit approval.
+**Delivered:**
+- Mobile single-column layout with sidebar converted to a top mobile
+  navigation area.
+- Brand, Add Task, nav destinations, and dark mode toggle fit on phone
+  widths.
+- Header simplified on mobile; visual-only search and date chip hidden.
+- Dashboard cards stack one column; Today's Tasks no longer clipped.
+- Task rows, category chips, Add Task modal, Quick Ideas workspace, and
+  detail views all reflow for phone widths.
+- Dark mode and accessibility preserved on mobile.
+- Desktop/laptop layout preserved above 760px breakpoint.
+- No new packages, no data-shape changes, no new localStorage keys, no
+  router, no backend/Firebase/auth changes.
 
 ---
 

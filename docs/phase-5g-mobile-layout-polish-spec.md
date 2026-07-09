@@ -1,9 +1,10 @@
 # Phase 5G - Mobile Layout Polish
 
-**Status: Draft for review - not implemented.**
+**Status: Complete — implemented, build/lint passed, manually
+browser-verified.**
 
-This spec is the proposed source of truth for Phase 5G. It must be reviewed
-and approved before any application code is changed.
+This spec is the source of truth for the completed Phase 5G work. It is
+now a historical reference.
 
 ---
 

@@ -192,16 +192,16 @@ focused spec and approval.
 Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
 Persistance, Phase 5C — Completed Task Display Refinement, Phase 5D —
 Quick Idea Notes Capture Refinement, Phase 5E — Responsive,
-Accessibility, and Visual Polish Pass, and Phase 5F — Dark Mode
-Preference are complete. Phase 5G — Mobile Layout Polish is the next
-planning-only future sub-phase. Phase 5H — README, Screenshots, and
-Portfolio Handoff follows after mobile polish. See
+Accessibility, and Visual Polish Pass, Phase 5F — Dark Mode
+Preference, and Phase 5G — Mobile Layout Polish are complete.
+Phase 5H — README, Screenshots, and Portfolio Handoff is the next
+planning-only sub-phase. See
 `docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, and Phase 5F are complete.
-Phase 5G and Phase 5H are planning only. Each remaining sub-phase requires
+Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, Phase 5F, and Phase 5G are
+complete. Phase 5H is planning only. Each remaining sub-phase requires
 its own focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
@@ -341,14 +341,31 @@ Phase 5F delivered:
 
 #### Phase 5G — Mobile Layout Polish
 
-Status: planning only — not implemented. Requires a focused Phase 5G spec
-and approval before coding.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-- Focused mobile usability and layout polish for the existing app.
-- Address mobile layout issues observed on the deployed Vercel app before
-  creating portfolio screenshots or README handoff materials.
-- Preserve existing app behavior and data constraints unless the approved
-  Phase 5G spec explicitly says otherwise.
+The spec `docs/phase-5g-mobile-layout-polish-spec.md` is now a historical
+reference for the completed Phase 5G work.
+
+Phase 5G delivered:
+
+- Mobile single-column layout: sidebar became a top mobile navigation area
+  with brand, Add Task, nav destinations, and dark mode toggle fitting
+  within phone width.
+- Header simplified on mobile: visual-only search and date chip hidden;
+  greeting and title remain readable.
+- Dashboard cards stack in one column; Today's Tasks no longer clipped.
+- Task rows reflow for mobile; badges wrap below title; overdue/time text
+  wraps without overflow; edit/delete actions remain visible and
+  touch-friendly.
+- Category filter chips scroll/wrap cleanly within their own area.
+- Add Task modal uses bottom-sheet style on mobile with internal scroll.
+- Standard Task Detail and YouTube Task Detail stack to single column on
+  mobile; video stays 16:9 and contained.
+- Quick Ideas workspace, completed groups, and dark mode all preserved and
+  functional on mobile.
+- Desktop/laptop layout preserved above the 760px breakpoint.
+- No new packages, no data-shape changes, no new localStorage keys, no
+  router, no backend/Firebase/auth changes.
 
 #### Phase 5H — README, Screenshots, and Portfolio Handoff
 
