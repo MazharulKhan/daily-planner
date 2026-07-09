@@ -36,7 +36,8 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
 5. **Phase 5E** — Responsive / Accessibility / Visual Polish ✓
 6. **Phase 5F** — Dark Mode Preference ✓
-7. **Phase 5G** — README / Screenshots / Portfolio Handoff
+7. **Phase 5G** — Mobile Layout Polish
+8. **Phase 5H** — README / Screenshots / Portfolio Handoff
 
 ---
 
@@ -317,7 +318,33 @@ no Firebase.
 
 ---
 
-### 9. README, Screenshots, and Portfolio Handoff (Phase 5G)
+### 9. Mobile Layout Polish (Phase 5G)
+
+**Status:** Planning only — not implemented. Requires its own focused spec
+and approval before coding.
+
+**Problem:**
+The deployed Vercel app needs focused mobile usability and layout polish
+before portfolio screenshots and README handoff. Mobile viewing currently
+does not present the app well unless Chrome desktop view is enabled.
+
+**Proposed behavior:**
+- Draft and approve a focused Phase 5G mobile layout polish spec before
+  making code changes.
+- Improve mobile usability and layout for the existing app without adding
+  new product features.
+- Preserve existing task, idea, YouTube, dark mode, and localStorage
+  behavior unless the approved spec explicitly changes it.
+
+**Priority:** High
+**Complexity:** Medium
+**Scope boundary:** No app code changes from this backlog note alone. No
+new packages, no router, no backend/Firebase/auth, and no data-shape
+changes without explicit approval.
+
+---
+
+### 10. README, Screenshots, and Portfolio Handoff (Phase 5H)
 
 **Problem:**
 The GitHub repo needs a professional README for portfolio presentation.

@@ -5,7 +5,7 @@
 Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
 Phase 5F — Dark Mode Preference is complete.
 Phase 5 — Polish, Accessibility, and GitHub Preparation continues with
-Phase 5G — README, Screenshots, and Portfolio Handoff (planning only).
+Phase 5G — Mobile Layout Polish (planning only; spec required before coding).
 See `docs/phase-5-ux-backlog.md` for the UX backlog / planning notes, and
 `docs/phase-5a-global-task-creation-spec.md`,
 `docs/phase-5b-current-workspace-persistence-spec.md`,
@@ -22,7 +22,9 @@ packages, auth, or config should be added now.
 ## Next Exact Step
 
 No active implementation phase. Phase 5F — Dark Mode Preference is complete.
-The next candidate is Phase 5G — README / Screenshots / Portfolio Handoff.
+The next candidate is Phase 5G — Mobile Layout Polish. It is not implemented
+yet and needs its own focused spec and approval before coding. README /
+Screenshots / Portfolio Handoff moves to Phase 5H.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -126,11 +128,12 @@ Open the Vite localhost URL in a normal browser (usually `http://localhost:5173/
 ## Known Issues / Deferred
 
 **Known issues:** OpenChamber built-in browser preview is unreliable; visual
-testing must use a normal browser.
+testing must use a normal browser. Mobile layout usability needs a focused
+Phase 5G spec before implementation.
 
 **Intentionally deferred (not bugs):** global search, saved filters,
 multi-select/bulk actions, custom category management, rich-text notes,
-responsive/mobile redesign, Reading Tasks, notifications,
+broader mobile-first redesign, Reading Tasks, notifications,
 recurring tasks, AI features, cloud sync, authentication, backend APIs,
 Firebase / cloud sync.
 

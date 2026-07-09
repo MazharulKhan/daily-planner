@@ -193,15 +193,16 @@ Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
 Persistance, Phase 5C — Completed Task Display Refinement, Phase 5D —
 Quick Idea Notes Capture Refinement, Phase 5E — Responsive,
 Accessibility, and Visual Polish Pass, and Phase 5F — Dark Mode
-Preference are complete. Phase 5G — README, Screenshots, and Portfolio
-Handoff is a planning-only future sub-phase. See
+Preference are complete. Phase 5G — Mobile Layout Polish is the next
+planning-only future sub-phase. Phase 5H — README, Screenshots, and
+Portfolio Handoff follows after mobile polish. See
 `docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
 Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, and Phase 5F are complete.
-Phase 5G is planning only. Each remaining sub-phase requires its own focused
-spec and approval before coding.
+Phase 5G and Phase 5H are planning only. Each remaining sub-phase requires
+its own focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -338,14 +339,25 @@ Phase 5F delivered:
 - No new packages, no data-shape changes, no router, no
   backend/Firebase/auth changes. One new localStorage key (`dp.theme`).
 
-#### Phase 5G — README, Screenshots, and Portfolio Handoff
+#### Phase 5G — Mobile Layout Polish
+
+Status: planning only — not implemented. Requires a focused Phase 5G spec
+and approval before coding.
+
+- Focused mobile usability and layout polish for the existing app.
+- Address mobile layout issues observed on the deployed Vercel app before
+  creating portfolio screenshots or README handoff materials.
+- Preserve existing app behavior and data constraints unless the approved
+  Phase 5G spec explicitly says otherwise.
+
+#### Phase 5H — README, Screenshots, and Portfolio Handoff
 
 - README, screenshots, live Vercel link, feature list, setup
   instructions, limitations, future improvements.
 
 ### Deferred Beyond Phase 5
 
-- Mobile-first redesign
+- Broader mobile-first redesign beyond focused Phase 5G polish
 - Calendar integration
 - Reminders and notifications
 - AI note summaries
