@@ -114,3 +114,12 @@
 .sidebar__add:hover {
   background: var(--color-accent-hover);
 }
+
+.sidebar__add--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sidebar__add--disabled:hover {
+  background: var(--color-accent);
+}

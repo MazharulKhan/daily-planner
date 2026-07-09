@@ -25,7 +25,7 @@ function NavIcon() {
   );
 }
 
-export default function Sidebar({ onAddTask, activeView, onNavigate }) {
+export default function Sidebar({ onAddTask, activeView, onNavigate, addDisabled }) {
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
@@ -74,7 +74,15 @@ export default function Sidebar({ onAddTask, activeView, onNavigate }) {
 
       <div className="sidebar__spacer" />
 
-      <button type="button" className="sidebar__add" onClick={onAddTask}>
+      <button
+        type="button"
+        className={
+          addDisabled ? 'sidebar__add sidebar__add--disabled' : 'sidebar__add'
+        }
+        onClick={onAddTask}
+        disabled={addDisabled}
+        aria-disabled={addDisabled || undefined}
+      >
         <svg
           width="16"
           height="16"

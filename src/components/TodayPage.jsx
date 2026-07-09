@@ -5,7 +5,7 @@ import '../styles/progress.css';
 import TaskRow from './TaskRow';
 import TaskEditForm from './TaskEditForm';
 import TaskDeleteConfirm from './TaskDeleteConfirm';
-import AddTaskForm from './AddTaskForm';
+import AddTaskTrigger from './AddTaskTrigger';
 import EmptyState from './EmptyState';
 import { sortTodayTasks, isOverdue, isTodayOrPast, isCompletedToday } from '../utils/dateTime';
 
@@ -22,13 +22,10 @@ function encouragement(pct) {
 export default function TodayPage({
   tasks,
   onToggle,
-  onAdd,
-  addOpen,
-  onRequestAdd,
-  onCloseAdd,
   onOpenDetail,
   onEditTask,
   onDeleteTask,
+  onRequestAdd,
   onViewAllCompleted,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
@@ -217,12 +214,7 @@ export default function TodayPage({
           </>
         )}
 
-        <AddTaskForm
-          open={addOpen}
-          onAdd={onAdd}
-          onClose={onCloseAdd}
-          onRequestOpen={onRequestAdd}
-        />
+        <AddTaskTrigger onRequestAdd={onRequestAdd} />
 
         {allDone && (
           <div className="task-list__all-done">

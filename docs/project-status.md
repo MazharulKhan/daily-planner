@@ -3,14 +3,22 @@
 ## Current Phase
 
 Phase 4G — Clickable Timestamp Notes is complete.
-Phase 4H — Rich Notes Editor / Formatting Toolbar Decision is the next
-candidate, but has no spec yet.
+Phase 5 — Polish, Accessibility, and GitHub Preparation is the next
+planned phase but has no active spec yet. See
+`docs/phase-5-ux-backlog.md` for the UX backlog / planning notes.
+
+Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
+It will start fresh with a clean Firestore data model (Option A).
+No localStorage-to-Firestore migration is required. No Firebase setup,
+packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-A Phase 4H spec must be drafted and approved before any implementation.
-`Convert to Task` for ideas stays deferred until a future phase provides
-the appropriate conversion flow.
+No active implementation phase. A Phase 5 plan/spec must be drafted and
+approved before any implementation.
+Rich-text notes / formatting toolbar are deferred future improvements
+with no spec or approval. `Convert to Task` for ideas stays deferred
+until a future phase provides the appropriate conversion flow.
 
 ## Completed Phase Checklist
 
@@ -34,6 +42,7 @@ the appropriate conversion flow.
 |-----|---------|
 | `docs/clickable-timestamp-notes-spec.md` | Phase 4G completed spec (historical) |
 | `docs/timestamped-notes-spec.md` | Phase 4F completed spec (historical) |
+| `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/youtube-player-spec.md` | Phase 4E completed spec (historical) |
 | `docs/youtube-task-foundation-spec.md` | Phase 4D completed spec (historical) |
 | `docs/task-list-pages-spec.md` | Phase 4C completed spec (historical) |

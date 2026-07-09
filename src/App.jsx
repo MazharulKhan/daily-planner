@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './styles/layout.css';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -9,6 +9,7 @@ import YouTubeTaskDetail from './components/YouTubeTaskDetail';
 import TodayPage from './components/TodayPage';
 import UpcomingPage from './components/UpcomingPage';
 import CompletedPage from './components/CompletedPage';
+import AddTaskModal from './components/AddTaskModal';
 import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
 
@@ -26,6 +27,8 @@ function App() {
 
   const [originView, setOriginView] = useState('dashboard');
 
+  const taskTriggerRef = useRef(null);
+
   const selectedTask = useMemo(
     () => tasks.find((t) => t.id === selectedTaskId) || null,
     [tasks, selectedTaskId],
@@ -34,11 +37,18 @@ function App() {
   const detailOpen = selectedTaskId !== null;
 
   const requestAddTask = useCallback(() => {
+    if (detailOpen) return;
+    taskTriggerRef.current = document.activeElement;
     setTaskAddOpen(true);
-  }, []);
+  }, [detailOpen]);
 
   const closeAddTask = useCallback(() => {
     setTaskAddOpen(false);
+    const el = taskTriggerRef.current;
+    if (el && typeof el.focus === 'function') {
+      el.focus();
+    }
+    taskTriggerRef.current = null;
   }, []);
 
   const requestAddIdea = useCallback(() => {
@@ -115,7 +125,6 @@ function App() {
         tasks={tasks}
         ideas={ideas}
         onToggleTask={toggleTask}
-        onAddTask={addTask}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
         onAddIdea={addIdea}
@@ -123,11 +132,9 @@ function App() {
         onOpenDetail={openTaskDetail}
         onViewAllToday={handleViewAllToday}
         onViewAllUpcoming={handleViewAllUpcoming}
-        taskAddOpen={taskAddOpen}
         ideaAddOpen={ideaAddOpen}
         requestAddTask={requestAddTask}
         requestAddIdea={requestAddIdea}
-        closeAddTask={closeAddTask}
         closeAddIdea={closeAddIdea}
       />
     );
@@ -136,13 +143,10 @@ function App() {
       <TodayPage
         tasks={tasks}
         onToggle={toggleTask}
-        onAdd={addTask}
-        addOpen={taskAddOpen}
-        onRequestAdd={requestAddTask}
-        onCloseAdd={closeAddTask}
         onOpenDetail={openTaskDetail}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
+        onRequestAdd={requestAddTask}
         onViewAllCompleted={() => setView('completed')}
       />
     );
@@ -151,10 +155,6 @@ function App() {
       <UpcomingPage
         tasks={tasks}
         onToggle={toggleTask}
-        onAdd={addTask}
-        addOpen={taskAddOpen}
-        onRequestAdd={requestAddTask}
-        onCloseAdd={closeAddTask}
         onOpenDetail={openTaskDetail}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
@@ -188,6 +188,7 @@ function App() {
         onAddTask={requestAddTask}
         activeView={view}
         onNavigate={navigate}
+        addDisabled={detailOpen}
       />
       <div className="app-main">
         <Header
@@ -197,6 +198,11 @@ function App() {
         />
         <main className="app-content">{content}</main>
       </div>
+      <AddTaskModal
+        open={taskAddOpen}
+        onAdd={addTask}
+        onClose={closeAddTask}
+      />
     </div>
   );
 }

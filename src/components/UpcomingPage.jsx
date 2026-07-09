@@ -4,17 +4,12 @@ import '../styles/task-row.css';
 import TaskRow from './TaskRow';
 import TaskEditForm from './TaskEditForm';
 import TaskDeleteConfirm from './TaskDeleteConfirm';
-import AddTaskForm from './AddTaskForm';
 import EmptyState from './EmptyState';
 import { formatDueDate, isUpcoming, sortUpcomingTasks } from '../utils/dateTime';
 
 export default function UpcomingPage({
   tasks,
   onToggle,
-  onAdd,
-  addOpen,
-  onRequestAdd,
-  onCloseAdd,
   onOpenDetail,
   onEditTask,
   onDeleteTask,
@@ -144,13 +139,6 @@ export default function UpcomingPage({
             ))}
           </div>
         )}
-
-        <AddTaskForm
-          open={addOpen}
-          onAdd={onAdd}
-          onClose={onCloseAdd}
-          onRequestOpen={onRequestAdd}
-        />
       </div>
     </div>
   );

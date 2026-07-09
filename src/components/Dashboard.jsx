@@ -10,7 +10,6 @@ export default function Dashboard({
   tasks,
   ideas,
   onToggleTask,
-  onAddTask,
   onEditTask,
   onDeleteTask,
   onAddIdea,
@@ -18,11 +17,9 @@ export default function Dashboard({
   onOpenDetail,
   onViewAllToday,
   onViewAllUpcoming,
-  taskAddOpen,
   ideaAddOpen,
   requestAddTask,
   requestAddIdea,
-  closeAddTask,
   closeAddIdea,
 }) {
   const [activeTaskAction, setActiveTaskAction] = useState(null);
@@ -71,10 +68,6 @@ export default function Dashboard({
         <TodayTasksCard
           tasks={todayTasks}
           onToggle={onToggleTask}
-          onAdd={onAddTask}
-          addOpen={taskAddOpen}
-          onRequestAdd={requestAddTask}
-          onCloseAdd={closeAddTask}
           activeTaskAction={activeTaskAction}
           onBeginEdit={beginEdit}
           onBeginDelete={beginDelete}
@@ -83,6 +76,7 @@ export default function Dashboard({
           onActionCancel={clearAction}
           onOpenDetail={onOpenDetail}
           onViewAll={onViewAllToday}
+          onRequestAdd={requestAddTask}
           lastTriggerRef={lastTriggerRef}
         />
       </div>

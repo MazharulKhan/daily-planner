@@ -4,7 +4,7 @@ import '../styles/task-row.css';
 import TaskRow from './TaskRow';
 import TaskEditForm from './TaskEditForm';
 import TaskDeleteConfirm from './TaskDeleteConfirm';
-import AddTaskForm from './AddTaskForm';
+import AddTaskTrigger from './AddTaskTrigger';
 import EmptyState from './EmptyState';
 import { sortTodayTasks, isOverdue } from '../utils/dateTime';
 
@@ -13,10 +13,6 @@ const CATEGORIES = ['All', 'Work', 'Learning', 'Personal', 'Health'];
 export default function TodayTasksCard({
   tasks,
   onToggle,
-  onAdd,
-  addOpen,
-  onRequestAdd,
-  onCloseAdd,
   activeTaskAction,
   onBeginEdit,
   onBeginDelete,
@@ -25,6 +21,7 @@ export default function TodayTasksCard({
   onActionCancel,
   onOpenDetail,
   onViewAll,
+  onRequestAdd,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
 
@@ -158,12 +155,7 @@ export default function TodayTasksCard({
           </div>
         )}
 
-        <AddTaskForm
-          open={addOpen}
-          onAdd={onAdd}
-          onClose={onCloseAdd}
-          onRequestOpen={onRequestAdd}
-        />
+        <AddTaskTrigger onRequestAdd={onRequestAdd} />
 
         {completionMessage && (
           <div className="task-list__all-done">{completionMessage}</div>

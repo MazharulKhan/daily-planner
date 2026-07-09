@@ -171,13 +171,12 @@ text; no rich-text editor or formatting toolbar was added.
 
 ### Phase 4H — Rich Notes Editor / Formatting Toolbar Decision
 
-Status: future candidate; no spec yet.
+Status: future improvement; no spec yet. Not scheduled. Not approved.
 
 May evaluate Markdown-style formatting, a formatting toolbar, inline
 timestamp controls, or a proper editor package. Do not hand-build a
 fragile rich-text editor. Do not add an editor package without separate
-explicit approval. Phase 4H has no spec yet and is not approved for
-implementation.
+explicit approval. Phase 4H is not an active candidate and has no spec.
 
 ### Caution
 
@@ -188,25 +187,63 @@ focused spec and approval.
 
 ## Phase 5 — Polish, Accessibility, and GitHub Preparation
 
-### Goal
+### Status
 
-Improve quality and prepare a professional project handoff.
+Next planned phase after completed Phase 4 work. No active spec yet.
+A focused Phase 5 sub-phase spec must be drafted and approved before
+implementation. See `docs/phase-5-ux-backlog.md` for the full UX backlog
+and planning notes.
 
-### Candidate Work
+### Proposed Sub-Phases
 
-- Responsive improvements
-- Accessibility review and fixes
-- Better empty states and feedback messages
-- Light/dark mode, only after core workflow is stable
-- README update
-- Screenshots for GitHub
-- Final bug fixes
-- GitHub push and deployment planning
+These are proposed sub-phases only, not approved implementation specs.
+Each requires its own focused spec and approval before coding.
 
-### Deferred Beyond MVP
+#### Phase 5A — Global Task Creation Flow
 
-- User accounts
-- Cloud synchronization
+- Reusable Add Task panel/modal that works from Dashboard, Today,
+  Upcoming, Completed, Quick Ideas, and other normal views.
+- Fixes confusing global + Add Task behavior outside Dashboard.
+- Includes task creation defaults: Today + Any time + Medium + Work +
+  Standard, with visible defaults in the compact form.
+
+#### Phase 5B — Persist Current Workspace After Refresh
+
+- Persist last stable normal workspace only: Dashboard, Today, Upcoming,
+  Completed, Quick Ideas.
+- Do not restore Standard Task Detail or YouTube Task Detail after
+  refresh.
+- Use a small preference key such as `dp.activeView`.
+- No router.
+
+#### Phase 5C — Completed Task Display Refinement
+
+- Prevent completed tasks from cluttering Today/Dashboard.
+- Show only a few completed tasks by default, with expand/collapse.
+- Keep completed count visible.
+- Active tasks must never be hidden.
+
+#### Phase 5D — Quick Idea Notes Capture Refinement
+
+- Expanded Quick Ideas allow notes to be edited directly.
+- Main idea text stays read-only by default.
+- Separate Edit idea action for editing the main idea text.
+- Use explicit Save notes, not auto-save.
+
+#### Phase 5E — Responsive, Accessibility, and Visual Polish Pass
+
+- Laptop/smaller-width layout cleanup.
+- Empty states, focus states, keyboard navigation, spacing, alignment,
+  card consistency.
+- No major redesign.
+
+#### Phase 5F — README, Screenshots, and Portfolio Handoff
+
+- README, screenshots, live Vercel link, feature list, setup
+  instructions, limitations, future improvements.
+
+### Deferred Beyond Phase 5
+
 - Mobile-first redesign
 - Calendar integration
 - Reminders and notifications
@@ -214,6 +251,54 @@ Improve quality and prepare a professional project handoff.
 - Recurring tasks
 - File attachments
 - Advanced filtering/search
+- Rich-text notes editor / formatting toolbar (deferred future
+  improvement; do not hand-build a fragile editor; no editor package
+  without explicit approval)
+
+---
+
+## Phase 6 — Firebase / Cloud Sync Planning and Implementation
+
+### Status
+
+Future planned phase (post-Phase-5). Not scheduled. No spec yet. No
+Firebase setup, packages, auth, or config should be added now.
+
+### Clean-Start Decision
+
+Use Option A — start fresh with Firebase:
+
+- Firebase version starts fresh with a clean Firestore data model.
+- No localStorage-to-Firestore migration is required for the first
+  Firebase implementation.
+- Existing browser localStorage data does not need to be preserved or
+  imported into Firebase.
+- The completed localStorage version remains the local MVP.
+- No one-time import tool, migration UI, or automatic upload from
+  `dp.tasks` / `dp.ideas` is needed.
+
+### Likely Planning Topics
+
+Any Firebase implementation requires a focused, approved Firebase spec
+before code changes. Likely planning topics include:
+
+- Firestore data model for tasks and ideas
+- Whether auth is needed immediately or deferred to a later Firebase
+  sub-phase
+- Loading, saving, and error states
+- Offline/local fallback decisions
+- Environment/config setup
+- Security rules
+- Deployment considerations
+
+### Out of Scope (Now and During Phase 5)
+
+- No Firebase implementation now
+- No packages now
+- No auth now
+- No Firestore setup now
+- No migration/import from localStorage now
+- No backend/cloud sync changes now
 
 ---
 
