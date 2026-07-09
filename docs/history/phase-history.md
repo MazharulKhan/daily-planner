@@ -205,6 +205,18 @@ Phase 3B delivered:
 - `npm run build` and `npm run lint` passed.
 - User-confirmed normal browser testing passed.
 
+### 2026-07-09 — Post-5G Task Row Alignment Polish
+
+- Small UI polish on Dashboard Today's Tasks card and shared task row alignment.
+- Improved badge/time column consistency (`min-width` on badges and time);
+  overdue divider gained visual spacing and top border.
+- Added `task-row--overdue` class for red left border styling on overdue rows
+  only (replaced the too-broad `.overdue-divider ~ .task-row` sibling
+  selector that incorrectly styled non-overdue active tasks).
+- Files changed: `src/components/TaskRow.jsx`, `src/styles/task-row.css`.
+- No packages, router, Firebase/backend, data-shape, or localStorage changes.
+- `npm run build` and `npm run lint` passed.
+
 ### 2026-07-09 — Phase 5G Implementation Complete
 
 - Implemented all approved Phase 5G work from

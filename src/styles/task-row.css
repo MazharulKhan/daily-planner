@@ -131,6 +131,8 @@
   gap: var(--space-2);
   flex-shrink: 0;
   flex-wrap: nowrap;
+  min-width: 52px;
+  justify-content: flex-end;
 }
 
 .badge {
@@ -169,7 +171,7 @@
   color: var(--color-text-faint);
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
-  min-width: 44px;
+  min-width: 110px;
   text-align: right;
 }
 
@@ -316,12 +318,20 @@
   outline-offset: 2px;
 }
 
+/* Overdue task visual distinction */
+.task-row--overdue {
+  border-left: 3px solid var(--color-danger);
+  padding-left: var(--space-2);
+}
+
 /* Overdue divider */
 .overdue-divider {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2) 0 var(--space-2);
+  padding: var(--space-3) 0 var(--space-2);
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .overdue-divider__label {

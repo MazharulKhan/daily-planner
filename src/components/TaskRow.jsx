@@ -33,7 +33,7 @@ export default function TaskRow({
 
   return (
     <div
-      className={`task-row${completed ? ' task-row--completed' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
+      className={`task-row${completed ? ' task-row--completed' : ''}${overdue ? ' task-row--overdue' : ''}${priorityBorderClass ? ` ${priorityBorderClass}` : ''}`}
     >
       <button
         type="button"
