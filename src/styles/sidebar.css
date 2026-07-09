@@ -23,7 +23,7 @@
   background: var(--color-accent);
   display: grid;
   place-items: center;
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-weight: 700;
   font-size: var(--font-size-lg);
   flex-shrink: 0;
@@ -45,7 +45,7 @@
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-4);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
   font-weight: 600;
@@ -127,4 +127,85 @@
 
 .sidebar__spacer {
   flex: 1 1 auto;
+}
+
+.sidebar__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-soft);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.sidebar__theme-toggle:hover {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-border);
+  color: var(--color-text);
+}
+
+.sidebar__theme-toggle:focus-visible {
+  outline: 2px solid var(--color-accent-border);
+  outline-offset: 2px;
+}
+
+.sidebar__theme-toggle--active {
+  color: var(--color-text);
+  border-color: var(--color-accent-border);
+}
+
+.sidebar__theme-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.sidebar__theme-icon {
+  width: 17px;
+  height: 17px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.sidebar__theme-switch {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sidebar__theme-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.sidebar__theme-toggle--active .sidebar__theme-switch {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.sidebar__theme-toggle--active .sidebar__theme-thumb {
+  background: var(--color-accent-contrast);
+  transform: translateX(16px);
 }

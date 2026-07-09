@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import './styles/layout.css';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -14,6 +14,32 @@ import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
 import { storage } from './data/storage';
 
+const THEME_STORAGE_KEY = 'dp.theme';
+
+function normalizeTheme(value) {
+  return value === 'dark' || value === 'light' ? value : 'light';
+}
+
+function loadThemePreference() {
+  if (typeof window === 'undefined') return 'light';
+
+  try {
+    return normalizeTheme(window.localStorage.getItem(THEME_STORAGE_KEY));
+  } catch {
+    return 'light';
+  }
+}
+
+function saveThemePreference(theme) {
+  if (typeof window === 'undefined') return;
+
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    return;
+  }
+}
+
 function App() {
   const { tasks, addTask, editTask, toggleTask, deleteTask, editPlaybackPosition } =
     useTasks(makeSampleTasks());
@@ -21,6 +47,7 @@ function App() {
 
   const [taskAddOpen, setTaskAddOpen] = useState(false);
   const [ideaAddOpen, setIdeaAddOpen] = useState(false);
+  const [theme, setTheme] = useState(loadThemePreference);
   const [view, setView] = useState(() => storage.loadActiveView('dashboard'));
   const [selectedIdeaId, setSelectedIdeaId] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -37,9 +64,21 @@ function App() {
 
   const detailOpen = selectedTaskId !== null;
 
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
   useEffect(() => {
     storage.saveActiveView(view);
   }, [view]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((currentTheme) => {
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      saveThemePreference(nextTheme);
+      return nextTheme;
+    });
+  }, []);
 
   const requestAddTask = useCallback(() => {
     if (detailOpen) return;
@@ -194,6 +233,8 @@ function App() {
         activeView={view}
         onNavigate={navigate}
         addDisabled={detailOpen}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <div className="app-main">
         <Header

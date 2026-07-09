@@ -4,7 +4,8 @@
 
 Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
 Phase 5 — Polish, Accessibility, and GitHub Preparation continues with the
-remaining sub-phases. See `docs/phase-5-ux-backlog.md` for the UX backlog /
+remaining sub-phases: Phase 5F (spec drafted, pending review) and Phase 5G
+(planning only). See `docs/phase-5-ux-backlog.md` for the UX backlog /
 planning notes, and `docs/phase-5a-global-task-creation-spec.md`,
 `docs/phase-5b-current-workspace-persistence-spec.md`,
 `docs/phase-5c-completed-task-display-refinement-spec.md`,
@@ -19,10 +20,11 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. The next candidate is Phase 5F —
-README / Screenshots / Portfolio Handoff. Its scope is described in
-`docs/phase-5-ux-backlog.md` (section 8). The next exact step is to plan
-and draft the Phase 5F spec for review. No implementation is approved yet.
+No active implementation phase. Phase 5F — Dark Mode Preference —
+has a drafted spec at `docs/phase-5f-dark-mode-preference-spec.md`
+pending review and approval before any coding. Dark mode is not
+implemented yet. README / Screenshots / Portfolio Handoff follows
+as Phase 5G.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -52,6 +54,7 @@ until a future phase provides the appropriate conversion flow.
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5f-dark-mode-preference-spec.md` | Phase 5F drafted spec (pending review, not yet approved) |
 | `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
 | `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
 | `docs/phase-5c-completed-task-display-refinement-spec.md` | Phase 5C completed spec (historical) |
@@ -128,7 +131,7 @@ testing must use a normal browser.
 
 **Intentionally deferred (not bugs):** global search, saved filters,
 multi-select/bulk actions, custom category management, rich-text notes,
-responsive/mobile redesign, dark mode, Reading Tasks, notifications,
+responsive/mobile redesign, Reading Tasks, notifications,
 recurring tasks, AI features, cloud sync, authentication, backend APIs.
 
 ## Current Constraints

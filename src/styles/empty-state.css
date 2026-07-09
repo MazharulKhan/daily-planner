@@ -39,7 +39,7 @@
 
 .empty-state__action:hover {
   background: var(--color-accent-border);
-  color: #fff;
+  color: var(--color-accent-contrast);
 }
 
 .empty-state__action:focus-visible {

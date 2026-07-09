@@ -268,7 +268,7 @@
   border-radius: var(--radius-md);
   border: none;
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-md);
   font-weight: 600;
   cursor: pointer;
@@ -335,14 +335,14 @@
   border-radius: var(--radius-sm);
   border: none;
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-danger-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
   cursor: pointer;
 }
 
 .add-task-modal__confirm-discard:hover {
-  background: #b91c1c;
+  filter: brightness(0.94);
 }
 
 /* Narrow-viewport guard (no mobile redesign) */

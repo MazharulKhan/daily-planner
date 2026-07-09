@@ -94,7 +94,7 @@
 
 .card__header-action:hover {
   background: var(--color-accent-border);
-  color: #fff;
+  color: var(--color-accent-contrast);
 }
 
 .card__header-action:focus-visible {

@@ -51,7 +51,7 @@
 .task-row__check {
   width: 11px;
   height: 11px;
-  color: #fff;
+  color: var(--color-success-contrast);
   opacity: 0;
 }
 
@@ -373,7 +373,7 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
   transition: background 0.15s;
@@ -406,7 +406,7 @@
 
 .add-task__more:hover {
   background: var(--color-accent-border);
-  color: #fff;
+  color: var(--color-accent-contrast);
 }
 
 .add-task__options {
@@ -532,7 +532,7 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
   transition: background 0.15s;
@@ -593,7 +593,7 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-danger-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
 }

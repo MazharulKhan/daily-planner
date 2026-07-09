@@ -64,7 +64,44 @@ function NavIcon({ name }) {
   }
 }
 
-export default function Sidebar({ onAddTask, activeView, onNavigate, addDisabled }) {
+function ThemeIcon({ isDark }) {
+  const common = {
+    className: 'sidebar__theme-icon',
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  };
+
+  if (isDark) {
+    return (
+      <svg {...common}>
+        <path d="M12 3a6 6 0 0 0 9 7.4A8 8 0 1 1 12 3Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...common}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+    </svg>
+  );
+}
+
+export default function Sidebar({
+  onAddTask,
+  activeView,
+  onNavigate,
+  addDisabled,
+  theme,
+  onToggleTheme,
+}) {
+  const darkModeOn = theme === 'dark';
+
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
@@ -136,6 +173,27 @@ export default function Sidebar({ onAddTask, activeView, onNavigate, addDisabled
       </nav>
 
       <div className="sidebar__spacer" />
+
+      <button
+        type="button"
+        className={
+          darkModeOn
+            ? 'sidebar__theme-toggle sidebar__theme-toggle--active'
+            : 'sidebar__theme-toggle'
+        }
+        role="switch"
+        aria-checked={darkModeOn}
+        aria-label="Toggle dark mode"
+        onClick={onToggleTheme}
+      >
+        <span className="sidebar__theme-label">
+          <ThemeIcon isDark={darkModeOn} />
+          <span>Dark mode</span>
+        </span>
+        <span className="sidebar__theme-switch" aria-hidden="true">
+          <span className="sidebar__theme-thumb" />
+        </span>
+      </button>
     </aside>
   );
 }

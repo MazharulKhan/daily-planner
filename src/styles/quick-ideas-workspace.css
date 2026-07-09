@@ -82,7 +82,7 @@
   padding: var(--space-2) var(--space-5);
   border-radius: var(--radius-md);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-base);
   font-weight: 600;
   transition: background 0.15s;
@@ -241,13 +241,13 @@
 }
 
 .qi-idea__action--danger {
-  color: var(--color-danger, #c0392b);
-  border-color: var(--color-danger-border, rgba(192, 57, 43, 0.35));
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .qi-idea__action--danger:hover {
-  background: var(--color-danger-soft, rgba(192, 57, 43, 0.08));
-  color: var(--color-danger, #c0392b);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
 }
 
 .qi-edit {
@@ -290,7 +290,7 @@
   padding: var(--space-2) var(--space-5);
   border-radius: var(--radius-md);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
   border: none;
@@ -341,8 +341,8 @@
 .qi-confirm__delete {
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);
-  background: var(--color-danger, #c0392b);
-  color: #fff;
+  background: var(--color-danger);
+  color: var(--color-danger-contrast);
   border: none;
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -423,8 +423,8 @@
 
 .qi-idea__action--danger:disabled:hover {
   background: var(--color-surface);
-  color: var(--color-danger, #c0392b);
-  border-color: var(--color-danger-border, rgba(192, 57, 43, 0.35));
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .qi-edit__save:disabled,
@@ -437,7 +437,7 @@
 
 .qi-idea__notes-saved {
   font-size: var(--font-size-xs);
-  color: var(--color-success, #2e7d32);
+  color: var(--color-success);
   margin: 0;
   padding-top: var(--space-1);
 }
@@ -559,8 +559,8 @@
 }
 
 .qi-idea__delete-title:hover {
-  color: var(--color-danger, #c0392b);
-  background: var(--color-danger-soft, rgba(192, 57, 43, 0.08));
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
 }
 
 .qi-idea__delete-title:disabled {

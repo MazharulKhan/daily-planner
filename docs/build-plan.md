@@ -190,18 +190,20 @@ focused spec and approval.
 ### Status
 
 Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
-Persistence, Phase 5C — Completed Task Display Refinement, Phase 5D —
+Persistance, Phase 5C — Completed Task Display Refinement, Phase 5D —
 Quick Idea Notes Capture Refinement, and Phase 5E — Responsive,
 Accessibility, and Visual Polish Pass are complete.
-Remaining Phase 5 sub-phases are proposed and require their own focused spec
-and approval before implementation. See `docs/phase-5-ux-backlog.md` for the
-full UX backlog and planning notes.
+Phase 5F — Dark Mode Preference has a drafted spec
+(`docs/phase-5f-dark-mode-preference-spec.md`) pending review and
+approval. Phase 5G — README, Screenshots, and Portfolio Handoff is
+a planning-only future sub-phase. See `docs/phase-5-ux-backlog.md` for
+the full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, Phase 5C, Phase 5D, and Phase 5E are complete. The remaining
-sub-phases are proposed only, not approved implementation specs. Each
-requires its own focused spec and approval before coding.
+Phase 5A, Phase 5B, Phase 5C, Phase 5D, and Phase 5E are complete. Phase 5F
+has a drafted spec pending review. Phase 5G is planning only. Each requires
+its own focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -315,7 +317,24 @@ Phase 5E delivered:
 - No new packages, no data-shape changes, no new localStorage keys, no
   router, no backend/Firebase/auth changes.
 
-#### Phase 5F — README, Screenshots, and Portfolio Handoff
+#### Phase 5F — Dark Mode Preference
+
+Status: spec drafted — pending review and approval. Not yet implemented.
+
+The spec `docs/phase-5f-dark-mode-preference-spec.md` is the proposed
+source of truth for this phase. It must be reviewed and approved before
+any application code is changed.
+
+- CSS custom properties approach using existing `src/styles/variables.css`.
+- Toggleable via a user preference control (likely Header or Sidebar).
+- System `prefers-color-scheme` detection for default.
+- Persist preference in `localStorage` under a key such as `dp.theme`.
+- Light background, dark surface, and adjusted text/accent colors.
+- No new packages, no UI library, no CSS framework.
+- Preserve all existing functionality and data.
+- No mobile-first redesign, no router, no backend, no Firebase.
+
+#### Phase 5G — README, Screenshots, and Portfolio Handoff
 
 - README, screenshots, live Vercel link, feature list, setup
   instructions, limitations, future improvements.

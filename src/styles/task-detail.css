@@ -57,14 +57,14 @@
 
 .task-detail__delete:hover {
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-danger-contrast);
 }
 
 .task-detail__save {
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-sm);
   font-weight: 600;
   transition: background 0.15s;
@@ -344,7 +344,7 @@
 
 .youtube-detail__insert-timestamp:hover:not(:disabled) {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
 }
 
 .youtube-detail__insert-timestamp:focus-visible {
@@ -442,7 +442,7 @@
 
 .youtube-detail__preview-chip:hover:not(:disabled) {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
 }
 
 .youtube-detail__preview-chip:focus-visible {
@@ -534,7 +534,7 @@
   align-self: flex-start;
   padding: var(--space-2) var(--space-4);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
   border: 1px solid var(--color-accent);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);

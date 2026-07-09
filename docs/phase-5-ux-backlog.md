@@ -35,7 +35,8 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 3. **Phase 5C** — Completed Task Display Refinement ✓
 4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
 5. **Phase 5E** — Responsive / Accessibility / Visual Polish ✓
-6. **Phase 5F** — README / Screenshots / Portfolio Handoff
+6. **Phase 5F** — Dark Mode Preference (spec drafted, pending review)
+7. **Phase 5G** — README / Screenshots / Portfolio Handoff
 
 ---
 
@@ -202,7 +203,6 @@ product invariants. Work included:
 The following are explicitly **not** approved for Phase 5E. They remain
 deferred or out of scope unless a later spec approves them separately.
 
-- Dark mode.
 - Mobile-first redesign.
 - Settings page / sidebar item.
 - New pages.
@@ -285,7 +285,36 @@ drafted.
 
 ---
 
-### 8. README, Screenshots, and Portfolio Handoff (Phase 5F)
+### 8. Dark Mode Preference (Phase 5F)
+
+**Status: Spec drafted — pending review and approval. Not yet implemented.**
+See `docs/phase-5f-dark-mode-preference-spec.md` for the proposed spec.
+
+**Problem:**
+The app is light-mode only, which is harsh in low-light environments and
+limits accessibility.
+
+**Proposed behavior:**
+- CSS custom properties for color tokens (backgrounds, surfaces, text,
+  accents, borders, shadows) using existing `src/styles/variables.css`.
+- Toggle control in the Header or Sidebar (TBD in spec).
+- System `prefers-color-scheme` detection for the initial default.
+- Persist preference in `localStorage` under a key such as `dp.theme`.
+- Light background, dark surface, and adjusted text/accent colors for the
+  dark palette.
+- No new packages, no UI library, no CSS framework.
+- Preserve all existing functionality and data.
+- Do not change the component or layout structure.
+
+**Priority:** Medium
+**Complexity:** Medium
+**Scope boundary:** CSS + a preference toggle + localStorage key
+(`dp.theme`) only. No redesign, no mobile-first, no router, no backend,
+no Firebase.
+
+---
+
+### 9. README, Screenshots, and Portfolio Handoff (Phase 5G)
 
 **Problem:**
 The GitHub repo needs a professional README for portfolio presentation.
@@ -336,7 +365,6 @@ These are not Phase 5 items. They are captured for future reference only.
 - Daily reflection
 - Mood/energy check-in
 - Completion celebration
-- Dark mode
 - Global search
 - Convert Quick Idea to Task
 - Recurring tasks
