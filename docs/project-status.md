@@ -19,8 +19,11 @@ packages, auth, or config should be added now.
 ## Next Exact Step
 
 No active implementation phase. The next candidate is Phase 5E —
-Responsive, Accessibility, and Visual Polish Pass, which requires its own
-focused spec and approval before any implementation.
+Responsive, Accessibility, and Visual Polish Pass. Its planning scope is
+now captured in `docs/phase-5-ux-backlog.md` (section 7, "Candidate Scope
+— Approved for Spec Drafting"). The next exact step is to generate a
+focused Repomix context bundle from the updated backlog and then draft the
+Phase 5E spec for review. No implementation is approved yet.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.

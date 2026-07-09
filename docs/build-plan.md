@@ -262,10 +262,23 @@ dirty-notes protection across all destructive actions.
 
 #### Phase 5E — Responsive, Accessibility, and Visual Polish Pass
 
-- Laptop/smaller-width layout cleanup.
-- Empty states, focus states, keyboard navigation, spacing, alignment,
-  card consistency.
-- No major redesign.
+Status: planning only — approved scope for spec drafting, not for
+implementation.
+
+- Laptop/smaller-width layout cleanup and dashboard density/alignment.
+- Sidebar and header visual polish (inline SVG nav icons, Add Task
+  placement, personal greeting, visual-only date area).
+- Card spacing, borders, headers, badges, dividers, empty-state
+  consistency.
+- Add Task modal visual/responsive polish.
+- Accessibility: focus states, keyboard reachability, no hover-only
+  controls, ARIA/focus fixes.
+- No major redesign, no dark mode, no mobile-first redesign, no new
+  packages, no router, no backend, no data-shape changes.
+
+See `docs/phase-5-ux-backlog.md` section 7 for the full approved candidate
+scope and the explicit "Deferred / Not Phase 5E" list. A focused Phase 5E
+spec must still be written and approved before any code changes.
 
 #### Phase 5F — README, Screenshots, and Portfolio Handoff
 

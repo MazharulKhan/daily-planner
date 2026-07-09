@@ -43,7 +43,9 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 
 ### 1. Global Task Creation Flow (Phase 5A)
 
-**Problem:**
+**Status: Complete.** See `docs/phase-5a-global-task-creation-spec.md`.
+
+**Problem (historical):**
 The + Add Task button is visible globally in the sidebar, but task creation
 is tied to Dashboard/Today in-page forms. This is confusing when the user is
 on Upcoming, Completed, or Quick Ideas and clicks + Add Task.
@@ -77,7 +79,9 @@ summary-before-saving feel.
 
 ### 2. Persist Current Workspace After Refresh (Phase 5B)
 
-**Problem:**
+**Status: Complete.** See `docs/phase-5b-current-workspace-persistence-spec.md`.
+
+**Problem (historical):**
 Refreshing the browser always resets to the Dashboard, even if the user was
 on Today, Upcoming, Completed, or Quick Ideas.
 
@@ -101,7 +105,9 @@ on Today, Upcoming, Completed, or Quick Ideas.
 
 ### 3. Completed Task Display Refinement (Phase 5C)
 
-**Problem:**
+**Status: Complete.** See `docs/phase-5c-completed-task-display-refinement-spec.md`.
+
+**Problem (historical):**
 As more tasks accumulate, completed tasks can dominate the Today and
 Dashboard views, pushing active tasks down.
 
@@ -150,6 +156,8 @@ shape.
 
 ### 6. Quick Ideas Dashboard Edit/Delete
 
+**Status: Deferred — not approved for Phase 5E.**
+
 **Problem:**
 Dashboard "Recent Ideas" section allows expanding ideas but not editing or
 deleting them directly from the dashboard.
@@ -168,27 +176,80 @@ workspace. Delete confirmation should be required (deletes are permanent).
 
 ### 7. Responsive, Accessibility, and Visual Polish (Phase 5E)
 
+**Status: Approved for spec drafting (planning only — not implementation).**
+
 **Problem:**
 The app is desktop-first and has rough edges at smaller widths, some
-inconsistent spacing, and incomplete accessibility coverage.
+inconsistent spacing, and incomplete accessibility coverage. The dashboard
+layout currently leaves excessive empty space between the sidebar and the
+main content/card grid.
 
-**Proposed behavior:**
-- Laptop/smaller-width layout cleanup without a full mobile redesign.
-- Empty state refinements across all views.
-- Focus state consistency and keyboard navigation review.
-- Spacing, alignment, and card consistency.
-- No major redesign.
+The candidate scope below has been approved for **planning / spec drafting
+only**. Implementation is not approved. A focused Phase 5E spec must still be
+written, reviewed, and approved before any code changes.
+
+#### Candidate Scope — Approved for Spec Drafting
+
+These items are approved as the Phase 5E planning scope. A Repomix context
+bundle will be generated from this updated backlog to support spec creation.
+
+- **Dashboard layout alignment and density**
+  - Pull the main content/card grid closer to the sidebar when there is
+    excessive empty space.
+  - Reduce overly spacious dashboard/card rhythm while keeping the app clean
+    and readable.
+- **Sidebar visual polish**
+  - Consider moving the Sidebar "+ Add Task" button near the top, under the
+    app brand/name.
+  - Add subtle inline SVG sidebar icons for existing nav items only:
+    Dashboard, Today, Upcoming, Completed, Quick Ideas. No icon package.
+- **Header polish**
+  - More personal Dashboard greeting.
+  - Visual-only date/calendar area. No real calendar behavior.
+- **Card consistency**
+  - Spacing, borders, headers, badges, dividers, and empty-state
+    consistency across cards.
+- **Add Task modal visual/responsive polish**
+- **Smaller-width / laptop responsiveness** across: Dashboard, task pages,
+  Quick Ideas, Add Task modal, Standard Task Detail, and YouTube Task
+  Detail.
+- **Accessibility polish**
+  - Visible focus states.
+  - Keyboard reachability.
+  - No hover-only controls.
+  - Obvious ARIA / focus fixes.
 
 **Priority:** Medium
 **Complexity:** Medium
-**Scope boundary:** Do not implement dark mode in Phase 5E. Do not redesign
-the layout. Do not add packages.
 
-#### Phase 5E Visual Polish Ideas From Phase 5A Modal Review
+#### Deferred / Not Phase 5E
 
-These are future backlog ideas captured during Phase 5A review. None are
-approved implementation requirements. They belong to Phase 5E or a later
-visual polish pass.
+The following are explicitly **not** approved for Phase 5E. They remain
+deferred or out of scope unless a later spec approves them separately.
+
+- Dark mode.
+- Mobile-first redesign.
+- Settings page / sidebar item.
+- New pages.
+- New packages, including icon packages.
+- Router / routing library.
+- Firebase, backend, auth, cloud sync.
+- Task or idea data-shape changes.
+- Bulk delete / multi-select.
+- Delete without confirmation.
+- Custom Ctrl+Z undo system for YouTube notes.
+- Dashboard Quick Ideas edit/delete.
+- Quick Idea → Task conversion.
+- Rich-text editor / formatting toolbar.
+- Calendar functionality beyond a visual-only date display.
+- Global search.
+
+#### Visual Polish Ideas From Phase 5A Modal Review (reference only)
+
+These are visual polish ideas captured during Phase 5A review. They are
+reference inputs for the Phase 5E spec draft, not approved implementation
+requirements on their own. The Candidate Scope above governs what may be
+drafted.
 
 1. **Sidebar visual polish**
 
