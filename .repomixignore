@@ -1,0 +1,14 @@
+repomix-*.md
+repomix-*.txt
+repomix-output.*
+dist/
+build/
+coverage/
+docs/history/
+docs/ui-reference/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.log
