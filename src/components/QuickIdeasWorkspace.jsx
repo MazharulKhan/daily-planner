@@ -19,6 +19,8 @@ export default function QuickIdeasWorkspace({
         : null,
   );
   const [action, setAction] = useState(null);
+  const [draftNotes, setDraftNotes] = useState('');
+  const [notesSavedAt, setNotesSavedAt] = useState(null);
   const captureRef = useRef(null);
 
   const sorted = useMemo(
@@ -29,6 +31,13 @@ export default function QuickIdeasWorkspace({
       ),
     [ideas],
   );
+
+  const isNotesDirty = (() => {
+    if (!expandedId) return false;
+    const idea = ideas.find((i) => i.id === expandedId);
+    if (!idea) return false;
+    return draftNotes !== (idea.notes ?? '');
+  })();
 
   useEffect(() => {
     const id = expandedId;
@@ -67,10 +76,21 @@ export default function QuickIdeasWorkspace({
 
   function handleToggleExpand(id) {
     if (action) return;
-    setExpandedId((prev) => (prev === id ? null : id));
+    if (isNotesDirty) return;
+    if (expandedId === id) {
+      setDraftNotes('');
+      setNotesSavedAt(null);
+      setExpandedId(null);
+      return;
+    }
+    const idea = ideas.find((i) => i.id === id);
+    setDraftNotes(idea?.notes ?? '');
+    setExpandedId(id);
   }
 
   function handleEditStart(id) {
+    if (isNotesDirty) return;
+    setNotesSavedAt(null);
     setAction({ type: 'edit', id });
   }
 
@@ -84,17 +104,48 @@ export default function QuickIdeasWorkspace({
   }
 
   function handleDeleteStart(id) {
+    if (isNotesDirty) return;
     setAction({ type: 'confirm', id });
   }
 
   function handleDeleteConfirm(id) {
     onDeleteIdea(id);
     setAction(null);
+    setDraftNotes('');
+    setNotesSavedAt(null);
     setExpandedId(null);
   }
 
   function handleDeleteCancel() {
     setAction(null);
+  }
+
+  function handleNotesChange(value) {
+    setDraftNotes(value);
+    if (notesSavedAt) {
+      const idea = ideas.find((i) => i.id === expandedId);
+      if (value !== (idea?.notes ?? '')) {
+        setNotesSavedAt(null);
+      }
+    }
+  }
+
+  function handleNotesSave() {
+    const normalized = draftNotes.trim().length === 0 ? '' : draftNotes;
+    onEditIdea(expandedId, { notes: normalized });
+    setDraftNotes(normalized);
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+    setNotesSavedAt(time);
+  }
+
+  function handleNotesCancel() {
+    const idea = ideas.find((i) => i.id === expandedId);
+    setDraftNotes(idea?.notes ?? '');
+    setNotesSavedAt(null);
   }
 
   return (
@@ -145,7 +196,13 @@ export default function QuickIdeasWorkspace({
               idea={idea}
               expanded={expandedId === idea.id}
               action={action}
-              muted={action !== null && action.id !== idea.id}
+              muted={
+                (action !== null && action.id !== idea.id)
+                || (isNotesDirty && expandedId !== idea.id)
+              }
+              isNotesDirty={expandedId === idea.id && isNotesDirty}
+              draftNotes={expandedId === idea.id ? draftNotes : ''}
+              notesSavedAt={expandedId === idea.id ? notesSavedAt : null}
               onToggleExpand={handleToggleExpand}
               onEditStart={handleEditStart}
               onEditSave={handleEditSave}
@@ -153,6 +210,9 @@ export default function QuickIdeasWorkspace({
               onDeleteStart={handleDeleteStart}
               onDeleteConfirm={handleDeleteConfirm}
               onDeleteCancel={handleDeleteCancel}
+              onNotesChange={handleNotesChange}
+              onNotesSave={handleNotesSave}
+              onNotesCancel={handleNotesCancel}
             />
           ))}
         </div>

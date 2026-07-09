@@ -367,3 +367,207 @@
   background: var(--color-surface-soft);
   color: var(--color-text);
 }
+
+/* ---- Notes Editor (Phase 5D) ---- */
+
+.qi-idea__notes-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.qi-idea__notes-textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 96px;
+  font-family: inherit;
+}
+
+.qi-idea__notes-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-border);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.qi-idea__notes-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+/* Disabled controls */
+
+.qi-idea__action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.qi-idea__action:disabled:hover {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.qi-idea__action--danger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.qi-idea__action--danger:disabled:hover {
+  background: var(--color-surface);
+  color: var(--color-danger, #c0392b);
+  border-color: var(--color-danger-border, rgba(192, 57, 43, 0.35));
+}
+
+.qi-edit__save:disabled,
+.qi-edit__cancel:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Notes saved confirmation */
+
+.qi-idea__notes-saved {
+  font-size: var(--font-size-xs);
+  color: var(--color-success, #2e7d32);
+  margin: 0;
+  padding-top: var(--space-1);
+}
+
+/* Edit title pencil button */
+
+.qi-idea__edit-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-text-faint);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.qi-idea__edit-title:hover {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.qi-idea__edit-title:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qi-idea__edit-title:disabled:hover {
+  color: var(--color-text-faint);
+  background: none;
+}
+
+/* Notes label above textarea */
+
+.qi-idea__notes-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Inline title edit mode */
+
+.qi-idea__title-edit {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+}
+
+.qi-idea__title-edit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  flex: 1 1 100%;
+}
+
+.qi-idea__title-edit-row .qi-idea__icon {
+  margin-top: var(--space-2);
+}
+
+.qi-idea__title-edit-input {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.5;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.qi-idea__title-edit-input:focus {
+  outline: none;
+  border-color: var(--color-accent-border);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.qi-idea__title-edit-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.qi-idea__title-edit .qi-idea__time {
+  margin-left: auto;
+}
+
+.qi-idea__title-edit .qi-idea__chevron {
+  flex-shrink: 0;
+}
+
+/* Delete title (trash) icon button */
+
+.qi-idea__delete-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-text-faint);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.qi-idea__delete-title:hover {
+  color: var(--color-danger, #c0392b);
+  background: var(--color-danger-soft, rgba(192, 57, 43, 0.08));
+}
+
+.qi-idea__delete-title:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qi-idea__delete-title:disabled:hover {
+  color: var(--color-text-faint);
+  background: none;
+}

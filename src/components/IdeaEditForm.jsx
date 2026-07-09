@@ -3,7 +3,6 @@ import '../styles/quick-ideas-workspace.css';
 
 export default function IdeaEditForm({ idea, onSave, onCancel }) {
   const [text, setText] = useState(idea.text ?? '');
-  const [notes, setNotes] = useState(idea.notes ?? '');
   const textRef = useRef(null);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function IdeaEditForm({ idea, onSave, onCancel }) {
       textRef.current?.focus();
       return;
     }
-    onSave(idea.id, { text: trimmed, notes: notes.trim() });
+    onSave(idea.id, { text: trimmed });
   }
 
   function handleKeyDown(e) {
@@ -45,17 +44,9 @@ export default function IdeaEditForm({ idea, onSave, onCancel }) {
         rows={3}
         aria-label="Edit idea text"
       />
-      <textarea
-        className="qi-edit__notes"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        rows={4}
-        placeholder="Add notes (optional)..."
-        aria-label="Edit idea notes"
-      />
       <div className="qi-edit__actions">
-        <button type="submit" className="qi-edit__save" aria-label="Save changes">
-          Save
+        <button type="submit" className="qi-edit__save" aria-label="Save title">
+          Save title
         </button>
         <button
           type="button"
