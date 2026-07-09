@@ -35,7 +35,7 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 3. **Phase 5C** — Completed Task Display Refinement ✓
 4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
 5. **Phase 5E** — Responsive / Accessibility / Visual Polish ✓
-6. **Phase 5F** — Dark Mode Preference (spec drafted, pending review)
+6. **Phase 5F** — Dark Mode Preference ✓
 7. **Phase 5G** — README / Screenshots / Portfolio Handoff
 
 ---
@@ -287,24 +287,27 @@ drafted.
 
 ### 8. Dark Mode Preference (Phase 5F)
 
-**Status: Spec drafted — pending review and approval. Not yet implemented.**
-See `docs/phase-5f-dark-mode-preference-spec.md` for the proposed spec.
+**Status: Complete.** See `docs/phase-5f-dark-mode-preference-spec.md`
+for the completed Phase 5F spec.
 
 **Problem:**
 The app is light-mode only, which is harsh in low-light environments and
 limits accessibility.
 
-**Proposed behavior:**
-- CSS custom properties for color tokens (backgrounds, surfaces, text,
-  accents, borders, shadows) using existing `src/styles/variables.css`.
-- Toggle control in the Header or Sidebar (TBD in spec).
-- System `prefers-color-scheme` detection for the initial default.
-- Persist preference in `localStorage` under a key such as `dp.theme`.
-- Light background, dark surface, and adjusted text/accent colors for the
-  dark palette.
+**Delivered:**
+- CSS custom property overrides for all color tokens (backgrounds, surfaces,
+  text, accents, borders, shadows, idea colors, success/warn/danger soft
+  colors, overlay tints) in `src/styles/variables.css`.
+- Toggle control in the Sidebar footer (sun/moon icon).
+- Global theme applied via `document.documentElement.dataset.theme` on the
+  root `<html>` element.
+- Preference persisted in `localStorage` under `dp.theme`.
+- Targeted `html[data-theme='dark']` overrides across all 10 component
+  stylesheets for cards, header, sidebar, task rows, modals, empty states,
+  Quick Ideas, and task detail views.
 - No new packages, no UI library, no CSS framework.
-- Preserve all existing functionality and data.
-- Do not change the component or layout structure.
+- All existing functionality and data preserved.
+- No component or layout structure changes.
 
 **Priority:** Medium
 **Complexity:** Medium

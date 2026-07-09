@@ -25,6 +25,7 @@ Persistence) is complete and committed (`de2adb8`), pushed to `origin/main`.
 Phase 5C (Completed Task Display Refinement) is complete.
 Phase 5D (Quick Idea Notes Capture Refinement) is complete.
 Phase 5E (Responsive, Accessibility, and Visual Polish Pass) is complete.
+Phase 5F (Dark Mode Preference) is complete.
 
 ## Phase 4D Decision Record
 
@@ -201,6 +202,29 @@ Phase 3B delivered:
   collapsed/default state.
 - Completed page remains the full, uncollapsed completion history.
 - `npm run build` and `npm run lint` passed.
+- User-confirmed normal browser testing passed.
+
+### 2026-07-09 — Phase 5F Implementation Complete
+
+- Implemented all approved Phase 5F work from
+  `docs/phase-5f-dark-mode-preference-spec.md`.
+- Features delivered:
+  - Manual light/dark theme toggle control in the Sidebar footer (sun/moon
+    icon).
+  - Global theme applied via `document.documentElement.dataset.theme` on the
+    root `<html>` element, driven by React state backed by `localStorage`.
+  - Preference persisted in `localStorage` under the key `dp.theme`.
+  - CSS custom property overrides in `src/styles/variables.css` for dark
+    surfaces, backgrounds, text, accents, borders, shadows, idea colors,
+    success/warn/danger soft colors, and overlay tints.
+  - `html[data-theme='dark']` selector used across all 10 component
+    stylesheets for targeted dark-mode readability fixes on cards, header,
+    sidebar, task rows, modals, empty states, Quick Ideas, and task detail
+    views (Standard and YouTube).
+- No new packages, no data-shape changes, no router, no
+  backend/Firebase/auth changes. One new localStorage key (`dp.theme`).
+- `npm run build` result: passed.
+- `npm run lint` result: passed.
 - User-confirmed normal browser testing passed.
 
 ### 2026-07-09 — Phase 5E Implementation Complete

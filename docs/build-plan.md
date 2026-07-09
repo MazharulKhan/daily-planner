@@ -191,19 +191,17 @@ focused spec and approval.
 
 Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
 Persistance, Phase 5C — Completed Task Display Refinement, Phase 5D —
-Quick Idea Notes Capture Refinement, and Phase 5E — Responsive,
-Accessibility, and Visual Polish Pass are complete.
-Phase 5F — Dark Mode Preference has a drafted spec
-(`docs/phase-5f-dark-mode-preference-spec.md`) pending review and
-approval. Phase 5G — README, Screenshots, and Portfolio Handoff is
-a planning-only future sub-phase. See `docs/phase-5-ux-backlog.md` for
-the full UX backlog and planning notes.
+Quick Idea Notes Capture Refinement, Phase 5E — Responsive,
+Accessibility, and Visual Polish Pass, and Phase 5F — Dark Mode
+Preference are complete. Phase 5G — README, Screenshots, and Portfolio
+Handoff is a planning-only future sub-phase. See
+`docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, Phase 5C, Phase 5D, and Phase 5E are complete. Phase 5F
-has a drafted spec pending review. Phase 5G is planning only. Each requires
-its own focused spec and approval before coding.
+Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, and Phase 5F are complete.
+Phase 5G is planning only. Each remaining sub-phase requires its own focused
+spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -319,20 +317,26 @@ Phase 5E delivered:
 
 #### Phase 5F — Dark Mode Preference
 
-Status: spec drafted — pending review and approval. Not yet implemented.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-The spec `docs/phase-5f-dark-mode-preference-spec.md` is the proposed
-source of truth for this phase. It must be reviewed and approved before
-any application code is changed.
+The spec `docs/phase-5f-dark-mode-preference-spec.md` is now a historical
+reference for the completed Phase 5F work.
 
-- CSS custom properties approach using existing `src/styles/variables.css`.
-- Toggleable via a user preference control (likely Header or Sidebar).
-- System `prefers-color-scheme` detection for default.
-- Persist preference in `localStorage` under a key such as `dp.theme`.
-- Light background, dark surface, and adjusted text/accent colors.
-- No new packages, no UI library, no CSS framework.
-- Preserve all existing functionality and data.
-- No mobile-first redesign, no router, no backend, no Firebase.
+Phase 5F delivered:
+
+- Manual light/dark theme toggle control in the Sidebar footer.
+- Global theme applied via `document.documentElement.dataset.theme` on the
+  root `<html>` element, driven by a React `localStorage`-backed preference.
+- Preference persisted in `localStorage` under the key `dp.theme`.
+- CSS custom property overrides in `src/styles/variables.css` for dark
+  surfaces, backgrounds, text, accents, borders, shadows, idea colors,
+  success/warn/danger soft colors, and overlay tints.
+- `html[data-theme='dark']` selector used across all 10 component
+  stylesheets for targeted dark-mode readability fixes on cards, header,
+  sidebar, task rows, modals, empty states, Quick Ideas, and task detail
+  views (Standard and YouTube).
+- No new packages, no data-shape changes, no router, no
+  backend/Firebase/auth changes. One new localStorage key (`dp.theme`).
 
 #### Phase 5G — README, Screenshots, and Portfolio Handoff
 
