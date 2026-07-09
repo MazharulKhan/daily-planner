@@ -20,7 +20,9 @@ Phase 4E (YouTube Player and Resume Foundation) is complete.
 Phase 4F (Timestamped Notes) is complete.
 Phase 4G (Clickable Timestamp Notes) is complete.
 Phase 5A (Global Task Creation Flow) is complete and committed
-(`164d83b`), pushed to `origin/main`.
+(`164d83b`), pushed to `origin/main`. Phase 5B (Current Workspace
+Persistence) is complete and committed (`de2adb8`), pushed to `origin/main`.
+Phase 5C (Completed Task Display Refinement) is complete.
 
 ## Phase 4D Decision Record
 
@@ -180,6 +182,22 @@ Phase 3B delivered:
   `docs/standard-task-detail-spec.md`.
 - Added optional `description` to task data; Standard Task Detail workspace
   with dirty-form protection, origin return, delete confirmation.
+- `npm run build` and `npm run lint` passed.
+- User-confirmed normal browser testing passed.
+
+### 2026-07-09 — Phase 5C Implementation Complete
+
+- Implemented all approved Phase 5C work from
+  `docs/phase-5c-completed-task-display-refinement-spec.md`.
+- Dashboard Today's Tasks completed group and Today page Completed Today group
+  now show the first 3 completed tasks by default when more than 3 exist.
+- Added `Show X more` / `Show less` controls with session-only React state;
+  refresh resets collapse state to default.
+- Completed counts remain full counts for the current list/filter, not just
+  visible rows.
+- Today and Dashboard category filter changes reset completed groups to their
+  collapsed/default state.
+- Completed page remains the full, uncollapsed completion history.
 - `npm run build` and `npm run lint` passed.
 - User-confirmed normal browser testing passed.
 

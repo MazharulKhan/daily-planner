@@ -9,6 +9,7 @@ import EmptyState from './EmptyState';
 import { sortTodayTasks, isOverdue } from '../utils/dateTime';
 
 const CATEGORIES = ['All', 'Work', 'Learning', 'Personal', 'Health'];
+const COMPLETED_PREVIEW_LIMIT = 3;
 
 export default function TodayTasksCard({
   tasks,
@@ -24,6 +25,7 @@ export default function TodayTasksCard({
   onRequestAdd,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [completedExpanded, setCompletedExpanded] = useState(false);
 
   const filteredTasks =
     categoryFilter === 'All'
@@ -34,6 +36,13 @@ export default function TodayTasksCard({
   const completed = filteredTasks
     .filter((t) => t.completed)
     .sort(sortTodayTasks);
+  const completedHasOverflow = completed.length > COMPLETED_PREVIEW_LIMIT;
+  const completedListExpanded = completedHasOverflow && completedExpanded;
+  const visibleCompleted =
+    completedListExpanded || !completedHasOverflow
+      ? completed
+      : completed.slice(0, COMPLETED_PREVIEW_LIMIT);
+  const hiddenCompletedCount = completed.length - visibleCompleted.length;
   const allDone = filteredTasks.length > 0 && active.length === 0;
 
   const overdueActive = active.filter((t) => isOverdue(t.dueDate));
@@ -46,6 +55,11 @@ export default function TodayTasksCard({
       ? 'All done for today. Nice work!'
       : `All ${categoryFilter} tasks are complete.`
     : null;
+
+  function handleCategoryChange(cat) {
+    setCategoryFilter(cat);
+    setCompletedExpanded(false);
+  }
 
   function renderRow(task) {
     const isEditing =
@@ -112,7 +126,7 @@ export default function TodayTasksCard({
                 type="button"
                 className={`filter-chip${isActive ? ' filter-chip--active' : ''}`}
                 aria-pressed={isActive}
-                onClick={() => setCategoryFilter(cat)}
+                onClick={() => handleCategoryChange(cat)}
               >
                 {cat}
               </button>
@@ -151,7 +165,19 @@ export default function TodayTasksCard({
                 </span>
               </div>
             )}
-            {completed.map(renderRow)}
+            {visibleCompleted.map(renderRow)}
+            {completedHasOverflow && (
+              <button
+                type="button"
+                className="completed-toggle"
+                aria-expanded={completedListExpanded}
+                onClick={() => setCompletedExpanded((expanded) => !expanded)}
+              >
+                {completedListExpanded
+                  ? 'Show less'
+                  : `Show ${hiddenCompletedCount} more`}
+              </button>
+            )}
           </div>
         )}
 

@@ -189,16 +189,17 @@ focused spec and approval.
 
 ### Status
 
-Phase 5A — Global Task Creation Flow and Phase 5B — Current Workspace
-Persistence are complete. Remaining Phase 5 sub-phases are proposed and
-require their own focused spec and approval before implementation. See
-`docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
+Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
+Persistence, and Phase 5C — Completed Task Display Refinement are complete.
+Remaining Phase 5 sub-phases are proposed and require their own focused spec
+and approval before implementation. See `docs/phase-5-ux-backlog.md` for the
+full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A and Phase 5B are complete. The remaining sub-phases are proposed
-only, not approved implementation specs. Each requires its own focused spec
-and approval before coding.
+Phase 5A, Phase 5B, and Phase 5C are complete. The remaining sub-phases are
+proposed only, not approved implementation specs. Each requires its own
+focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -232,12 +233,22 @@ historical reference for the completed Phase 5B work.
 
 #### Phase 5C — Completed Task Display Refinement
 
-- Prevent completed tasks from cluttering Today/Dashboard.
-- Show only a few completed tasks by default, with expand/collapse.
-- Keep completed count visible.
-- Active tasks must never be hidden.
+Status: complete — implemented, build/lint passed, manually browser-verified.
+
+The spec `docs/phase-5c-completed-task-display-refinement-spec.md` is now a
+historical reference for the completed Phase 5C work.
+
+Phase 5C reduced completed-task clutter in the Dashboard Today's Tasks card
+and Today page Completed Today group. Each affected completed group now shows
+the first 3 completed tasks by default, keeps the full completed count visible,
+and provides `Show X more` / `Show less` controls when there are more than 3
+completed tasks. Active tasks are never hidden. The Completed page remains the
+full, uncollapsed completion history.
 
 #### Phase 5D — Quick Idea Notes Capture Refinement
+
+Status: proposed only — requires its own focused spec and approval before
+implementation.
 
 - Expanded Quick Ideas allow notes to be edited directly.
 - Main idea text stays read-only by default.

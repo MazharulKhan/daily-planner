@@ -10,6 +10,7 @@ import EmptyState from './EmptyState';
 import { sortTodayTasks, isOverdue, isTodayOrPast, isCompletedToday } from '../utils/dateTime';
 
 const CATEGORIES = ['All', 'Work', 'Learning', 'Personal', 'Health'];
+const COMPLETED_PREVIEW_LIMIT = 3;
 
 function encouragement(pct) {
   if (pct === 100) return 'Perfect day! Every task done.';
@@ -29,6 +30,7 @@ export default function TodayPage({
   onViewAllCompleted,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [completedExpanded, setCompletedExpanded] = useState(false);
   const [activeTaskAction, setActiveTaskAction] = useState(null);
   const lastTriggerRef = useRef(null);
 
@@ -40,6 +42,14 @@ export default function TodayPage({
   const completedToday = filtered.filter(
     (t) => t.completed && isCompletedToday(t.completedAt),
   );
+  const completedHasOverflow = completedToday.length > COMPLETED_PREVIEW_LIMIT;
+  const completedListExpanded = completedHasOverflow && completedExpanded;
+  const visibleCompletedToday =
+    completedListExpanded || !completedHasOverflow
+      ? completedToday
+      : completedToday.slice(0, COMPLETED_PREVIEW_LIMIT);
+  const hiddenCompletedTodayCount =
+    completedToday.length - visibleCompletedToday.length;
   const overdueActive = active.filter((t) => isOverdue(t.dueDate));
   const restActive = active.filter((t) => !isOverdue(t.dueDate));
 
@@ -48,6 +58,11 @@ export default function TodayPage({
   const pctDaily = totalDaily === 0 ? 0 : Math.round((doneDaily / totalDaily) * 100);
   const allDone = filtered.length > 0 && active.length === 0;
   const filteredEmpty = pool.length > 0 && filtered.length === 0;
+
+  function handleCategoryChange(cat) {
+    setCategoryFilter(cat);
+    setCompletedExpanded(false);
+  }
 
   const beginEdit = useCallback((task, triggerEl) => {
     lastTriggerRef.current = triggerEl;
@@ -152,7 +167,7 @@ export default function TodayPage({
                 type="button"
                 className={`filter-chip${isActive ? ' filter-chip--active' : ''}`}
                 aria-pressed={isActive}
-                onClick={() => setCategoryFilter(cat)}
+                onClick={() => handleCategoryChange(cat)}
               >
                 {cat}
               </button>
@@ -209,7 +224,19 @@ export default function TodayPage({
                   </span>
                 </div>
               )}
-              {completedToday.map(renderRow)}
+              {visibleCompletedToday.map(renderRow)}
+              {completedHasOverflow && (
+                <button
+                  type="button"
+                  className="completed-toggle"
+                  aria-expanded={completedListExpanded}
+                  onClick={() => setCompletedExpanded((expanded) => !expanded)}
+                >
+                  {completedListExpanded
+                    ? 'Show less'
+                    : `Show ${hiddenCompletedTodayCount} more`}
+                </button>
+              )}
             </div>
           </>
         )}
