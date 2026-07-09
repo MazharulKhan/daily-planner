@@ -34,7 +34,7 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 2. **Phase 5B** — Persist Current Workspace After Refresh ✓
 3. **Phase 5C** — Completed Task Display Refinement ✓
 4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
-5. **Phase 5E** — Responsive / Accessibility / Visual Polish
+5. **Phase 5E** — Responsive / Accessibility / Visual Polish ✓
 6. **Phase 5F** — README / Screenshots / Portfolio Handoff
 
 ---
@@ -176,51 +176,26 @@ workspace. Delete confirmation should be required (deletes are permanent).
 
 ### 7. Responsive, Accessibility, and Visual Polish (Phase 5E)
 
-**Status: Approved for spec drafting (planning only — not implementation).**
+**Status: Complete.** See `docs/phase-5e-responsive-accessibility-visual-polish-spec.md`.
 
-**Problem:**
-The app is desktop-first and has rough edges at smaller widths, some
-inconsistent spacing, and incomplete accessibility coverage. The dashboard
-layout currently leaves excessive empty space between the sidebar and the
-main content/card grid.
+Phase 5E delivered a focused visual, responsive, and accessibility polish
+pass across the app while preserving all Phase 2–5D functionality and
+product invariants. Work included:
 
-The candidate scope below has been approved for **planning / spec drafting
-only**. Implementation is not approved. A focused Phase 5E spec must still be
-written, reviewed, and approved before any code changes.
-
-#### Candidate Scope — Approved for Spec Drafting
-
-These items are approved as the Phase 5E planning scope. A Repomix context
-bundle will be generated from this updated backlog to support spec creation.
-
-- **Dashboard layout alignment and density**
-  - Pull the main content/card grid closer to the sidebar when there is
-    excessive empty space.
-  - Reduce overly spacious dashboard/card rhythm while keeping the app clean
-    and readable.
-- **Sidebar visual polish**
-  - Consider moving the Sidebar "+ Add Task" button near the top, under the
-    app brand/name.
-  - Add subtle inline SVG sidebar icons for existing nav items only:
-    Dashboard, Today, Upcoming, Completed, Quick Ideas. No icon package.
-- **Header polish**
-  - More personal Dashboard greeting.
-  - Visual-only date/calendar area. No real calendar behavior.
-- **Card consistency**
-  - Spacing, borders, headers, badges, dividers, and empty-state
-    consistency across cards.
-- **Add Task modal visual/responsive polish**
-- **Smaller-width / laptop responsiveness** across: Dashboard, task pages,
-  Quick Ideas, Add Task modal, Standard Task Detail, and YouTube Task
-  Detail.
-- **Accessibility polish**
-  - Visible focus states.
-  - Keyboard reachability.
-  - No hover-only controls.
-  - Obvious ARIA / focus fixes.
-
-**Priority:** Medium
-**Complexity:** Medium
+- Dashboard layout pulled closer to sidebar; reduced excessive spacing.
+- Sidebar nav icons (inline SVG), Add Task moved near top under brand.
+- Header personalized greeting with visual-only date chip.
+- Card spacing, dividers, badges, and empty-state consistency.
+- Add Task modal visual/responsive polish with metadata icons.
+- Daily Progress green completed ring.
+- Laptop-width responsiveness across Dashboard, task pages, Quick Ideas,
+  Add Task modal, Standard Task Detail, and YouTube Task Detail.
+- Accessibility polish: visible focus states, keyboard reachability,
+  visible task row action discoverability (no hover-only), icon-only
+  button labels, ARIA fixes.
+- Completed page task row regression fixes.
+- Build and lint passed; no new packages, no data-shape changes, no new
+  localStorage keys.
 
 #### Deferred / Not Phase 5E
 

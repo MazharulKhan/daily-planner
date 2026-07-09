@@ -190,15 +190,16 @@ focused spec and approval.
 ### Status
 
 Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
-Persistence, Phase 5C — Completed Task Display Refinement, and Phase 5D —
-Quick Idea Notes Capture Refinement are complete.
+Persistence, Phase 5C — Completed Task Display Refinement, Phase 5D —
+Quick Idea Notes Capture Refinement, and Phase 5E — Responsive,
+Accessibility, and Visual Polish Pass are complete.
 Remaining Phase 5 sub-phases are proposed and require their own focused spec
 and approval before implementation. See `docs/phase-5-ux-backlog.md` for the
 full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, Phase 5C, and Phase 5D are complete. The remaining
+Phase 5A, Phase 5B, Phase 5C, Phase 5D, and Phase 5E are complete. The remaining
 sub-phases are proposed only, not approved implementation specs. Each
 requires its own focused spec and approval before coding.
 
@@ -262,23 +263,57 @@ dirty-notes protection across all destructive actions.
 
 #### Phase 5E — Responsive, Accessibility, and Visual Polish Pass
 
-Status: planning only — approved scope for spec drafting, not for
-implementation.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-- Laptop/smaller-width layout cleanup and dashboard density/alignment.
-- Sidebar and header visual polish (inline SVG nav icons, Add Task
-  placement, personal greeting, visual-only date area).
-- Card spacing, borders, headers, badges, dividers, empty-state
-  consistency.
-- Add Task modal visual/responsive polish.
-- Accessibility: focus states, keyboard reachability, no hover-only
-  controls, ARIA/focus fixes.
-- No major redesign, no dark mode, no mobile-first redesign, no new
-  packages, no router, no backend, no data-shape changes.
+The spec `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` is
+now a historical reference for the completed Phase 5E work.
 
-See `docs/phase-5-ux-backlog.md` section 7 for the full approved candidate
-scope and the explicit "Deferred / Not Phase 5E" list. A focused Phase 5E
-spec must still be written and approved before any code changes.
+Phase 5E delivered:
+
+- **Responsive/layout polish:** Dashboard content pulled closer to sidebar;
+  reduced excessive spacing across app shell, main content, card grid, and
+  page layouts. Two-column desktop layout preserved; stacks cleanly at
+  laptop/narrow widths without horizontal overflow.
+- **Sidebar polish:** Inline SVG nav icons for Dashboard, Today, Upcoming,
+  Completed, and Quick Ideas. Add Task button moved near the top under the
+  brand. Disabled state preserved on task detail views.
+- **Header polish:** Personalized Dashboard greeting with a visual-only
+  date chip (weekday + month/day + calendar icon). Header search remains
+  visual-only. Header Add Task hidden on detail views.
+- **Dashboard/card density polish:** Standardized card headers, counts,
+  dividers, badges, empty states, and spacing across Dashboard, task
+  pages, and Quick Ideas. Task rows remain compact and readable.
+- **Add Task modal visual polish:** Metadata field icons, improved spacing
+  and alignment. Defaults box preserved near the bottom above the footer.
+  Modal scrolls internally on short viewports; metadata stacks to one
+  column at narrow widths. Dirty-state discard confirmation preserved.
+- **Daily Progress green completed ring:** Completed ring is green when at
+  least one task is done; empty ring remains neutral.
+- **Task pages responsive polish:** Today, Upcoming, and Completed pages
+  work on laptop widths without horizontal overflow. Category filters,
+  completed-group expand/collapse, and full Completed archive preserved.
+- **Quick Ideas responsive polish:** Workspace, capture card, expanded
+  notes editor, and actions work at narrower widths. Dirty-note
+  protection, title edit, and delete preserved.
+- **Standard Task Detail responsive polish:** Metadata grid collapses at
+  narrow widths. Footer buttons remain usable. Dirty-form and delete
+  confirmations preserved.
+- **YouTube Task Detail responsive polish:** Two-column layout stacks
+  player/metadata above notes at narrow widths. Video stays 16:9. Notes
+  textarea, clickable timestamp preview, Insert Timestamp, and bullet
+  continuation preserved.
+- **Accessibility/discoverability polish:** Visible focus states on
+  Sidebar, Header, card actions, task rows, Quick Ideas controls, modal,
+  detail controls, and timestamp controls. Task row actions are visible
+  by default (subtle opacity) and intensify on row hover/focus; no
+  hover-only controls. Icon-only buttons have accessible labels. Sidebar
+  nav keeps `aria-current="page"`. Expand/collapse buttons keep
+  `aria-expanded`. Modal preserves `role="dialog"` and
+  `aria-modal="true"`.
+- **Completed page cleanup:** Task row regression fixes on the Completed
+  page.
+- No new packages, no data-shape changes, no new localStorage keys, no
+  router, no backend/Firebase/auth changes.
 
 #### Phase 5F — README, Screenshots, and Portfolio Handoff
 

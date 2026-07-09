@@ -2,13 +2,14 @@
 
 ## Current Phase
 
-Phase 5D — Quick Idea Notes Capture Refinement is complete.
+Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
 Phase 5 — Polish, Accessibility, and GitHub Preparation continues with the
 remaining sub-phases. See `docs/phase-5-ux-backlog.md` for the UX backlog /
 planning notes, and `docs/phase-5a-global-task-creation-spec.md`,
 `docs/phase-5b-current-workspace-persistence-spec.md`,
-`docs/phase-5c-completed-task-display-refinement-spec.md`, and
-`docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` for completed
+`docs/phase-5c-completed-task-display-refinement-spec.md`,
+`docs/phase-5d-quick-idea-notes-capture-refinement-spec.md`, and
+`docs/phase-5e-responsive-accessibility-visual-polish-spec.md` for completed
 Phase 5 specs.
 
 Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
@@ -18,12 +19,10 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. The next candidate is Phase 5E —
-Responsive, Accessibility, and Visual Polish Pass. Its planning scope is
-now captured in `docs/phase-5-ux-backlog.md` (section 7, "Candidate Scope
-— Approved for Spec Drafting"). The next exact step is to generate a
-focused Repomix context bundle from the updated backlog and then draft the
-Phase 5E spec for review. No implementation is approved yet.
+No active implementation phase. The next candidate is Phase 5F —
+README / Screenshots / Portfolio Handoff. Its scope is described in
+`docs/phase-5-ux-backlog.md` (section 8). The next exact step is to plan
+and draft the Phase 5F spec for review. No implementation is approved yet.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -47,11 +46,13 @@ until a future phase provides the appropriate conversion flow.
 | 5B | Current Workspace Persistence | Complete |
 | 5C | Completed Task Display Refinement | Complete |
 | 5D | Quick Idea Notes Capture Refinement | Complete |
+| 5E | Responsive, Accessibility, and Visual Polish | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
 | `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
 | `docs/phase-5c-completed-task-display-refinement-spec.md` | Phase 5C completed spec (historical) |
 | `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |

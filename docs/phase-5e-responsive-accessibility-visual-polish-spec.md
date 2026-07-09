@@ -1,8 +1,8 @@
 # Phase 5E — Responsive, Accessibility, and Visual Polish Pass
 
-**Status: Draft — pending review. Not approved for implementation yet.**
+**Status: Complete — implemented, build/lint passed, manually browser-verified.**
 
-This spec is the proposed source of truth for Phase 5E after review and approval.
+This spec is the historical reference for the completed Phase 5E work.
 
 ---
 
