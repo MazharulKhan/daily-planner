@@ -2,11 +2,13 @@
 
 ## Current Phase
 
-Phase 5A — Global Task Creation Flow is complete.
+Phase 5B — Current Workspace Persistence is complete.
 Phase 5 — Polish, Accessibility, and GitHub Preparation continues with the
 remaining sub-phases. See `docs/phase-5-ux-backlog.md` for the UX backlog /
-planning notes and `docs/phase-5a-global-task-creation-spec.md` for the
-completed Phase 5A spec.
+planning notes, `docs/phase-5a-global-task-creation-spec.md` for the
+completed Phase 5A spec, and
+`docs/phase-5b-current-workspace-persistence-spec.md` for the completed
+Phase 5B spec.
 
 Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
 It will start fresh with a clean Firestore data model (Option A).
@@ -15,9 +17,9 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. The next candidate is Phase 5B — Persist
-Current Workspace After Refresh, which requires its own focused spec and
-approval before any implementation.
+No active implementation phase. The next candidate is Phase 5C — Completed
+Task Display Refinement, which requires its own focused spec and approval
+before any implementation.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -38,11 +40,13 @@ until a future phase provides the appropriate conversion flow.
 | 4F | Timestamped Notes | Complete |
 | 4G | Clickable Timestamp Notes | Complete |
 | 5A | Global Task Creation Flow | Complete |
+| 5B | Current Workspace Persistence | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |
 | `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |
 | `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/clickable-timestamp-notes-spec.md` | Phase 4G completed spec (historical) |

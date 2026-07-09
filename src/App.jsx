@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './styles/layout.css';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -12,6 +12,7 @@ import CompletedPage from './components/CompletedPage';
 import AddTaskModal from './components/AddTaskModal';
 import { useTasks, useIdeas } from './hooks/useLocalStorage';
 import { makeSampleTasks, makeSampleIdeas } from './data/sampleData';
+import { storage } from './data/storage';
 
 function App() {
   const { tasks, addTask, editTask, toggleTask, deleteTask, editPlaybackPosition } =
@@ -20,12 +21,12 @@ function App() {
 
   const [taskAddOpen, setTaskAddOpen] = useState(false);
   const [ideaAddOpen, setIdeaAddOpen] = useState(false);
-  const [view, setView] = useState('dashboard');
+  const [view, setView] = useState(() => storage.loadActiveView('dashboard'));
   const [selectedIdeaId, setSelectedIdeaId] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [pendingNavTarget, setPendingNavTarget] = useState(null);
 
-  const [originView, setOriginView] = useState('dashboard');
+  const [originView, setOriginView] = useState(view);
 
   const taskTriggerRef = useRef(null);
 
@@ -35,6 +36,10 @@ function App() {
   );
 
   const detailOpen = selectedTaskId !== null;
+
+  useEffect(() => {
+    storage.saveActiveView(view);
+  }, [view]);
 
   const requestAddTask = useCallback(() => {
     if (detailOpen) return;

@@ -189,16 +189,16 @@ focused spec and approval.
 
 ### Status
 
-Phase 5A — Global Task Creation Flow is complete. Remaining Phase 5
-sub-phases are proposed and require their own focused spec and approval
-before implementation. See `docs/phase-5-ux-backlog.md` for the full UX
-backlog and planning notes.
+Phase 5A — Global Task Creation Flow and Phase 5B — Current Workspace
+Persistence are complete. Remaining Phase 5 sub-phases are proposed and
+require their own focused spec and approval before implementation. See
+`docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A is complete. The remaining sub-phases are proposed only, not
-approved implementation specs. Each requires its own focused spec and
-approval before coding.
+Phase 5A and Phase 5B are complete. The remaining sub-phases are proposed
+only, not approved implementation specs. Each requires its own focused spec
+and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -217,6 +217,11 @@ and includes a dirty-state discard confirmation. The Sidebar "+ Add
 Task" button is visually disabled while a task detail is open.
 
 #### Phase 5B — Persist Current Workspace After Refresh
+
+Status: complete — implemented, build/lint passed, manually browser-verified.
+
+The spec `docs/phase-5b-current-workspace-persistence-spec.md` is now a
+historical reference for the completed Phase 5B work.
 
 - Persist last stable normal workspace only: Dashboard, Today, Upcoming,
   Completed, Quick Ideas.
