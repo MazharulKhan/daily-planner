@@ -190,16 +190,17 @@ focused spec and approval.
 ### Status
 
 Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
-Persistence, and Phase 5C — Completed Task Display Refinement are complete.
+Persistence, Phase 5C — Completed Task Display Refinement, and Phase 5D —
+Quick Idea Notes Capture Refinement are complete.
 Remaining Phase 5 sub-phases are proposed and require their own focused spec
 and approval before implementation. See `docs/phase-5-ux-backlog.md` for the
 full UX backlog and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, and Phase 5C are complete. The remaining sub-phases are
-proposed only, not approved implementation specs. Each requires its own
-focused spec and approval before coding.
+Phase 5A, Phase 5B, Phase 5C, and Phase 5D are complete. The remaining
+sub-phases are proposed only, not approved implementation specs. Each
+requires its own focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -247,13 +248,17 @@ full, uncollapsed completion history.
 
 #### Phase 5D — Quick Idea Notes Capture Refinement
 
-Status: proposed only — requires its own focused spec and approval before
-implementation.
+Status: complete — implemented, build/lint passed, manually browser-verified.
 
-- Expanded Quick Ideas allow notes to be edited directly.
-- Main idea text stays read-only by default.
-- Separate Edit idea action for editing the main idea text.
-- Use explicit Save notes, not auto-save.
+The spec `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` is now a
+historical reference for the completed Phase 5D work.
+
+Phase 5D made notes directly editable in the expanded Quick Idea view, added
+explicit Save notes (not auto-save), a transient "Notes saved at [time]"
+confirmation, Discard changes that reverts without collapsing, a pencil icon
+for inline title editing separate from notes, a trash icon for deleting from
+any row state with confirmation, cursor-at-end on notes reopen, and
+dirty-notes protection across all destructive actions.
 
 #### Phase 5E — Responsive, Accessibility, and Visual Polish Pass
 

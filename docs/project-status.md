@@ -2,13 +2,13 @@
 
 ## Current Phase
 
-Phase 5C — Completed Task Display Refinement is complete.
+Phase 5D — Quick Idea Notes Capture Refinement is complete.
 Phase 5 — Polish, Accessibility, and GitHub Preparation continues with the
 remaining sub-phases. See `docs/phase-5-ux-backlog.md` for the UX backlog /
-planning notes, `docs/phase-5a-global-task-creation-spec.md` for the
-completed Phase 5A spec, and
-`docs/phase-5b-current-workspace-persistence-spec.md` and
-`docs/phase-5c-completed-task-display-refinement-spec.md` for completed
+planning notes, and `docs/phase-5a-global-task-creation-spec.md`,
+`docs/phase-5b-current-workspace-persistence-spec.md`,
+`docs/phase-5c-completed-task-display-refinement-spec.md`, and
+`docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` for completed
 Phase 5 specs.
 
 Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
@@ -18,9 +18,9 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. The next candidate is Phase 5D — Quick Idea
-Notes Capture Refinement, which requires its own focused spec and approval
-before any implementation.
+No active implementation phase. The next candidate is Phase 5E —
+Responsive, Accessibility, and Visual Polish Pass, which requires its own
+focused spec and approval before any implementation.
 Rich-text notes / formatting toolbar are deferred future improvements
 with no spec or approval. `Convert to Task` for ideas stays deferred
 until a future phase provides the appropriate conversion flow.
@@ -43,11 +43,13 @@ until a future phase provides the appropriate conversion flow.
 | 5A | Global Task Creation Flow | Complete |
 | 5B | Current Workspace Persistence | Complete |
 | 5C | Completed Task Display Refinement | Complete |
+| 5D | Quick Idea Notes Capture Refinement | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
 | `docs/phase-5c-completed-task-display-refinement-spec.md` | Phase 5C completed spec (historical) |
 | `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |
 | `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |

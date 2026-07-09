@@ -30,10 +30,10 @@ Implement → Browser test → `npm run build` → `npm run lint` → Commit.
 
 ## B. Recommended Phase 5 Priority Order
 
-1. **Phase 5A** — Global Task Creation Flow
-2. **Phase 5B** — Persist Current Workspace After Refresh
-3. **Phase 5C** — Completed Task Display Refinement
-4. **Phase 5D** — Quick Idea Notes Capture Refinement
+1. **Phase 5A** — Global Task Creation Flow ✓
+2. **Phase 5B** — Persist Current Workspace After Refresh ✓
+3. **Phase 5C** — Completed Task Display Refinement ✓
+4. **Phase 5D** — Quick Idea Notes Capture Refinement ✓
 5. **Phase 5E** — Responsive / Accessibility / Visual Polish
 6. **Phase 5F** — README / Screenshots / Portfolio Handoff
 
@@ -123,23 +123,8 @@ rules.
 
 ### 4. Quick Idea Notes Capture Refinement (Phase 5D)
 
-**Problem:**
-Currently, adding notes to a Quick Idea requires entering full Edit mode,
-which also exposes the main idea text for editing. Users just want to jot
-notes.
-
-**Proposed behavior:**
-- Expanded Quick Idea shows the main idea text as read-only (by default).
-- Below the main idea, a notes field is editable directly.
-- An explicit "Save notes" action persists the notes.
-- A separate "Edit idea" action opens the main idea text for editing
-  (existing behavior).
-- Notes saving uses an explicit Save button, not auto-save.
-
-**Priority:** Medium
-**Complexity:** Medium
-**Scope boundary:** Do not combine this with Quick Idea → Task conversion.
-Do not change localStorage structure without an approved spec.
+**Status: Complete.** See `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md`
+for the completed Phase 5D spec and Final UX Decisions.
 
 ---
 
