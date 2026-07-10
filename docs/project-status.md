@@ -2,37 +2,26 @@
 
 ## Current Phase
 
-Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
-Phase 5F — Dark Mode Preference is complete.
-Phase 5G — Mobile Layout Polish is complete.
-Phase 5H — README, Screenshots, and Portfolio Handoff is complete. All
-sub-phases of Phase 5 are now complete.
-See `docs/phase-5-ux-backlog.md` for the UX backlog / planning notes, and
-`docs/phase-5a-global-task-creation-spec.md`,
-`docs/phase-5b-current-workspace-persistence-spec.md`,
-`docs/phase-5c-completed-task-display-refinement-spec.md`,
-`docs/phase-5d-quick-idea-notes-capture-refinement-spec.md`,
-`docs/phase-5e-responsive-accessibility-visual-polish-spec.md`,
-`docs/phase-5f-dark-mode-preference-spec.md`,
-`docs/phase-5g-mobile-layout-polish-spec.md`, and
-`docs/phase-5h-readme-portfolio-handoff-spec.md` for completed Phase 5 specs.
+Phase 5 is fully complete (5A–5H).
 
-Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
-It will start fresh with a clean Firestore data model (Option A).
-No localStorage-to-Firestore migration is required. No Firebase setup,
-packages, auth, or config should be added now.
+Phase 6 — Firebase Cloud Edition is the next planned phase. The approved
+master specification is `docs/phase-6-firebase-cloud-edition-spec.md`.
+Phase 6 will be implemented in four sub-phases: 6A (Foundation & Auth),
+6B (Firestore Data Foundation), 6C (Task Cloud Sync), and 6D (Quick
+Ideas, Reliability & Release). No implementation has started yet.
 
 ## Next Exact Step
 
-No active implementation phase. Phase 5 is fully complete, including the
-Phase 5H README, screenshots, and portfolio handoff. The next candidate is
-Phase 6 — Firebase / Cloud Sync. It is not implemented yet and needs its
-own focused spec and approval before any setup, packages, auth, or config
-are added. Rich-text notes / formatting toolbar remain deferred future
-improvements with no spec or approval. `Convert to Task` for ideas stays
-deferred until a future phase provides the appropriate conversion flow.
-The `v1.0-local-mvp` tag and the Phase 6 Firebase feature branch should
-be handled separately after Phase 5H is committed.
+1. Review and commit/push this documentation-only checkpoint to `main`.
+2. Create `feature/phase-6-firebase` from the updated `main`.
+3. Create and test `/phase-plan`, `/verify-phase`, and `firebase-safety`
+   per the master spec Section 22.
+4. Prepare the focused Phase 6A specification
+   (`docs/phase-6a-firebase-foundation-auth-spec.md`).
+5. Run a plan-only pass before any Firebase implementation.
+
+No Firebase packages, config, or code changes until the Phase 6A focused
+spec is approved and the Phase 6 branch exists.
 
 ## Completed Phase Checklist
 
@@ -62,15 +51,16 @@ be handled separately after Phase 5H is committed.
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-6-firebase-cloud-edition-spec.md` | Phase 6 master spec — approved, not yet implemented |
+| `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
+| `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |
+| `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |
+| `docs/phase-5c-completed-task-display-refinement-spec.md` | Phase 5C completed spec (historical) |
+| `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
+| `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
+| `docs/phase-5f-dark-mode-preference-spec.md` | Phase 5F completed spec (historical) |
 | `docs/phase-5g-mobile-layout-polish-spec.md` | Phase 5G completed spec (historical) |
 | `docs/phase-5h-readme-portfolio-handoff-spec.md` | Phase 5H completed spec (historical) |
-| `docs/phase-5f-dark-mode-preference-spec.md` | Phase 5F completed spec (historical) |
-| `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
-| `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |
-| `docs/phase-5c-completed-task-display-refinement-spec.md` | Phase 5C completed spec (historical) |
-| `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |
-| `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |
-| `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/clickable-timestamp-notes-spec.md` | Phase 4G completed spec (historical) |
 | `docs/timestamped-notes-spec.md` | Phase 4F completed spec (historical) |
 | `docs/youtube-player-spec.md` | Phase 4E completed spec (historical) |
@@ -142,16 +132,19 @@ testing must use a normal browser.
 **Intentionally deferred (not bugs):** global search, saved filters,
 multi-select/bulk actions, custom category management, rich-text notes,
 broader mobile-first redesign, Reading Tasks, notifications,
-recurring tasks, AI features, cloud sync, authentication, backend APIs,
-Firebase / cloud sync.
+recurring tasks, AI features, authentication backend, backend APIs,
+cloud sync beyond the Phase 6 Firebase scope.
 
 ## Current Constraints
 
 - React + JavaScript + Vite + regular CSS only. No TypeScript.
 - No Tailwind, styled-components, CSS modules, UI kits, or CSS frameworks.
 - `localStorage` only. No backend, Firebase, auth, cloud sync, or external APIs.
+  (Phase 6 will add Firebase; no Firebase packages or config have been added yet.)
 - No React Router or routing libraries.
 - No npm packages without explicit approval.
+  (The `firebase`, `firebase-tools`, and `@firebase/rules-unit-testing`
+  packages are pre-approved for Phase 6 per the master spec.)
 - No API keys or secrets in project files.
 - Read saved data on load; fall back to sample data only when nothing saved.
 - Write `localStorage` after every user change.

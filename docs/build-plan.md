@@ -389,50 +389,54 @@ updated. No app code changes, no new packages, no data-shape changes.
   improvement; do not hand-build a fragile editor; no editor package
   without explicit approval)
 
----
+Phase 6 — Firebase Cloud Edition is the next active planned phase
+(separate section below).
 
 ## Phase 6 — Firebase / Cloud Sync Planning and Implementation
 
 ### Status
 
-Future planned phase (post-Phase-5). Not scheduled. No spec yet. No
-Firebase setup, packages, auth, or config should be added now.
+Master spec approved: `docs/phase-6-firebase-cloud-edition-spec.md`.
+Implementation has not started. The master spec defines four sub-phases
+to be implemented one at a time. Each sub-phase needs its own focused,
+detailed specification before coding begins (Section 6 / Section 22 of
+the master spec).
 
 ### Clean-Start Decision
 
-Use Option A — start fresh with Firebase:
+The master spec confirms **Option A — start fresh with Firebase**:
 
-- Firebase version starts fresh with a clean Firestore data model.
-- No localStorage-to-Firestore migration is required for the first
-  Firebase implementation.
-- Existing browser localStorage data does not need to be preserved or
-  imported into Firebase.
-- The completed localStorage version remains the local MVP.
-- No one-time import tool, migration UI, or automatic upload from
-  `dp.tasks` / `dp.ideas` is needed.
+- No task or idea migration from localStorage.
+- Existing v1 localStorage data remains as the local MVP.
+- New cloud accounts start empty with no sample content.
+- `dp.theme` and `dp.activeView` remain device-local.
 
-### Likely Planning Topics
+### Sub-Phase Summary
 
-Any Firebase implementation requires a focused, approved Firebase spec
-before code changes. Likely planning topics include:
+| Sub-Phase | Title | Key Deliverables |
+|-----------|-------|------------------|
+| 6A | Firebase Foundation & Google Auth | Firebase project setup, emulators, env config, Google popup sign-in, signed-out screen, user area in sidebar, auth-state gate, pending-write sign-out protection. Tasks/ideas stay localStorage. |
+| 6B | Secure Firestore Data Foundation | `users/{uid}/tasks/{taskId}` and `users/{uid}/ideas/{ideaId}` paths, converters/repositories, default-deny owner-only Rules, focused Rules tests. UI content stays localStorage. |
+| 6C | Task Cloud Sync | Replace task localStorage with Firestore persistence. Shared task listener, all CRUD writes, YouTube playback throttling, cross-session sync, error states, regression testing. |
+| 6D | Quick Ideas, Reliability & Release | Move Quick Ideas to Firestore, global offline/reconnect states, final Rules/reliability review, separate Vercel v2 deployment, README/docs update, release. |
 
-- Firestore data model for tasks and ideas
-- Whether auth is needed immediately or deferred to a later Firebase
-  sub-phase
-- Loading, saving, and error states
-- Offline/local fallback decisions
-- Environment/config setup
-- Security rules
-- Deployment considerations
+### Phase 6 Packages (Pre-Approved)
 
-### Out of Scope (Now and During Phase 5)
+- Runtime: `firebase`
+- Dev: `firebase-tools`, `@firebase/rules-unit-testing`
 
-- No Firebase implementation now
-- No packages now
-- No auth now
-- No Firestore setup now
-- No migration/import from localStorage now
-- No backend/cloud sync changes now
+No other packages may be added without explicit approval.
+
+### Phase 6 Hard Constraints
+
+The constraints in Section 5 (Non-Goals) and Section 17 (Zero-Cost
+Enforcement) of the master spec apply throughout:
+- Never attach billing or upgrade to Blaze.
+- No Firebase Hosting, Storage, Functions, or Extensions.
+- Google auth only (no email/password, anonymous, or guest).
+- Emulator-first local development.
+- No localStorage content migration, deletion, or cloud fallback.
+- v1 localStorage deployment preserved alongside v2 cloud deployment.
 
 ---
 
