@@ -5,15 +5,17 @@
 Phase 5E — Responsive, Accessibility, and Visual Polish Pass is complete.
 Phase 5F — Dark Mode Preference is complete.
 Phase 5G — Mobile Layout Polish is complete.
-Phase 5H — README, Screenshots, and Portfolio Handoff is the next
-planning-only sub-phase.
+Phase 5H — README, Screenshots, and Portfolio Handoff is complete. All
+sub-phases of Phase 5 are now complete.
 See `docs/phase-5-ux-backlog.md` for the UX backlog / planning notes, and
 `docs/phase-5a-global-task-creation-spec.md`,
 `docs/phase-5b-current-workspace-persistence-spec.md`,
 `docs/phase-5c-completed-task-display-refinement-spec.md`,
 `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md`,
-`docs/phase-5e-responsive-accessibility-visual-polish-spec.md`, and
-`docs/phase-5f-dark-mode-preference-spec.md` for completed Phase 5 specs.
+`docs/phase-5e-responsive-accessibility-visual-polish-spec.md`,
+`docs/phase-5f-dark-mode-preference-spec.md`,
+`docs/phase-5g-mobile-layout-polish-spec.md`, and
+`docs/phase-5h-readme-portfolio-handoff-spec.md` for completed Phase 5 specs.
 
 Phase 6 — Firebase / Cloud Sync is a future post-Phase-5 planned phase.
 It will start fresh with a clean Firestore data model (Option A).
@@ -22,13 +24,15 @@ packages, auth, or config should be added now.
 
 ## Next Exact Step
 
-No active implementation phase. Phase 5F — Dark Mode Preference and
-Phase 5G — Mobile Layout Polish are complete. The next candidate is
-Phase 5H — README / Screenshots / Portfolio Handoff. It is not
-implemented yet and needs its own focused spec and approval before coding.
-Rich-text notes / formatting toolbar are deferred future improvements
-with no spec or approval. `Convert to Task` for ideas stays deferred
-until a future phase provides the appropriate conversion flow.
+No active implementation phase. Phase 5 is fully complete, including the
+Phase 5H README, screenshots, and portfolio handoff. The next candidate is
+Phase 6 — Firebase / Cloud Sync. It is not implemented yet and needs its
+own focused spec and approval before any setup, packages, auth, or config
+are added. Rich-text notes / formatting toolbar remain deferred future
+improvements with no spec or approval. `Convert to Task` for ideas stays
+deferred until a future phase provides the appropriate conversion flow.
+The `v1.0-local-mvp` tag and the Phase 6 Firebase feature branch should
+be handled separately after Phase 5H is committed.
 
 ## Completed Phase Checklist
 
@@ -52,12 +56,14 @@ until a future phase provides the appropriate conversion flow.
 | 5E | Responsive, Accessibility, and Visual Polish | Complete |
 | 5F | Dark Mode Preference | Complete |
 | 5G | Mobile Layout Polish | Complete |
+| 5H | README, Screenshots, and Portfolio Handoff | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
 | `docs/phase-5g-mobile-layout-polish-spec.md` | Phase 5G completed spec (historical) |
+| `docs/phase-5h-readme-portfolio-handoff-spec.md` | Phase 5H completed spec (historical) |
 | `docs/phase-5f-dark-mode-preference-spec.md` | Phase 5F completed spec (historical) |
 | `docs/phase-5e-responsive-accessibility-visual-polish-spec.md` | Phase 5E completed spec (historical) |
 | `docs/phase-5d-quick-idea-notes-capture-refinement-spec.md` | Phase 5D completed spec (historical) |

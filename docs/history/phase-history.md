@@ -27,6 +27,30 @@ Phase 5D (Quick Idea Notes Capture Refinement) is complete.
 Phase 5E (Responsive, Accessibility, and Visual Polish Pass) is complete.
 Phase 5F (Dark Mode Preference) is complete.
 Phase 5G (Mobile Layout Polish) is complete.
+Phase 5H (README, Screenshots, and Portfolio Handoff) is complete. All
+Phase 5 sub-phases are now complete.
+
+## Phase 5H Completion — README, Screenshots, and Portfolio Handoff
+
+- Replaced the outdated README with a concise portfolio README: product
+  description, prominent live Vercel demo link, dashboard hero screenshot,
+  key features, additional screenshots, technology stack, local setup,
+  npm commands, data storage and limitations, project status and roadmap,
+  and author.
+- Four approved screenshots stored under `docs/screenshots/`:
+  `dashboard-light.png`, `today-dark.png`,
+  `youtube-task-detail-dark.png`, `quick-ideas-dark.png`.
+- Roadmap docs updated to mark Phase 5H complete:
+  `docs/project-status.md`, `docs/build-plan.md`,
+  `docs/phase-5-ux-backlog.md`.
+- No files under `src/`, `package.json`, dependencies, or app
+  configuration were changed. Phase 5H is documentation and screenshots
+  only.
+- `npm run build` and `npm run lint` pass.
+- Browser testing not performed by the agent; README and screenshot paths
+  are to be verified by the user on GitHub.
+- Not committed or pushed. The `v1.0-local-mvp` tag and Phase 6 Firebase
+  feature branch are handled separately after Phase 5H is committed.
 
 ## Phase 4D Decision Record
 

@@ -193,16 +193,16 @@ Phase 5A — Global Task Creation Flow, Phase 5B — Current Workspace
 Persistance, Phase 5C — Completed Task Display Refinement, Phase 5D —
 Quick Idea Notes Capture Refinement, Phase 5E — Responsive,
 Accessibility, and Visual Polish Pass, Phase 5F — Dark Mode
-Preference, and Phase 5G — Mobile Layout Polish are complete.
-Phase 5H — README, Screenshots, and Portfolio Handoff is the next
-planning-only sub-phase. See
-`docs/phase-5-ux-backlog.md` for the full UX backlog and planning notes.
+Preference, Phase 5G — Mobile Layout Polish, and Phase 5H — README,
+Screenshots, and Portfolio Handoff are complete. All Phase 5 sub-phases
+are complete. See `docs/phase-5-ux-backlog.md` for the full UX backlog
+and planning notes.
 
 ### Proposed Sub-Phases
 
-Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, Phase 5F, and Phase 5G are
-complete. Phase 5H is planning only. Each remaining sub-phase requires
-its own focused spec and approval before coding.
+Phase 5A, Phase 5B, Phase 5C, Phase 5D, Phase 5E, Phase 5F, Phase 5G, and
+Phase 5H are complete. All Phase 5 sub-phases are complete. Phase 6
+will require its own focused spec and approval before coding.
 
 #### Phase 5A — Global Task Creation Flow
 
@@ -368,6 +368,10 @@ Phase 5G delivered:
   router, no backend/Firebase/auth changes.
 
 #### Phase 5H — README, Screenshots, and Portfolio Handoff
+
+Status: complete — README replaced with a portfolio README, four
+approved screenshots stored under `docs/screenshots/`, and roadmap docs
+updated. No app code changes, no new packages, no data-shape changes.
 
 - README, screenshots, live Vercel link, feature list, setup
   instructions, limitations, future improvements.

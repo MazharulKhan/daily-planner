@@ -341,6 +341,10 @@ for the completed Phase 5G spec.
 
 ### 10. README, Screenshots, and Portfolio Handoff (Phase 5H)
 
+**Status:** Complete. README replaced with a portfolio README; four
+approved screenshots stored under `docs/screenshots/`; roadmap docs
+updated. No app code changes.
+
 **Problem:**
 The GitHub repo needs a professional README for portfolio presentation.
 
