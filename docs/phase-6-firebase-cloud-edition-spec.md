@@ -622,6 +622,12 @@ workflow; `/verify-phase` is the completion-verification command.
 
 ### Focused Sub-Phase Specification Requirements
 
+Phase 6A is intentionally detailed because it establishes the Firebase and
+authentication foundation. Phase 6B–6D focused specs should target approximately
+150–250 lines, reference this master specification instead of repeating it, and
+leave routine file selection, implementation ordering, and commands to
+`/phase-plan`.
+
 Each focused specification should be detailed enough that OpenChamber decides
 **how** to implement rather than **what** the feature should do. It should define:
 
