@@ -8,11 +8,20 @@ Phase status and roadmap live in `docs/project-status.md` and `docs/build-plan.m
 
 - React + JavaScript (no TypeScript) + Vite + regular CSS only.
 - No Tailwind, styled-components, CSS modules, UI kits, or CSS frameworks.
-- ESLint. Browser `localStorage` only. Frontend-only.
+- ESLint. Browser `localStorage` only as content store on the v1 edition. Frontend-only.
 - Sidebar destinations: Dashboard, Today, Upcoming, Completed, Quick Ideas.
 - `taskType` controls workflow: `standard` or `youtube`.
 - `category` is metadata only: Work, Learning, Personal, Health. Category must never decide which detail workspace opens.
-- Deferred unless an approved spec says otherwise: Reading Tasks, standalone Learning/Reading/Categories pages, global search, dark mode, recurring tasks, notifications, Firebase, backend, auth, cloud sync, AI features.
+- Deferred unless an approved spec says otherwise: Reading Tasks, standalone Learning/Reading/Categories pages, global search, dark mode, recurring tasks, notifications, AI features.
+
+## v1 vs Phase 6 (v2) Edition
+
+- The tagged/deployed v1 edition (`v1.0-local-mvp` and the live Vercel URL) remains localStorage-only and frontend-only. Do not connect it to Firebase.
+- The `feature/phase-6-firebase` branch may use **Firebase Authentication** (Google provider only) and **Cloud Firestore** (Toronto region `northamerica-northeast2`) only under approved Phase 6 sub-phase specifications. See `docs/phase-6-firebase-cloud-edition-spec.md`.
+- Tasks and Quick Ideas remain localStorage-backed through Phase 6A and until an approved later sub-phase explicitly cuts over to Firestore. Phase 6A adds Firebase foundation + Google auth only.
+- No additional backend, Firebase product, auth provider, or npm package is approved beyond `firebase`, `firebase-tools`, and `@firebase/rules-unit-testing`.
+- Existing approval gates for secrets, broad refactors, commits, pushes, production actions, and data deletion remain.
+- The clean-start/no-migration rule is permanent for Phase 6: cloud edition accounts start empty; `dp.tasks` and `dp.ideas` are never read, uploaded, merged, deleted, or overwritten for Firebase purposes. `dp.theme` and `dp.activeView` stay device-local.
 
 ## Hard Constraints & Approval Gates
 

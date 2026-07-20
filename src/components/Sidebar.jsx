@@ -92,6 +92,41 @@ function ThemeIcon({ isDark }) {
   );
 }
 
+function SignOutIcon() {
+  return (
+    <svg
+      className="sidebar__account-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5M21 12H9" />
+    </svg>
+  );
+}
+
+function getDisplayName(user) {
+  if (!user) return null;
+  if (user.displayName && user.displayName.trim().length > 0) {
+    return user.displayName;
+  }
+  if (user.email && user.email.trim().length > 0) {
+    return user.email;
+  }
+  return 'Signed in';
+}
+
+function getEmail(user) {
+  if (!user) return null;
+  if (user.email && user.email.trim().length > 0) return user.email;
+  return null;
+}
+
 export default function Sidebar({
   onAddTask,
   activeView,
@@ -99,8 +134,16 @@ export default function Sidebar({
   addDisabled,
   theme,
   onToggleTheme,
+  user,
+  onSignOut,
+  isSigningOut,
+  signOutError,
+  onClearSignOutError,
 }) {
   const darkModeOn = theme === 'dark';
+  const displayName = getDisplayName(user);
+  const email = getEmail(user);
+  const hasDistinctEmail = email && email !== displayName;
 
   return (
     <aside className="sidebar">
@@ -173,6 +216,33 @@ export default function Sidebar({
       </nav>
 
       <div className="sidebar__spacer" />
+
+      <div className="sidebar__account">
+        <div className="sidebar__account-info" title={hasDistinctEmail ? `${displayName}\n${email}` : displayName}>
+          <div className="sidebar__account-name">{displayName}</div>
+          {hasDistinctEmail && (
+            <div className="sidebar__account-email">{email}</div>
+          )}
+        </div>
+        <button
+          type="button"
+          className="sidebar__signout"
+          onClick={() => {
+            if (signOutError) onClearSignOutError?.();
+            onSignOut?.();
+          }}
+          disabled={isSigningOut}
+          aria-disabled={isSigningOut || undefined}
+        >
+          <SignOutIcon />
+          <span>{isSigningOut ? 'Signing out…' : 'Sign out'}</span>
+        </button>
+        {signOutError && (
+          <div className="sidebar__account-error" role="alert" aria-live="assertive">
+            {signOutError.message}
+          </div>
+        )}
+      </div>
 
       <button
         type="button"

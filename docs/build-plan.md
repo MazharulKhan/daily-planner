@@ -397,10 +397,29 @@ Phase 6 — Firebase Cloud Edition is the next active planned phase
 ### Status
 
 Master spec approved: `docs/phase-6-firebase-cloud-edition-spec.md`.
-Implementation has not started. The master spec defines four sub-phases
-to be implemented one at a time. Each sub-phase needs its own focused,
-detailed specification before coding begins (Section 6 / Section 22 of
-the master spec).
+Phase 6A — Firebase Foundation and Google Authentication is complete on
+the `feature/phase-6-firebase` branch and committed. Delivered the
+Firebase SDK initialized from validated Vite env vars, emulator
+configuration on the `demo-daily-planner` demo project, a deny-all
+`firestore.rules` fallback with a passing Rules smoke test, Google popup
+sign-in, persistent auth session, an auth-state loading gate, a
+professional responsive signed-out screen, and a compact signed-in
+account area in the Sidebar footer. Tasks and Quick Ideas remain
+localStorage-backed; no live Firestore content document was created.
+
+**Verification:** `npm run build`, `npm run lint`, `npm run test:rules`,
+and `git diff --check` all pass. Manual browser checks (emulator auth
+flow including the repeated sign-in sequence after the pending-state
+fix, data preservation, and responsive account UI) were completed by the
+user and reported successful; the agent did not perform those browser
+checks itself.
+
+**Next implementation phase:** Phase 6B — Secure Firestore Data
+Foundation. Begin with a focused
+`docs/phase-6b-secure-firestore-foundation-spec.md` before coding (per
+master spec Section 6 / Section 22). Phase 6B owns the `users/{uid}/…`
+paths, converters/repositories, and default-deny owner-only Security
+Rules; production UI content stays on localStorage until Phase 6C.
 
 ### Clean-Start Decision
 
@@ -415,7 +434,7 @@ The master spec confirms **Option A — start fresh with Firebase**:
 
 | Sub-Phase | Title | Key Deliverables |
 |-----------|-------|------------------|
-| 6A | Firebase Foundation & Google Auth | Firebase project setup, emulators, env config, Google popup sign-in, signed-out screen, user area in sidebar, auth-state gate, pending-write sign-out protection. Tasks/ideas stay localStorage. |
+| 6A | Firebase Foundation & Google Auth | Firebase SDK + emulator config, env validation, deny-all Firestore Rules + smoke test, Google popup sign-in, auth-state gate, signed-out screen, user area in sidebar, before-sign-out guard seam. Tasks/ideas stay localStorage. **Status: complete.** |
 | 6B | Secure Firestore Data Foundation | `users/{uid}/tasks/{taskId}` and `users/{uid}/ideas/{ideaId}` paths, converters/repositories, default-deny owner-only Rules, focused Rules tests. UI content stays localStorage. |
 | 6C | Task Cloud Sync | Replace task localStorage with Firestore persistence. Shared task listener, all CRUD writes, YouTube playback throttling, cross-session sync, error states, regression testing. |
 | 6D | Quick Ideas, Reliability & Release | Move Quick Ideas to Firestore, global offline/reconnect states, final Rules/reliability review, separate Vercel v2 deployment, README/docs update, release. |

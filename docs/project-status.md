@@ -4,24 +4,40 @@
 
 Phase 5 is fully complete (5A–5H).
 
-Phase 6 — Firebase Cloud Edition is the next planned phase. The approved
-master specification is `docs/phase-6-firebase-cloud-edition-spec.md`.
-Phase 6 will be implemented in four sub-phases: 6A (Foundation & Auth),
-6B (Firestore Data Foundation), 6C (Task Cloud Sync), and 6D (Quick
-Ideas, Reliability & Release). No implementation has started yet.
+Phase 6 — Firebase Cloud Edition is in progress on the
+`feature/phase-6-firebase` branch. The approved master specification is
+`docs/phase-6-firebase-cloud-edition-spec.md`. Phase 6 is implemented in
+four sub-phases: 6A (Foundation & Auth), 6B (Firestore Data Foundation),
+6C (Task Cloud Sync), and 6D (Quick Ideas, Reliability & Release).
+
+**Phase 6A — Firebase Foundation and Google Authentication:** complete.
+Delivered the modular Firebase SDK initialized from validated Vite
+environment variables, Auth/Firestore emulator configuration on the
+`demo-daily-planner` demo project, a deny-all `firestore.rules` fallback
+with a passing Rules smoke test, Google popup sign-in, persistent auth
+session, an auth-state loading gate, a professional responsive signed-out
+screen, and a compact signed-in account area in the Sidebar footer. Tasks
+and Quick Ideas remain localStorage-backed; no live Firestore content
+document is created.
+
+**Verification:** `npm run build`, `npm run lint`, `npm run test:rules`
+( Rules/emulator smoke test via `firebase emulators:exec` and Node's
+built-in test runner), and `git diff --check` all pass. Manual browser
+checks (emulator auth flow including the repeated sign-in sequence after
+the pending-state fix, data preservation of `dp.tasks`/`dp.ideas`, and
+responsive account UI) were completed by the user and reported
+successful; the agent did not perform those browser checks itself.
+
+See `docs/phase-6a-firebase-foundation-auth-spec.md` for the Phase 6A
+contract.
 
 ## Next Exact Step
 
-1. Review and commit/push this documentation-only checkpoint to `main`.
-2. Create `feature/phase-6-firebase` from the updated `main`.
-3. Create and test `/phase-plan`, `/verify-phase`, and `firebase-safety`
-   per the master spec Section 22.
-4. Prepare the focused Phase 6A specification
-   (`docs/phase-6a-firebase-foundation-auth-spec.md`).
-5. Run a plan-only pass before any Firebase implementation.
-
-No Firebase packages, config, or code changes until the Phase 6A focused
-spec is approved and the Phase 6 branch exists.
+Phase 6A is committed on `feature/phase-6-firebase`. Begin the Phase 6B
+focused specification (`docs/phase-6b-secure-firestore-foundation-spec.md`)
+for the user-scoped Firestore data layer, default-deny owner-only Security
+Rules, and focused Rules tests. Production UI content must remain on
+localStorage until Phase 6B/6C cutover per the master spec.
 
 ## Completed Phase Checklist
 
@@ -46,12 +62,14 @@ spec is approved and the Phase 6 branch exists.
 | 5F | Dark Mode Preference | Complete |
 | 5G | Mobile Layout Polish | Complete |
 | 5H | README, Screenshots, and Portfolio Handoff | Complete |
+| 6A | Firebase Foundation and Google Authentication | Complete |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
-| `docs/phase-6-firebase-cloud-edition-spec.md` | Phase 6 master spec — approved, not yet implemented |
+| `docs/phase-6-firebase-cloud-edition-spec.md` | Phase 6 master spec — approved, in progress |
+| `docs/phase-6a-firebase-foundation-auth-spec.md` | Phase 6A completed spec (historical) |
 | `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
 | `docs/phase-5a-global-task-creation-spec.md` | Phase 5A completed spec (historical) |
 | `docs/phase-5b-current-workspace-persistence-spec.md` | Phase 5B completed spec (historical) |
@@ -126,28 +144,38 @@ Open the Vite localhost URL in a normal browser (usually `http://localhost:5173/
 
 ## Known Issues / Deferred
 
-**Known issues:** OpenChamber built-in browser preview is unreliable; visual
-testing must use a normal browser.
-
 **Intentionally deferred (not bugs):** global search, saved filters,
 multi-select/bulk actions, custom category management, rich-text notes,
 broader mobile-first redesign, Reading Tasks, notifications,
-recurring tasks, AI features, authentication backend, backend APIs,
+recurring tasks, AI features, backend APIs,
 cloud sync beyond the Phase 6 Firebase scope.
+
+**Known issues:**
+
+- OpenChamber built-in browser preview is unreliable; visual testing must
+  use a normal browser.
+- The Phase 6 Firestore Rules smoke test (`npm run test:rules`) requires
+  Java JDK 11+ (the Firestore emulator depends on Java). On machines
+  without Java, install a JDK or run the smoke test in an environment
+  that has one. Auth-only emulator use (`npm run emulators`) does not
+  require Java.
 
 ## Current Constraints
 
 - React + JavaScript + Vite + regular CSS only. No TypeScript.
 - No Tailwind, styled-components, CSS modules, UI kits, or CSS frameworks.
-- `localStorage` only. No backend, Firebase, auth, cloud sync, or external APIs.
-  (Phase 6 will add Firebase; no Firebase packages or config have been added yet.)
+- v1 tagged edition: `localStorage` only, no Firebase.
+- `feature/phase-6-firebase` branch: Firebase Authentication (Google
+  only) and Cloud Firestore (`northamerica-northeast2`) under approved
+  Phase 6 specs. Both Firebase projects remain on Spark with no billing.
 - No React Router or routing libraries.
-- No npm packages without explicit approval.
-  (The `firebase`, `firebase-tools`, and `@firebase/rules-unit-testing`
-  packages are pre-approved for Phase 6 per the master spec.)
-- No API keys or secrets in project files.
+- No npm packages without explicit approval. Approved Phase 6 packages:
+  `firebase`, `firebase-tools`, `@firebase/rules-unit-testing`.
+- No API keys or secrets in project files. `.env`/`.env.*` are ignored;
+  only `.env.example` is tracked.
 - Read saved data on load; fall back to sample data only when nothing saved.
-- Write `localStorage` after every user change.
+- Write `localStorage` after every user change (content remains
+  localStorage-backed through Phase 6A).
 
 ## Historical Details
 
