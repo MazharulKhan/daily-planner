@@ -233,6 +233,17 @@ development and production project values remain outside committed files.
 
 ## 6. Authentication UI Contract
 
+### Approved visual references
+
+- Desktop: `docs/ui-reference/phase-6a-google-auth-desktop.png`
+- Mobile: `docs/ui-reference/phase-6a-google-auth-mobile.png`
+
+These dark designs are the primary visual references for the signed-out
+authentication screen. The existing `dp.theme` preference must still provide a
+readable light version. The behavioral, responsive, and accessibility
+requirements in this specification remain authoritative. Do not create Terms or
+Privacy links unless corresponding pages exist.
+
 ### 6.1 Signed-out desktop screen
 
 Use a polished two-column layout that matches the existing blue, white, soft
