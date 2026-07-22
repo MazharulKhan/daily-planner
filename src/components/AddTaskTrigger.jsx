@@ -1,10 +1,11 @@
-export default function AddTaskTrigger({ onRequestAdd }) {
+export default function AddTaskTrigger({ onRequestAdd, disabled = false }) {
   return (
     <div className="add-task">
       <button
         type="button"
         className="add-task__trigger"
         onClick={onRequestAdd}
+        disabled={disabled}
       >
         <svg
           width="16"

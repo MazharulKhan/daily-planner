@@ -208,3 +208,7 @@
     justify-content: center;
   }
 }
+.header__add:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

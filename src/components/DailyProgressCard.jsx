@@ -9,7 +9,7 @@ function encouragement(pct) {
   return 'Ready when you are. Pick a task to begin.';
 }
 
-export default function DailyProgressCard({ tasks }) {
+export default function DailyProgressCard({ tasks, tasksReady = true }) {
   const total = tasks.length;
   const done = tasks.filter((t) => t.completed).length;
   const pct = total === 0 ? 0 : Math.round((done / total) * 100);
@@ -23,6 +23,9 @@ export default function DailyProgressCard({ tasks }) {
       </div>
 
       <div className="card__body">
+        {!tasksReady ? (
+          <div className="cloud-placeholder">Loading your cloud tasks...</div>
+        ) : (
         <div className="progress">
           <div
             className={`progress__ring${total === 0 ? ' progress__ring--empty' : ''}`}
@@ -49,6 +52,7 @@ export default function DailyProgressCard({ tasks }) {
           </div>
           <div className="progress__note">{encouragement(pct)}</div>
         </div>
+        )}
       </div>
     </div>
   );

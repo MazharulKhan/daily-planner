@@ -24,11 +24,15 @@ export function subscribeToTasks(uid, { onData, onError }) {
 
   return onSnapshot(
     collectionRef,
+    { includeMetadataChanges: true },
     (snapshot) => {
       try {
         const tasks = snapshot.docs.map((docSnap) => taskFromFirestore(docSnap));
         if (typeof onData === 'function') {
-          onData(tasks);
+          onData(tasks, {
+            fromCache: snapshot.metadata.fromCache,
+            hasPendingWrites: snapshot.metadata.hasPendingWrites,
+          });
         }
       } catch (err) {
         if (typeof onError === 'function') {
@@ -44,15 +48,16 @@ export function subscribeToTasks(uid, { onData, onError }) {
   );
 }
 
-export async function createTask(uid, taskInput) {
+export function createTask(uid, taskInput, { onWriteQueued } = {}) {
   validateUid(uid);
   const data = taskToFirestoreCreate(taskInput);
   const docRef = doc(getUserTasksCollection(uid));
-  await setDoc(docRef, data);
-  return { id: docRef.id };
+  const acknowledgement = setDoc(docRef, data);
+  onWriteQueued?.({ id: docRef.id });
+  return acknowledgement.then(() => ({ id: docRef.id, written: true }));
 }
 
-export async function updateTaskContent(uid, taskId, currentTask, patch) {
+export function updateTaskContent(uid, taskId, currentTask, patch, { onWriteQueued } = {}) {
   const docRef = getUserTaskDoc(uid, taskId);
   const firestorePatch = buildContentPatch(currentTask, patch);
 
@@ -60,11 +65,12 @@ export async function updateTaskContent(uid, taskId, currentTask, patch) {
     return { written: false };
   }
 
-  await updateDoc(docRef, firestorePatch);
-  return { written: true };
+  const acknowledgement = updateDoc(docRef, firestorePatch);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }
 
-export async function setTaskCompletion(uid, taskId, currentTask, completed) {
+export function setTaskCompletion(uid, taskId, currentTask, completed, { onWriteQueued } = {}) {
   const docRef = getUserTaskDoc(uid, taskId);
   const firestorePatch = buildCompletionPatch(currentTask, completed);
 
@@ -72,11 +78,12 @@ export async function setTaskCompletion(uid, taskId, currentTask, completed) {
     return { written: false };
   }
 
-  await updateDoc(docRef, firestorePatch);
-  return { written: true };
+  const acknowledgement = updateDoc(docRef, firestorePatch);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }
 
-export async function updateTaskPlaybackPosition(uid, taskId, currentTask, seconds) {
+export function updateTaskPlaybackPosition(uid, taskId, currentTask, seconds, { onWriteQueued } = {}) {
   const docRef = getUserTaskDoc(uid, taskId);
   const firestorePatch = buildPlaybackPatch(currentTask, seconds);
 
@@ -84,11 +91,14 @@ export async function updateTaskPlaybackPosition(uid, taskId, currentTask, secon
     return { written: false };
   }
 
-  await updateDoc(docRef, firestorePatch);
-  return { written: true };
+  const acknowledgement = updateDoc(docRef, firestorePatch);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }
 
-export async function deleteTask(uid, taskId) {
+export function deleteTask(uid, taskId, { onWriteQueued } = {}) {
   const docRef = getUserTaskDoc(uid, taskId);
-  await deleteDoc(docRef);
+  const acknowledgement = deleteDoc(docRef);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }

@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import '../styles/task-detail.css';
 import { parseYouTubeVideoId, formatSeconds, validateYouTubeUrl, parseTimestampNotes } from '../utils/youtube';
 import { useYouTubePlayer } from '../hooks/useYouTubePlayer';
+import { useTaskPlaybackPersistence } from '../hooks/useTaskPlaybackPersistence';
+import { deriveChangedFields, getErrorMessage } from '../utils/taskCloud';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
 const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
@@ -10,15 +12,36 @@ const TASK_TYPES = [
   { value: 'youtube', label: 'YouTube Task' },
 ];
 
+const CONTENT_FIELDS = [
+  'title', 'description', 'taskType', 'youtubeUrl', 'youtubeNotes',
+  'priority', 'category', 'dueDate', 'time',
+];
+
+function taskDraft(task) {
+  return {
+    title: task.title || '',
+    description: task.description || '',
+    taskType: task.taskType || 'youtube',
+    youtubeUrl: task.youtubeUrl || '',
+    youtubeNotes: task.youtubeNotes || '',
+    priority: task.priority || 'Medium',
+    category: task.category || 'Work',
+    dueDate: task.dueDate || null,
+    time: task.time || null,
+    completed: Boolean(task.completed),
+  };
+}
+
 export default function YouTubeTaskDetail({
   task,
   originView,
   pendingNavTarget,
   onConfirmNavigation,
   onCancelNavigation,
-  onEditTask,
+  onSaveTask,
   onDeleteTask,
-  onEditPlaybackPosition,
+  onSavePlayback,
+  onPlaybackError,
 }) {
   const [title, setTitle] = useState(task.title || '');
   const [description, setDescription] = useState(task.description || '');
@@ -37,26 +60,48 @@ export default function YouTubeTaskDetail({
   const [playerError, setPlayerError] = useState(false);
   const [duration, setDuration] = useState(0);
   const [previewCollapsed, setPreviewCollapsed] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [cloudError, setCloudError] = useState('');
+  const [baseline, setBaseline] = useState(() => taskDraft(task));
+  const [lastTaskSnapshot, setLastTaskSnapshot] = useState(task);
 
   const titleRef = useRef(null);
   const keepEditingRef = useRef(null);
   const cancelDeleteRef = useRef(null);
   const notesRef = useRef(null);
   const notesFocusedRef = useRef(false);
-
   const isDirty = (() => {
-    if (title.trim() !== (task.title || '').trim()) return true;
-    if (description !== (task.description || '')) return true;
-    if (taskType !== (task.taskType || 'youtube')) return true;
-    if (youtubeUrl !== (task.youtubeUrl || '')) return true;
-    if (youtubeNotes !== (task.youtubeNotes || '')) return true;
-    if (priority !== (task.priority || 'Medium')) return true;
-    if (category !== (task.category || 'Work')) return true;
-    if ((dueDate || '') !== (task.dueDate || '')) return true;
-    if ((time || '') !== (task.time || '')) return true;
-    if (completed !== !!task.completed) return true;
+    if (title.trim() !== baseline.title.trim()) return true;
+    if (description !== baseline.description) return true;
+    if (taskType !== baseline.taskType) return true;
+    if (youtubeUrl !== baseline.youtubeUrl) return true;
+    if (youtubeNotes !== baseline.youtubeNotes) return true;
+    if (priority !== baseline.priority) return true;
+    if (category !== baseline.category) return true;
+    if ((dueDate || null) !== baseline.dueDate) return true;
+    if ((time || null) !== baseline.time) return true;
+    if (completed !== baseline.completed) return true;
     return false;
   })();
+
+  if (task !== lastTaskSnapshot) {
+    setLastTaskSnapshot(task);
+    if (!isDirty) {
+      const next = taskDraft(task);
+      setBaseline(next);
+      setTitle(next.title);
+      setDescription(next.description);
+      setTaskType(next.taskType);
+      setYoutubeUrl(next.youtubeUrl);
+      setYoutubeNotes(next.youtubeNotes);
+      setPriority(next.priority);
+      setCategory(next.category);
+      setDueDate(next.dueDate || '');
+      setTime(next.time || '');
+      setCompleted(next.completed);
+    }
+  }
 
   useEffect(() => {
     titleRef.current?.focus();
@@ -72,7 +117,8 @@ export default function YouTubeTaskDetail({
     }
   }, [pendingNavTarget, isDirty, onConfirmNavigation]);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
+    if (isSaving || isDeleting) return;
     const trimmedTitle = title.trim();
     if (!trimmedTitle) {
       setTitleError(true);
@@ -89,9 +135,9 @@ export default function YouTubeTaskDetail({
     setTitleError(false);
     setUrlError(false);
 
-    const patch = {
+    const draft = {
       title: trimmedTitle,
-      description: description.trim(),
+      description,
       taskType,
       youtubeUrl: urlCheck.url,
       youtubeNotes,
@@ -99,24 +145,21 @@ export default function YouTubeTaskDetail({
       category,
       dueDate: dueDate || null,
       time: time || null,
-      completed,
     };
-
-    if (
-      urlCheck.url.trim() !== (task.youtubeUrl || '').trim() &&
-      urlCheck.url.trim() !== ''
-    ) {
-      patch.lastWatchedSeconds = 0;
+    const patch = deriveChangedFields(baseline, draft, CONTENT_FIELDS);
+    setIsSaving(true);
+    setCloudError('');
+    try {
+      await onSaveTask(task.id, patch, completed);
+      onConfirmNavigation(originView);
+    } catch (error) {
+      setCloudError(getErrorMessage(
+        error,
+        'This task could not be saved. Your changes are still here.',
+      ));
+    } finally {
+      setIsSaving(false);
     }
-
-    if (!task.completed && completed) {
-      patch.completedAt = new Date().toISOString();
-    } else if (task.completed && !completed) {
-      patch.completedAt = null;
-    }
-
-    onEditTask(task.id, patch);
-    onConfirmNavigation(originView);
   }, [
     title,
     description,
@@ -128,10 +171,11 @@ export default function YouTubeTaskDetail({
     dueDate,
     time,
     completed,
+    baseline,
+    isSaving,
+    isDeleting,
     task.id,
-    task.completed,
-    task.youtubeUrl,
-    onEditTask,
+    onSaveTask,
     onConfirmNavigation,
     originView,
   ]);
@@ -149,9 +193,16 @@ export default function YouTubeTaskDetail({
     setShowDeleteConfirm(true);
   }, []);
 
-  const confirmDelete = useCallback(() => {
-    onDeleteTask(task.id);
-    onConfirmNavigation(originView);
+  const confirmDelete = useCallback(async () => {
+    setIsDeleting(true);
+    setCloudError('');
+    try {
+      await onDeleteTask(task.id);
+      onConfirmNavigation(originView);
+    } catch (error) {
+      setCloudError(getErrorMessage(error, 'This task could not be deleted.'));
+      setIsDeleting(false);
+    }
   }, [onDeleteTask, task.id, onConfirmNavigation, originView]);
 
   const cancelDelete = useCallback(() => {
@@ -198,14 +249,12 @@ export default function YouTubeTaskDetail({
     !urlDraftChanged &&
     (duration <= 0 || task.lastWatchedSeconds < duration - 3);
 
-  const persistPosition = useCallback(
-    (seconds) => {
-      if (onEditPlaybackPosition) {
-        onEditPlaybackPosition(task.id, seconds);
-      }
-    },
-    [onEditPlaybackPosition, task.id],
-  );
+  const playbackPersistence = useTaskPlaybackPersistence({
+    taskId: task.id,
+    initialSeconds: task.lastWatchedSeconds || 0,
+    onSavePlayback,
+    onImmediateError: onPlaybackError,
+  });
 
   const { playerRef, positionRef, seekAndPlay } = useYouTubePlayer({
     containerId,
@@ -224,16 +273,16 @@ export default function YouTubeTaskDetail({
       setPlayerError(false);
     },
     onPositionChange: (seconds) => {
-      persistPosition(seconds);
+      playbackPersistence.onPositionChange(seconds);
     },
     onPaused: (seconds) => {
-      persistPosition(seconds);
+      playbackPersistence.onPaused(seconds);
     },
     onEnded: () => {
-      persistPosition(0);
+      playbackPersistence.onEnded();
     },
     onLeave: (seconds) => {
-      persistPosition(seconds);
+      playbackPersistence.onLeave(seconds);
     },
     onError: () => {
       setPlayerError(true);
@@ -382,7 +431,7 @@ export default function YouTubeTaskDetail({
   return (
     <div className="task-detail task-detail--youtube">
       <div className="task-detail__header">
-        <button type="button" className="task-detail__back" onClick={handleBack}>
+        <button type="button" className="task-detail__back" onClick={handleBack} disabled={isSaving || isDeleting}>
           <svg
             width="16"
             height="16"
@@ -403,11 +452,12 @@ export default function YouTubeTaskDetail({
             type="button"
             className="task-detail__delete"
             onClick={handleDeleteClick}
+            disabled={isSaving || isDeleting}
           >
             Delete Task
           </button>
-          <button type="button" className="task-detail__save" onClick={handleSave}>
-            Save Changes
+          <button type="button" className="task-detail__save" onClick={handleSave} disabled={isSaving || isDeleting}>
+            {isSaving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </div>
@@ -424,20 +474,24 @@ export default function YouTubeTaskDetail({
               type="button"
               className="task-delete__confirm"
               onClick={confirmDelete}
+              disabled={isDeleting}
             >
-              Confirm Delete
+              {isDeleting ? 'Deleting...' : 'Confirm Delete'}
             </button>
             <button
               ref={cancelDeleteRef}
               type="button"
               className="task-delete__cancel"
               onClick={cancelDelete}
+              disabled={isDeleting}
             >
               Cancel
             </button>
           </div>
         </div>
       )}
+
+      {cloudError && <div className="task-detail__cloud-error" role="alert">{cloudError}</div>}
 
       {(pendingNavTarget || showDiscardConfirm) && isDirty && !showDeleteConfirm && (
         <div
@@ -743,11 +797,11 @@ export default function YouTubeTaskDetail({
       </form>
 
       <div className="task-detail__footer">
-        <button type="button" className="task-detail__cancel" onClick={handleBack}>
+        <button type="button" className="task-detail__cancel" onClick={handleBack} disabled={isSaving || isDeleting}>
           Cancel
         </button>
-        <button type="button" className="task-detail__save" onClick={handleSave}>
-          Save Changes
+        <button type="button" className="task-detail__save" onClick={handleSave} disabled={isSaving || isDeleting}>
+          {isSaving ? 'Saving...' : 'Save Changes'}
         </button>
       </div>
     </div>

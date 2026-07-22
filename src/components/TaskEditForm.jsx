@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import '../styles/task-row.css';
+import { deriveChangedFields, getErrorMessage, normalizeInlineTaskDraft } from '../utils/taskCloud';
 
 const PRIORITIES = ['High', 'Medium', 'Low'];
 const CATEGORIES = ['Work', 'Learning', 'Personal', 'Health'];
@@ -10,36 +11,60 @@ export default function TaskEditForm({ task, onSave, onCancel }) {
   const [category, setCategory] = useState(task.category || 'Work');
   const [time, setTime] = useState(task.time || '');
   const [dueDate, setDueDate] = useState(task.dueDate || '');
+  const [isSaving, setIsSaving] = useState(false);
+  const [cloudError, setCloudError] = useState('');
   const titleRef = useRef(null);
+  const baselineRef = useRef(normalizeInlineTaskDraft({
+    title: task.title || '',
+    priority: task.priority || 'Medium',
+    category: task.category || 'Work',
+    time: task.time || '',
+    dueDate: task.dueDate || '',
+  }));
 
   useEffect(() => {
     titleRef.current?.focus();
   }, []);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (isSaving) return;
     const trimmed = title.trim();
     if (!trimmed) return;
-    onSave(task.id, {
+    const draft = normalizeInlineTaskDraft({
       title: trimmed,
       priority,
       category,
-      time: time || null,
-      dueDate: dueDate || null,
+      time,
+      dueDate,
     });
+    const patch = deriveChangedFields(
+      baselineRef.current,
+      draft,
+      ['title', 'priority', 'category', 'time', 'dueDate'],
+    );
+    setIsSaving(true);
+    setCloudError('');
+    try {
+      await onSave(task.id, patch);
+    } catch (error) {
+      setCloudError(getErrorMessage(error, 'Task changes could not be saved.'));
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   function handleKeyDown(e) {
     if (e.key === 'Escape') {
       e.preventDefault();
-      onCancel();
+      if (!isSaving) onCancel();
     }
   }
 
   const trimmed = title.trim();
 
   return (
-    <div className="task-edit" onKeyDown={handleKeyDown}>
+    <div className="task-edit" onKeyDown={handleKeyDown} aria-busy={isSaving}>
       <form className="task-edit__form" onSubmit={handleSubmit}>
         <input
           ref={titleRef}
@@ -98,17 +123,18 @@ export default function TaskEditForm({ task, onSave, onCancel }) {
           <button
             type="submit"
             className="task-edit__save"
-            disabled={!trimmed}
+            disabled={!trimmed || isSaving}
           >
-            Save
+            {isSaving ? 'Saving...' : 'Save'}
           </button>
-          <button type="button" className="task-edit__cancel" onClick={onCancel}>
+          <button type="button" className="task-edit__cancel" onClick={onCancel} disabled={isSaving}>
             Cancel
           </button>
         </div>
         {!trimmed && (
           <span className="task-edit__validation">Title is required</span>
         )}
+        {cloudError && <span className="task-edit__validation" role="alert">{cloudError}</span>}
       </form>
     </div>
   );

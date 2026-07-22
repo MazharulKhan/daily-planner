@@ -21,6 +21,7 @@ export default function Dashboard({
   requestAddTask,
   requestAddIdea,
   closeAddIdea,
+  tasksReady,
 }) {
   const [activeTaskAction, setActiveTaskAction] = useState(null);
   const lastTriggerRef = useRef(null);
@@ -47,16 +48,16 @@ export default function Dashboard({
   }, []);
 
   const handleEditSave = useCallback(
-    (id, patch) => {
-      onEditTask(id, patch);
+    async (id, patch) => {
+      await onEditTask(id, patch);
       clearAction();
     },
     [onEditTask, clearAction],
   );
 
   const handleDeleteConfirm = useCallback(
-    (id) => {
-      onDeleteTask(id);
+    async (id) => {
+      await onDeleteTask(id);
       clearAction();
     },
     [onDeleteTask, clearAction],
@@ -78,6 +79,7 @@ export default function Dashboard({
           onViewAll={onViewAllToday}
           onRequestAdd={requestAddTask}
           lastTriggerRef={lastTriggerRef}
+          tasksReady={tasksReady}
         />
       </div>
       <div className="dashboard__cell">
@@ -91,6 +93,7 @@ export default function Dashboard({
           onActionCancel={clearAction}
           onOpenDetail={onOpenDetail}
           onViewAll={onViewAllUpcoming}
+          tasksReady={tasksReady}
         />
       </div>
       <div className="dashboard__cell">
@@ -104,7 +107,7 @@ export default function Dashboard({
         />
       </div>
       <div className="dashboard__cell">
-        <DailyProgressCard tasks={todayTasks} />
+        <DailyProgressCard tasks={todayTasks} tasksReady={tasksReady} />
       </div>
     </div>
   );

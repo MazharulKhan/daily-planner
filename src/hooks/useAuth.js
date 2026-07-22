@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getAuthInstance } from '../firebase/firebase.js';
 import {
@@ -16,8 +16,6 @@ export function useAuth() {
   const [signOutError, setSignOutError] = useState(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
-
-  const hasPendingWritesRef = useRef(false);
 
   useEffect(() => {
     const auth = getAuthInstance();
@@ -59,28 +57,32 @@ export function useAuth() {
     }
   }, []);
 
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(async ({
+    hasPendingWrites = false,
+    confirmed = false,
+    beforeSignOut,
+  } = {}) => {
     setSignOutError(null);
-    if (isSigningOut) return;
+    if (isSigningOut) return { status: 'busy' };
 
-    const hasPendingWrites = hasPendingWritesRef.current;
-    if (shouldConfirmBeforeSignOut(hasPendingWrites)) {
-      // Phase 6A: shouldConfirmBeforeSignOut is always false. This branch
-      // exists as the seam for Phase 6C/6D when real writes exist.
-      return;
+    if (!confirmed && shouldConfirmBeforeSignOut(hasPendingWrites)) {
+      return { status: 'confirmation-required' };
     }
 
     setIsSigningOut(true);
     try {
+      beforeSignOut?.();
       await signOutUser();
       // Success: the auth-state observer will transition the app to
       // signed-out. Reset signing-out within the callback (not an effect)
       // so a future sign-out cycle is not blocked after the user signs
       // back in.
       setIsSigningOut(false);
+      return { status: 'success' };
     } catch (error) {
       setSignOutError(mapSignOutError(error));
       setIsSigningOut(false);
+      return { status: 'failure', error };
     }
   }, [isSigningOut]);
 

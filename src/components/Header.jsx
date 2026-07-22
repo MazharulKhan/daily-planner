@@ -35,7 +35,7 @@ function DateChip() {
   );
 }
 
-export default function Header({ onAddTask, activeView, detailOpen }) {
+export default function Header({ onAddTask, activeView, detailOpen, addDisabled = false }) {
   const showTitle = activeView !== 'quick-ideas' && !detailOpen;
   const page = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
 
@@ -77,7 +77,12 @@ export default function Header({ onAddTask, activeView, detailOpen }) {
             />
           </div>
 
-          <button type="button" className="header__add" onClick={onAddTask}>
+          <button
+            type="button"
+            className="header__add"
+            onClick={onAddTask}
+            disabled={addDisabled}
+          >
             <svg
               width="16"
               height="16"

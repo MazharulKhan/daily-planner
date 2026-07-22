@@ -125,3 +125,7 @@
     padding: var(--space-2) var(--space-3) var(--space-3);
   }
 }
+.add-task__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

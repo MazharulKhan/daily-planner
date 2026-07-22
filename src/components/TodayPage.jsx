@@ -28,6 +28,7 @@ export default function TodayPage({
   onDeleteTask,
   onRequestAdd,
   onViewAllCompleted,
+  tasksReady = true,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [completedExpanded, setCompletedExpanded] = useState(false);
@@ -84,16 +85,16 @@ export default function TodayPage({
   }, []);
 
   const handleEditSave = useCallback(
-    (id, patch) => {
-      onEditTask(id, patch);
+    async (id, patch) => {
+      await onEditTask(id, patch);
       clearAction();
     },
     [onEditTask, clearAction],
   );
 
   const handleDeleteConfirm = useCallback(
-    (id) => {
-      onDeleteTask(id);
+    async (id) => {
+      await onDeleteTask(id);
       clearAction();
     },
     [onDeleteTask, clearAction],
@@ -142,7 +143,7 @@ export default function TodayPage({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Today</h2>
-          <span className="card__count">{filtered.length}</span>
+          <span className="card__count">{tasksReady ? filtered.length : '—'}</span>
         </div>
         <button
           type="button"
@@ -153,7 +154,7 @@ export default function TodayPage({
         </button>
       </div>
 
-      {pool.length > 0 && (
+      {tasksReady && pool.length > 0 && (
         <div
           className="filter-chips"
           role="group"
@@ -177,6 +178,10 @@ export default function TodayPage({
       )}
 
       <div className="card__body">
+        {!tasksReady ? (
+          <div className="cloud-placeholder">Loading your cloud tasks...</div>
+        ) : (
+        <>
         {pool.length === 0 ? (
           <EmptyState
             title="No tasks for today"
@@ -241,7 +246,7 @@ export default function TodayPage({
           </>
         )}
 
-        <AddTaskTrigger onRequestAdd={onRequestAdd} />
+        <AddTaskTrigger onRequestAdd={onRequestAdd} disabled={!tasksReady} />
 
         {allDone && (
           <div className="task-list__all-done">
@@ -249,6 +254,8 @@ export default function TodayPage({
               ? 'All done for today. Nice work!'
               : `All ${categoryFilter} tasks are complete.`}
           </div>
+        )}
+        </>
         )}
       </div>
     </div>

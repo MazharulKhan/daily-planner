@@ -724,3 +724,16 @@
     justify-content: flex-end;
   }
 }
+.task-delete__error,
+.task-row__cloud-error {
+  grid-column: 1 / -1;
+  color: var(--color-danger, #b42318);
+  font-size: var(--font-size-sm);
+}
+
+.task-row button:disabled,
+.task-edit button:disabled,
+.task-delete button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

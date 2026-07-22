@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import '../styles/add-task-modal.css';
-import { makeId, todayISO } from '../utils/dateTime';
+import { todayISO } from '../utils/dateTime';
+import { getErrorMessage } from '../utils/taskCloud';
 import { validateYouTubeUrl } from '../utils/youtube';
 
 const DEFAULT_PRIORITY = 'Medium';
@@ -83,6 +84,8 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
   const [hasUserEdited, setHasUserEdited] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [confirmDiscardOpen, setConfirmDiscardOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [cloudError, setCloudError] = useState('');
 
   const dialogRef = useRef(null);
   const titleRef = useRef(null);
@@ -132,7 +135,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, hasUserEdited, confirmDiscardOpen]);
+  }, [open, hasUserEdited, confirmDiscardOpen, isAdding]);
 
   function trapTab(e) {
     const dialog = dialogRef.current;
@@ -163,6 +166,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
 
   function updateField(key, value) {
     setFields((prev) => ({ ...prev, [key]: value }));
+    setCloudError('');
     markEdited();
   }
 
@@ -171,9 +175,11 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
     setHasUserEdited(false);
     setUrlError(false);
     setConfirmDiscardOpen(false);
+    setCloudError('');
   }
 
   function requestClose() {
+    if (isAdding) return;
     if (confirmDiscardOpen) {
       // While the discard confirmation is open, treat any close request as
       // "cancel the confirmation" first — the user must explicitly Discard.
@@ -192,6 +198,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
   }
 
   function handleDiscard() {
+    if (isAdding) return;
     resetFields();
     onClose?.();
   }
@@ -199,7 +206,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
   function handleOverlayClick(e) {
     // Overlay click never closes while dirty. While the discard confirmation
     // is open, also ignore.
-    if (hasUserEdited || confirmDiscardOpen) return;
+    if (hasUserEdited || confirmDiscardOpen || isAdding) return;
     if (e.target === e.currentTarget) {
       onClose?.();
     }
@@ -213,8 +220,9 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
     updateField('time', '');
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (isAdding) return;
     const trimmedTitle = fields.title.trim();
     if (!trimmedTitle) return;
 
@@ -228,24 +236,34 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
     }
 
     const trimmedDesc = fields.description.trim();
-    onAdd({
-      id: makeId('task'),
-      title: trimmedTitle,
-      description: trimmedDesc,
-      taskType: fields.taskType,
-      youtubeUrl:
-        fields.taskType === 'youtube'
-          ? validateYouTubeUrl(fields.youtubeUrl).url
-          : '',
-      youtubeNotes: '',
-      completed: false,
-      priority: fields.priority,
-      category: fields.category,
-      time: fields.time || null,
-      dueDate: fields.dueDate || null,
-    });
-    resetFields();
-    onClose?.();
+    setIsAdding(true);
+    setCloudError('');
+    try {
+      await onAdd({
+        title: trimmedTitle,
+        description: trimmedDesc,
+        taskType: fields.taskType,
+        youtubeUrl:
+          fields.taskType === 'youtube'
+            ? validateYouTubeUrl(fields.youtubeUrl).url
+            : '',
+        youtubeNotes: '',
+        lastWatchedSeconds: 0,
+        priority: fields.priority,
+        category: fields.category,
+        time: fields.time || null,
+        dueDate: fields.dueDate || null,
+      });
+      resetFields();
+      onClose?.();
+    } catch (error) {
+      setCloudError(getErrorMessage(
+        error,
+        'This task could not be added. Check your connection and try again.',
+      ));
+    } finally {
+      setIsAdding(false);
+    }
   }
 
   if (!open) return null;
@@ -263,6 +281,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        aria-busy={isAdding}
       >
         <div className="add-task-modal__header">
           <h2 id={titleId} className="add-task-modal__title">
@@ -273,6 +292,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             className="add-task-modal__close"
             aria-label="Close"
             onClick={handleCancelClick}
+            disabled={isAdding}
           >
             <svg
               width="18"
@@ -290,6 +310,7 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
         </div>
 
         <form className="add-task-modal__form" onSubmit={handleSubmit}>
+          <fieldset className="add-task-modal__fieldset" disabled={isAdding}>
           <label className="add-task-modal__field add-task-modal__field--full">
             <span className="add-task-modal__label">Task title</span>
             <input
@@ -459,6 +480,12 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
             </div>
           )}
 
+          {cloudError && (
+            <div className="add-task-modal__error" role="alert">
+              {cloudError}
+            </div>
+          )}
+
           <div className="add-task-modal__defaults" role="note">
             <svg
               width="16"
@@ -487,17 +514,19 @@ export default function AddTaskModal({ open, onAdd, onClose }) {
               type="button"
               className="add-task-modal__cancel"
               onClick={handleCancelClick}
+              disabled={isAdding}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="add-task-modal__submit"
-              disabled={!canSubmit}
+              disabled={!canSubmit || isAdding}
             >
-              Add Task
+              {isAdding ? 'Adding...' : 'Add Task'}
             </button>
           </div>
+          </fieldset>
         </form>
       </div>
     </div>

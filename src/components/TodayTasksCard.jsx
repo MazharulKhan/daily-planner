@@ -23,6 +23,7 @@ export default function TodayTasksCard({
   onOpenDetail,
   onViewAll,
   onRequestAdd,
+  tasksReady = true,
 }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [completedExpanded, setCompletedExpanded] = useState(false);
@@ -105,14 +106,14 @@ export default function TodayTasksCard({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Today&apos;s Tasks</h2>
-          <span className="card__count">{filteredTasks.length}</span>
+          <span className="card__count">{tasksReady ? filteredTasks.length : '—'}</span>
         </div>
         <button type="button" className="card__view-all" onClick={onViewAll}>
           View all
         </button>
       </div>
 
-      {tasks.length > 0 && (
+      {tasksReady && tasks.length > 0 && (
         <div
           className="filter-chips"
           role="group"
@@ -136,7 +137,9 @@ export default function TodayTasksCard({
       )}
 
       <div className="card__body">
-        {tasks.length === 0 ? (
+        {!tasksReady ? (
+          <div className="cloud-placeholder">Loading your cloud tasks...</div>
+        ) : tasks.length === 0 ? (
           <EmptyState
             title="No tasks for today"
             hint="Add your first task to get started."
@@ -181,9 +184,9 @@ export default function TodayTasksCard({
           </div>
         )}
 
-        <AddTaskTrigger onRequestAdd={onRequestAdd} />
+        <AddTaskTrigger onRequestAdd={onRequestAdd} disabled={!tasksReady} />
 
-        {completionMessage && (
+        {tasksReady && completionMessage && (
           <div className="task-list__all-done">{completionMessage}</div>
         )}
       </div>

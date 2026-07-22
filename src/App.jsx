@@ -45,6 +45,7 @@ function App() {
 
   return (
     <Planner
+      key={user.uid}
       user={user}
       onSignOut={signOut}
       isSigningOut={isSigningOut}

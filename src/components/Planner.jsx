@@ -9,8 +9,11 @@ import TodayPage from './TodayPage';
 import UpcomingPage from './UpcomingPage';
 import CompletedPage from './CompletedPage';
 import AddTaskModal from './AddTaskModal';
-import { useTasks, useIdeas } from '../hooks/useLocalStorage';
-import { makeSampleTasks, makeSampleIdeas } from '../data/sampleData';
+import TaskCloudStatus from './TaskCloudStatus';
+import PendingWritesSignOutConfirm from './PendingWritesSignOutConfirm';
+import { useLocalIdeas } from '../hooks/useLocalIdeas';
+import { useTaskCloud } from '../hooks/useTaskCloud';
+import { makeSampleIdeas } from '../data/sampleData';
 import { storage } from '../data/storage';
 
 export default function Planner({
@@ -22,9 +25,17 @@ export default function Planner({
   theme,
   onToggleTheme,
 }) {
-  const { tasks, addTask, editTask, toggleTask, deleteTask, editPlaybackPosition } =
-    useTasks(makeSampleTasks());
-  const { ideas, addIdea, editIdea, deleteIdea } = useIdeas(makeSampleIdeas());
+  const taskCloud = useTaskCloud(user.uid);
+  const {
+    tasks,
+    createTask: addTask,
+    updateTaskContent: editTask,
+    toggleTaskCompletion: toggleTask,
+    deleteTask,
+    saveTaskDetail,
+    savePlaybackPosition,
+  } = taskCloud;
+  const { ideas, addIdea, editIdea, deleteIdea } = useLocalIdeas(makeSampleIdeas());
 
   const [taskAddOpen, setTaskAddOpen] = useState(false);
   const [ideaAddOpen, setIdeaAddOpen] = useState(false);
@@ -32,10 +43,12 @@ export default function Planner({
   const [selectedIdeaId, setSelectedIdeaId] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [pendingNavTarget, setPendingNavTarget] = useState(null);
+  const [signOutConfirmOpen, setSignOutConfirmOpen] = useState(false);
 
   const [originView, setOriginView] = useState(view);
 
   const taskTriggerRef = useRef(null);
+  const signOutTriggerRef = useRef(null);
 
   const selectedTask = useMemo(
     () => tasks.find((t) => t.id === selectedTaskId) || null,
@@ -49,10 +62,10 @@ export default function Planner({
   }, [view]);
 
   const requestAddTask = useCallback(() => {
-    if (detailOpen) return;
+    if (detailOpen || !taskCloud.canMutate) return;
     taskTriggerRef.current = document.activeElement;
     setTaskAddOpen(true);
-  }, [detailOpen]);
+  }, [detailOpen, taskCloud.canMutate]);
 
   const closeAddTask = useCallback(() => {
     setTaskAddOpen(false);
@@ -115,6 +128,68 @@ export default function Planner({
   const handleViewAllToday = useCallback(() => setView('today'), []);
   const handleViewAllUpcoming = useCallback(() => setView('upcoming'), []);
 
+  useEffect(() => {
+    if (!selectedTaskId || !taskCloud.hasServerSnapshot || taskCloud.suspended) return;
+    if (tasks.some((task) => task.id === selectedTaskId)) return;
+    const timeoutId = window.setTimeout(() => {
+      setSelectedTaskId(null);
+      setPendingNavTarget(null);
+      setTaskAddOpen(false);
+      setView(originView);
+      taskCloud.notifyRemoteDeletion();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [
+    selectedTaskId,
+    tasks,
+    originView,
+    taskCloud.hasServerSnapshot,
+    taskCloud.suspended,
+    taskCloud,
+  ]);
+
+  const clearPlannerSession = useCallback(() => {
+    setSelectedTaskId(null);
+    setPendingNavTarget(null);
+    setTaskAddOpen(false);
+    setIdeaAddOpen(false);
+    setSelectedIdeaId(null);
+    taskCloud.clearSession();
+  }, [taskCloud]);
+
+  const performSignOut = useCallback(async (confirmed) => {
+    const result = await onSignOut({
+      hasPendingWrites: taskCloud.hasPendingWrites,
+      confirmed,
+      beforeSignOut: clearPlannerSession,
+    });
+    if (result?.status === 'confirmation-required') {
+      setSignOutConfirmOpen(true);
+    } else if (result?.status === 'failure') {
+      setSignOutConfirmOpen(false);
+      setSelectedTaskId(null);
+      setPendingNavTarget(null);
+      setTaskAddOpen(false);
+      taskCloud.resumeSession();
+    }
+    return result;
+  }, [onSignOut, taskCloud, clearPlannerSession]);
+
+  const requestSignOut = useCallback((triggerElement = null) => {
+    signOutTriggerRef.current = triggerElement || document.activeElement;
+    return performSignOut(false);
+  }, [performSignOut]);
+
+  const keepSyncing = useCallback(() => {
+    setSignOutConfirmOpen(false);
+    signOutTriggerRef.current?.focus?.();
+  }, []);
+
+  const signOutAnyway = useCallback(() => {
+    setSignOutConfirmOpen(false);
+    performSignOut(true);
+  }, [performSignOut]);
+
   let content;
   if (detailOpen && selectedTask) {
     const DetailComponent =
@@ -126,9 +201,10 @@ export default function Planner({
         pendingNavTarget={pendingNavTarget}
         onConfirmNavigation={confirmNavigation}
         onCancelNavigation={cancelNavigation}
-        onEditTask={editTask}
+        onSaveTask={saveTaskDetail}
         onDeleteTask={deleteTask}
-        onEditPlaybackPosition={editPlaybackPosition}
+        onSavePlayback={savePlaybackPosition}
+        onPlaybackError={taskCloud.reportPlaybackError}
       />
     );
   } else if (view === 'dashboard') {
@@ -148,6 +224,7 @@ export default function Planner({
         requestAddTask={requestAddTask}
         requestAddIdea={requestAddIdea}
         closeAddIdea={closeAddIdea}
+        tasksReady={taskCloud.hasServerSnapshot}
       />
     );
   } else if (view === 'today') {
@@ -160,6 +237,7 @@ export default function Planner({
         onDeleteTask={deleteTask}
         onRequestAdd={requestAddTask}
         onViewAllCompleted={() => setView('completed')}
+        tasksReady={taskCloud.hasServerSnapshot}
       />
     );
   } else if (view === 'upcoming') {
@@ -170,6 +248,7 @@ export default function Planner({
         onOpenDetail={openTaskDetail}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
+        tasksReady={taskCloud.hasServerSnapshot}
       />
     );
   } else if (view === 'completed') {
@@ -180,6 +259,7 @@ export default function Planner({
         onOpenDetail={openTaskDetail}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
+        tasksReady={taskCloud.hasServerSnapshot}
       />
     );
   } else {
@@ -200,12 +280,12 @@ export default function Planner({
         onAddTask={requestAddTask}
         activeView={view}
         onNavigate={navigate}
-        addDisabled={detailOpen}
+        addDisabled={detailOpen || !taskCloud.canMutate || taskCloud.suspended}
         theme={theme}
         onToggleTheme={onToggleTheme}
         user={user}
-        onSignOut={onSignOut}
-        isSigningOut={isSigningOut}
+        onSignOut={requestSignOut}
+        isSigningOut={isSigningOut || signOutConfirmOpen}
         signOutError={signOutError}
         onClearSignOutError={onClearSignOutError}
       />
@@ -214,13 +294,30 @@ export default function Planner({
           onAddTask={requestAddTask}
           activeView={view}
           detailOpen={detailOpen}
+          addDisabled={!taskCloud.canMutate || taskCloud.suspended}
         />
-        <main className="app-content">{content}</main>
+        <main className="app-content">
+          <TaskCloudStatus
+            status={taskCloud.status}
+            isConfirmedEmpty={taskCloud.isConfirmedEmpty}
+            listenerError={taskCloud.listenerError}
+            notices={taskCloud.mutationNotices}
+            onRetry={taskCloud.retry}
+            onSignOut={requestSignOut}
+            onDismissNotice={taskCloud.dismissNotice}
+          />
+          {content}
+        </main>
       </div>
       <AddTaskModal
         open={taskAddOpen}
         onAdd={addTask}
         onClose={closeAddTask}
+      />
+      <PendingWritesSignOutConfirm
+        open={signOutConfirmOpen}
+        onKeepSyncing={keepSyncing}
+        onSignOutAnyway={signOutAnyway}
       />
     </div>
   );

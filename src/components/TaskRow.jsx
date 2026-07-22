@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import '../styles/task-row.css';
 import { isOverdue, formatShortDate } from '../utils/dateTime';
+import { getErrorMessage } from '../utils/taskCloud';
 
 function priorityClass(priority) {
   if (!priority) return '';
@@ -19,6 +21,8 @@ export default function TaskRow({
   editBtnRef,
 }) {
   const completed = !!task.completed;
+  const [isToggling, setIsToggling] = useState(false);
+  const [toggleError, setToggleError] = useState('');
   const overdue = !completed && isOverdue(task.dueDate);
 
   const priorityBorderClass = task.priority
@@ -45,7 +49,18 @@ export default function TaskRow({
             ? `Mark "${task.title}" as not done`
             : `Mark "${task.title}" as done`
         }
-        onClick={() => onToggle(task.id)}
+        onClick={async () => {
+          setIsToggling(true);
+          setToggleError('');
+          try {
+            await onToggle(task.id);
+          } catch (error) {
+            setToggleError(getErrorMessage(error, 'Completion status could not be updated.'));
+          } finally {
+            setIsToggling(false);
+          }
+        }}
+        disabled={isToggling}
       >
         <svg
           className="task-row__check"
@@ -136,6 +151,7 @@ export default function TaskRow({
           </svg>
         </button>
       </div>
+      {toggleError && <span className="task-row__cloud-error" role="alert">{toggleError}</span>}
     </div>
   );
 }

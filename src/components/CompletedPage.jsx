@@ -13,6 +13,7 @@ export default function CompletedPage({
   onOpenDetail,
   onEditTask,
   onDeleteTask,
+  tasksReady = true,
 }) {
   const [activeTaskAction, setActiveTaskAction] = useState(null);
   const lastTriggerRef = useRef(null);
@@ -50,16 +51,16 @@ export default function CompletedPage({
   }, []);
 
   const handleEditSave = useCallback(
-    (id, patch) => {
-      onEditTask(id, patch);
+    async (id, patch) => {
+      await onEditTask(id, patch);
       clearAction();
     },
     [onEditTask, clearAction],
   );
 
   const handleDeleteConfirm = useCallback(
-    (id) => {
-      onDeleteTask(id);
+    async (id) => {
+      await onDeleteTask(id);
       clearAction();
     },
     [onDeleteTask, clearAction],
@@ -118,12 +119,14 @@ export default function CompletedPage({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Completed</h2>
-          <span className="card__count">{pool.length}</span>
+          <span className="card__count">{tasksReady ? pool.length : '—'}</span>
         </div>
       </div>
 
       <div className="card__body">
-        {pool.length === 0 ? (
+        {!tasksReady ? (
+          <div className="cloud-placeholder">Loading your cloud tasks...</div>
+        ) : pool.length === 0 ? (
           <EmptyState
             title="No completed tasks yet"
             hint="Complete a task to see it here."

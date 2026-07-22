@@ -24,6 +24,7 @@ export default function UpcomingTasksCard({
   onActionCancel,
   onOpenDetail,
   onViewAll,
+  tasksReady = true,
 }) {
   const upcoming = tasks
     .filter((t) => isUpcoming(t.dueDate) && !t.completed)
@@ -72,7 +73,7 @@ export default function UpcomingTasksCard({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Upcoming Tasks</h2>
-          <span className="card__count">{upcoming.length}</span>
+          <span className="card__count">{tasksReady ? upcoming.length : '—'}</span>
         </div>
         <button type="button" className="card__view-all" onClick={onViewAll}>
           View all
@@ -80,7 +81,9 @@ export default function UpcomingTasksCard({
       </div>
 
       <div className="card__body">
-        {upcoming.length === 0 ? (
+        {!tasksReady ? (
+          <div className="cloud-placeholder">Loading your cloud tasks...</div>
+        ) : upcoming.length === 0 ? (
           <EmptyState
             title="Nothing upcoming"
             hint="Tasks with a future due date will appear here."

@@ -227,9 +227,9 @@ export default function Sidebar({
         <button
           type="button"
           className="sidebar__signout"
-          onClick={() => {
+          onClick={(event) => {
             if (signOutError) onClearSignOutError?.();
-            onSignOut?.();
+            onSignOut?.(event.currentTarget);
           }}
           disabled={isSigningOut}
           aria-disabled={isSigningOut || undefined}

@@ -385,3 +385,10 @@
     flex: 1 1 auto;
   }
 }
+.add-task-modal__fieldset {
+  display: contents;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}

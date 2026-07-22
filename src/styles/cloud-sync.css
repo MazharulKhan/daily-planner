@@ -1,0 +1,94 @@
+.cloud-status {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.cloud-status__notice,
+.cloud-status__alert,
+.cloud-placeholder {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4);
+}
+
+.cloud-status__notice--offline,
+.cloud-status__notice--reconnecting {
+  border-color: var(--color-warning, #c58a20);
+}
+
+.cloud-status__alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-color: var(--color-danger, #c74646);
+  color: var(--color-text);
+}
+
+.cloud-status__actions,
+.pending-signout__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.cloud-status__actions button,
+.cloud-status__dismiss,
+.pending-signout__actions button {
+  min-height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised, var(--color-bg));
+  padding: var(--space-2) var(--space-3);
+}
+
+.cloud-placeholder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 96px;
+}
+
+.cloud-placeholder__pulse {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: cloud-pulse 1.2s ease-in-out infinite;
+}
+
+.pending-signout__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(15 23 42 / 55%);
+}
+
+.pending-signout__dialog {
+  width: min(460px, 100%);
+  display: grid;
+  gap: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+}
+
+.pending-signout__dialog p { color: var(--color-text-muted); }
+.pending-signout__danger { color: var(--color-danger, #b42318); }
+
+@keyframes cloud-pulse {
+  50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+@media (max-width: 640px) {
+  .cloud-status__alert { align-items: stretch; flex-direction: column; }
+  .pending-signout__actions { flex-direction: column; }
+}

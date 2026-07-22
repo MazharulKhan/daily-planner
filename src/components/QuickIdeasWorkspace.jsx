@@ -162,6 +162,9 @@ export default function QuickIdeasWorkspace({
         <p className="qi-workspace__subtitle">
           Capture sparks of thought. Expand any idea to read notes, edit, or delete.
         </p>
+        <p className="qi-workspace__storage-note">
+          Stored on this browser until Quick Ideas cloud sync is added.
+        </p>
       </div>
 
       <form className="qi-capture" onSubmit={handleSubmit}>

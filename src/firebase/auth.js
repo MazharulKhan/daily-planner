@@ -60,10 +60,6 @@ export async function signOutUser() {
   return signOut(auth);
 }
 
-// Guard seam for future hasPendingWrites confirmation (Phase 6C/6D).
-// Phase 6A performs no Firestore content writes, so this is always false.
-// The boolean parameter will be wired in Phase 6C/6D; unused now.
-// eslint-disable-next-line no-unused-vars
 export function shouldConfirmBeforeSignOut(hasPendingWrites = false) {
-  return false;
+  return Boolean(hasPendingWrites);
 }
