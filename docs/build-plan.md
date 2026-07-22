@@ -414,12 +414,7 @@ fix, data preservation, and responsive account UI) were completed by the
 user and reported successful; the agent did not perform those browser
 checks itself.
 
-**Next implementation phase:** Phase 6B — Secure Firestore Data
-Foundation. Begin with a focused
-`docs/phase-6b-secure-firestore-foundation-spec.md` before coding (per
-master spec Section 6 / Section 22). Phase 6B owns the `users/{uid}/…`
-paths, converters/repositories, and default-deny owner-only Security
-Rules; production UI content stays on localStorage until Phase 6C.
+**Next implementation phase:** Phase 6C — Task Cloud Sync. Phase 6B (Secure Firestore Data Foundation) is complete. Prepare the focused `docs/phase-6c-task-cloud-sync-spec.md` before coding for replacing task localStorage persistence with Firestore task cloud sync.
 
 ### Clean-Start Decision
 
@@ -435,7 +430,7 @@ The master spec confirms **Option A — start fresh with Firebase**:
 | Sub-Phase | Title | Key Deliverables |
 |-----------|-------|------------------|
 | 6A | Firebase Foundation & Google Auth | Firebase SDK + emulator config, env validation, deny-all Firestore Rules + smoke test, Google popup sign-in, auth-state gate, signed-out screen, user area in sidebar, before-sign-out guard seam. Tasks/ideas stay localStorage. **Status: complete.** |
-| 6B | Secure Firestore Data Foundation | `users/{uid}/tasks/{taskId}` and `users/{uid}/ideas/{ideaId}` paths, converters/repositories, default-deny owner-only Rules, focused Rules tests. UI content stays localStorage. |
+| 6B | Secure Firestore Data Foundation | `users/{uid}/tasks/{taskId}` and `users/{uid}/ideas/{ideaId}` paths, converters/repositories, default-deny owner-only Rules, focused Rules/converter tests, single-field index exemptions. UI content stays localStorage. **Status: complete.** |
 | 6C | Task Cloud Sync | Replace task localStorage with Firestore persistence. Shared task listener, all CRUD writes, YouTube playback throttling, cross-session sync, error states, regression testing. |
 | 6D | Quick Ideas, Reliability & Release | Move Quick Ideas to Firestore, global offline/reconnect states, final Rules/reliability review, separate Vercel v2 deployment, README/docs update, release. |
 

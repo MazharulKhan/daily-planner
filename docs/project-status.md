@@ -20,24 +20,26 @@ screen, and a compact signed-in account area in the Sidebar footer. Tasks
 and Quick Ideas remain localStorage-backed; no live Firestore content
 document is created.
 
-**Verification:** `npm run build`, `npm run lint`, `npm run test:rules`
-( Rules/emulator smoke test via `firebase emulators:exec` and Node's
-built-in test runner), and `git diff --check` all pass. Manual browser
-checks (emulator auth flow including the repeated sign-in sequence after
-the pending-state fix, data preservation of `dp.tasks`/`dp.ideas`, and
-responsive account UI) were completed by the user and reported
-successful; the agent did not perform those browser checks itself.
+**Phase 6B — Secure Firestore Data Foundation:** complete.
+Delivered the user-scoped Firestore data layer for tasks (`users/{uid}/tasks/{taskId}`)
+and Quick Ideas (`users/{uid}/ideas/{ideaId}`), converters isolating Firestore
+timestamps/types from UI domain objects, repositories with normalized no-op and subscription
+primitives, default-deny owner-only Security Rules with `diff().affectedKeys()` update
+classification, single-field index exemptions for unqueried long text fields, and comprehensive
+emulator tests (Rules and converters). Production planner tasks and Quick Ideas remain
+localStorage-backed; no production UI component imports or invokes the new repositories.
 
-See `docs/phase-6a-firebase-foundation-auth-spec.md` for the Phase 6A
+**Verification:** `npm run build`, `npm run lint`, `npm run test:rules`
+(complete Rules and converter emulator test suite), and `git diff --check` all pass.
+
+See `docs/phase-6b-secure-firestore-foundation-spec.md` for the Phase 6B
 contract.
 
 ## Next Exact Step
 
-Phase 6A is committed on `feature/phase-6-firebase`. Begin the Phase 6B
-focused specification (`docs/phase-6b-secure-firestore-foundation-spec.md`)
-for the user-scoped Firestore data layer, default-deny owner-only Security
-Rules, and focused Rules tests. Production UI content must remain on
-localStorage until Phase 6B/6C cutover per the master spec.
+Phase 6B is complete on `feature/phase-6-firebase`. Prepare the Phase 6C
+focused specification (`docs/phase-6c-task-cloud-sync-spec.md`) for replacing
+task localStorage persistence with Firestore task cloud sync.
 
 ## Completed Phase Checklist
 
@@ -63,6 +65,7 @@ localStorage until Phase 6B/6C cutover per the master spec.
 | 5G | Mobile Layout Polish | Complete |
 | 5H | README, Screenshots, and Portfolio Handoff | Complete |
 | 6A | Firebase Foundation and Google Authentication | Complete |
+| 6B | Secure Firestore Data Foundation | Complete |
 
 ## Active Source-of-Truth Docs
 

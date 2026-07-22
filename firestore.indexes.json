@@ -1,3 +1,25 @@
 {
-  "indexes": []
+  "indexes": [],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "tasks",
+      "fieldPath": "description",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "tasks",
+      "fieldPath": "youtubeNotes",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "ideas",
+      "fieldPath": "text",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "ideas",
+      "fieldPath": "notes",
+      "indexes": []
+    }
+  ]
 }
