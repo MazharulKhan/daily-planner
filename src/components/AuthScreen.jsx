@@ -1,4 +1,5 @@
 import '../styles/auth-screen.css';
+import AuthShowcaseCarousel from './AuthShowcaseCarousel';
 
 function ThemeIcon({ isDark }) {
   const common = {
@@ -32,14 +33,30 @@ function GoogleIcon() {
   return (
     <svg className="auth-google__icon" viewBox="0 0 24 24" aria-hidden="true">
       <path
-        fill="#EA4335"
-        d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 3.2 14.7 2.2 12 2.2 6.9 2.2 2.8 6.3 2.8 11.5S6.9 20.8 12 20.8c5.2 0 8.7-3.7 8.7-8.9 0-.6-.1-1-.2-1.7H12z"
+        fill="#4285F4"
+        d="M21.6 12.23c0-.71-.06-1.4-.18-2.07H12v3.92h5.38a4.6 4.6 0 0 1-2 3.02v2.54h3.24c1.9-1.75 2.98-4.33 2.98-7.41Z"
       />
       <path
         fill="#34A853"
-        d="M3.7 7.5l3.2 2.4C7.8 7.9 9.7 6.4 12 6.4c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 3.2 14.7 2.2 12 2.2 8.4 2.2 5.3 4.3 3.7 7.5z"
-        opacity="0"
+        d="M12 22c2.7 0 4.97-.9 6.62-2.36l-3.24-2.54c-.9.6-2.05.96-3.38.96-2.6 0-4.81-1.76-5.6-4.13H3.06v2.62A10 10 0 0 0 12 22Z"
       />
+      <path
+        fill="#FBBC05"
+        d="M6.4 13.93A6.02 6.02 0 0 1 6.09 12c0-.67.12-1.32.31-1.93V7.45H3.06A10 10 0 0 0 2 12c0 1.61.39 3.14 1.06 4.55l3.34-2.62Z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.94c1.47 0 2.79.5 3.83 1.5l2.87-2.87A9.62 9.62 0 0 0 12 2a10 10 0 0 0-8.94 5.45l3.34 2.62C7.19 7.7 9.4 5.94 12 5.94Z"
+      />
+    </svg>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg className="auth-security__icon" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="5" y="10" width="14" height="11" rx="2" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
     </svg>
   );
 }
@@ -47,55 +64,26 @@ function GoogleIcon() {
 function Brand() {
   return (
     <div className="auth-brand">
-      <div className="auth-brand__mark" aria-hidden="true">D</div>
+      <div className="auth-brand__mark">
+        <svg
+          className="auth-brand__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <rect x="3" y="4" width="18" height="17" rx="3.5" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="8" y1="2" x2="8" y2="5" />
+          <line x1="16" y1="2" x2="16" y2="5" />
+          <path d="M8.5 14.5L11 17L15.5 11.5" strokeWidth="2.2" />
+        </svg>
+      </div>
       <div className="auth-brand__name">Daily Planner</div>
-    </div>
-  );
-}
-
-function PreviewCard() {
-  // Static decorative preview only. Must not read real localStorage or
-  // Firestore data (Phase 6A / Section 6.1 "It must not read real localStorage
-  // or Firestore data").
-  return (
-    <div className="auth-preview" aria-hidden="true">
-      <div className="auth-preview__card">
-        <div className="auth-preview__heading">
-          <span className="auth-preview__dot auth-preview__dot--blue" />
-          <span className="auth-preview__title">Today</span>
-          <span className="auth-preview__count">3</span>
-        </div>
-        <div className="auth-preview__row">
-          <span className="auth-preview__checkbox" />
-          <span className="auth-preview__text">Review quarterly goals</span>
-          <span className="auth-preview__meta">High</span>
-        </div>
-        <div className="auth-preview__row">
-          <span className="auth-preview__checkbox" />
-          <span className="auth-preview__text">Reply to design thread</span>
-          <span className="auth-preview__meta">Med</span>
-        </div>
-        <div className="auth-preview__row">
-          <span className="auth-preview__checkbox auth-preview__checkbox--done" />
-          <span className="auth-preview__text auth-preview__text--done">Morning run</span>
-          <span className="auth-preview__meta auth-preview__meta--done">Health</span>
-        </div>
-      </div>
-      <div className="auth-preview__card auth-preview__card--idea">
-        <div className="auth-preview__idea-tag">Quick Idea</div>
-        <div className="auth-preview__idea-text">
-          "Write weekly retrospective every Sunday."
-        </div>
-      </div>
-      <div className="auth-preview__card auth-preview__card--youtube">
-        <div className="auth-preview__youtube-bar">
-          <span className="auth-preview__play" />
-          <span className="auth-preview__youtube-title">React performance tips</span>
-        </div>
-        <div className="auth-preview__progress">
-          <span className="auth-preview__progress-fill" />
-        </div>
-      </div>
     </div>
   );
 }
@@ -107,10 +95,6 @@ function SignInError({ error }) {
       {error.message}
     </div>
   );
-}
-
-function SignOutErrorStub() {
-  return null;
 }
 
 export default function AuthScreen({
@@ -172,28 +156,15 @@ export default function AuthScreen({
         </button>
       </div>
 
-      <div className="auth-content">
-        <section className="auth-value">
+      <main className="auth-content">
+        <section className="auth-signin" aria-labelledby="auth-heading">
           <p className="auth-eyebrow">PLAN WITH CLARITY</p>
-          <h1 className="auth-heading">Your day, organized everywhere.</h1>
+          <h1 id="auth-heading" className="auth-heading">
+            Your day, organized everywhere.
+          </h1>
           <p className="auth-supporting">
             A private cross-device workspace for your tasks and Quick Ideas,
             synced through your own Google account.
-          </p>
-          <ul className="auth-benefits">
-            <li>Private workspace for each Google account.</li>
-            <li>Tasks and ideas available across devices.</li>
-            <li>Existing local planner data remains untouched.</li>
-          </ul>
-          <div className="auth-preview-wrapper">
-            <PreviewCard />
-          </div>
-        </section>
-
-        <section className="auth-card" aria-label="Sign in">
-          <h2 className="auth-card__heading">Welcome to Daily Planner</h2>
-          <p className="auth-card__supporting">
-            Sign in to continue to your private workspace.
           </p>
 
           <SignInError error={signInError} />
@@ -211,14 +182,14 @@ export default function AuthScreen({
             <span>{isSigningIn ? 'Signing in…' : 'Continue with Google'}</span>
           </button>
 
-          <p className="auth-privacy">
-            Your planner data is private to the signed-in account. Daily Planner
-            never shares your tasks or ideas.
+          <p className="auth-security">
+            <LockIcon />
+            <span>Secure sign-in powered by Google.</span>
           </p>
         </section>
-      </div>
 
-      <SignOutErrorStub />
+        <AuthShowcaseCarousel />
+      </main>
     </div>
   );
 }
