@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Plan"
+  short_description: "Create repository-grounded implementation plans"
+  default_prompt: "Use $implementation-plan to create and save an implementation-ready plan from the approved specification."

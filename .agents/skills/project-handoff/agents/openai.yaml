@@ -1,4 +1,0 @@
-interface:
-  display_name: "Project Handoff"
-  short_description: "Create evidence-based repository handoffs between agent sessions"
-  default_prompt: "Create a focused project handoff for the requested phase and mode using repository evidence."
