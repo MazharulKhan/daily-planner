@@ -35,11 +35,23 @@ localStorage-backed; no production UI component imports or invokes the new repos
 See `docs/phase-6b-secure-firestore-foundation-spec.md` for the Phase 6B
 contract.
 
+**Phase 6D — Quick Ideas, Reliability & Release:** specification approved (`docs/phase-6d-quick-ideas-reliability-release-spec.md`). Implementation has not started.
+
+The signed-out screen redesign must be completed, verified, committed, and pushed separately before Phase 6D implementation planning begins.
+
 ## Next Exact Step
 
-Phase 6B is complete on `feature/phase-6-firebase`. Prepare the Phase 6C
-focused specification (`docs/phase-6c-task-cloud-sync-spec.md`) for replacing
-task localStorage persistence with Firestore task cloud sync.
+The focused Phase 6D specification (`docs/phase-6d-quick-ideas-reliability-release-spec.md`) is approved, but Phase 6D implementation has not started.
+
+The signed-out screen redesign must be completed, verified, committed, and pushed separately before Phase 6D implementation planning begins.
+
+Once the signed-out screen redesign has its own completed Git checkpoint, the next exact step is a fresh coding-agent plan-only pass using:
+
+```text
+docs/phase-6d-quick-ideas-reliability-release-spec.md
+```
+
+This checkpoint does not authorize application edits, Firebase or Vercel changes, Security Rules or index deployment, commits, pushes, merges, or releases.
 
 ## Completed Phase Checklist
 
@@ -66,11 +78,13 @@ task localStorage persistence with Firestore task cloud sync.
 | 5H | README, Screenshots, and Portfolio Handoff | Complete |
 | 6A | Firebase Foundation and Google Authentication | Complete |
 | 6B | Secure Firestore Data Foundation | Complete |
+| 6D | Quick Ideas, Reliability & Release | Spec Approved (Implementation Not Started) |
 
 ## Active Source-of-Truth Docs
 
 | Doc | Purpose |
 |-----|---------|
+| `docs/phase-6d-quick-ideas-reliability-release-spec.md` | Phase 6D spec — approved for planning |
 | `docs/phase-6-firebase-cloud-edition-spec.md` | Phase 6 master spec — approved, in progress |
 | `docs/phase-6a-firebase-foundation-auth-spec.md` | Phase 6A completed spec (historical) |
 | `docs/phase-5-ux-backlog.md` | Phase 5 UX backlog / planning notes |
