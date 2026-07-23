@@ -1,10 +1,12 @@
 # Phase 6D — Quick Ideas, Reliability, and Cloud Release Specification
 
-**Status:** APPROVED — implementation planning may begin. Application code changes, Firebase or Vercel changes, Security Rules or index deployment, commits, pushes, merges, and releases still require their later explicit approval gates.  
-**Parent specification:** `docs/phase-6-firebase-cloud-edition-spec.md`  
-**Previous phase:** Phase 6C — Task Cloud Sync, implemented and verified  
-**Branch:** `feature/phase-6-firebase`  
-**Implementation baseline:** Record the exact clean commit after the signed-out screen redesign is completed and committed  
+**Status:** RELEASE VERIFICATION COMPLETE - FINAL RELEASE APPROVAL PENDING. The approved contract remains in force; no final release, documentation commit, push, or announcement is authorized without its separate gate.
+**Parent specification:** `docs/phase-6-firebase-cloud-edition-spec.md`
+**Previous phase:** Phase 6C — Task Cloud Sync, implemented and verified
+**Implementation branch:** `feature/phase-6-firebase` (preserved)
+**Accepted release branch and SHA:** `main` at `cc7222bf480b4be9703cd19bc9ce0d2c00cbb086`
+**Release verification:** v1 remains localStorage-only on `release/v1-local` at https://daily-planner-olive-zeta.vercel.app; v2 Production is https://daily-planner-v2-seven.vercel.app and maps to `daily-planner-mk-prod`. Preview maps only to `daily-planner-mk-dev`. Focused Preview and Production acceptance passed; final approval is pending.
+**Recorded limitation:** two Vercel build-warning indicators for the corrective Production deployment had no visible details in the current dashboard/build-log view; the deployment is Ready and no build or runtime failure was observed.
 **Hard constraint:** Firebase must remain on Spark with no billing account
 
 ---

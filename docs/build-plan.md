@@ -396,32 +396,25 @@ Phase 6 — Firebase Cloud Edition is the next active planned phase
 
 ### Status
 
-Master spec approved: `docs/phase-6-firebase-cloud-edition-spec.md`.
-Phase 6A — Firebase Foundation and Google Authentication is complete on
-the `feature/phase-6-firebase` branch and committed. Delivered the
-Firebase SDK initialized from validated Vite env vars, emulator
-configuration on the `demo-daily-planner` demo project, a deny-all
-`firestore.rules` fallback with a passing Rules smoke test, Google popup
-sign-in, persistent auth session, an auth-state loading gate, a
-professional responsive signed-out screen, and a compact signed-in
-account area in the Sidebar footer. Tasks and Quick Ideas remain
-localStorage-backed; no live Firestore content document was created.
+Phase 6 implementation and release verification are complete. Final Phase 6D
+release approval remains pending.
 
-**Verification:** `npm run build`, `npm run lint`, `npm run test:rules`,
-and `git diff --check` all pass. Manual browser checks (emulator auth
-flow including the repeated sign-in sequence after the pending-state
-fix, data preservation, and responsive account UI) were completed by the
-user and reported successful; the agent did not perform those browser
-checks itself.
+The accepted release candidate is
+`cc7222bf480b4be9703cd19bc9ce0d2c00cbb086`. v1 remains the localStorage
+edition on `release/v1-local` at
+https://daily-planner-olive-zeta.vercel.app. v2 is the separately built cloud
+edition on `main` at https://daily-planner-v2-seven.vercel.app.
 
-**Next implementation phase:** Phase 6D — Quick Ideas, Reliability & Release (`docs/phase-6d-quick-ideas-reliability-release-spec.md`). The focused Phase 6D specification is approved, but Phase 6D implementation has not started.
+Checkpoint 1 delivered the Firestore Quick Ideas cutover; Checkpoint 2
+delivered reliability, owner isolation, and focused regression verification;
+Checkpoint 3 delivered separate Development Preview and Production release
+topology, matching Firebase authorized domains, reviewed Rules/index
+deployments, and focused acceptance. Preview maps to `daily-planner-mk-dev`;
+Production maps to `daily-planner-mk-prod`. Both Firebase projects remain on
+Spark/no billing.
 
-Phase 6D is structured into three internal checkpoints:
-1. Quick Ideas Firestore cutover.
-2. Reliability, security, and regression verification.
-3. Separate v1/v2 cloud release and documentation.
-
-The next step is a fresh coding-agent plan-only pass using `docs/phase-6d-quick-ideas-reliability-release-spec.md` after the signed-out screen redesign has its own completed Git checkpoint.
+The remaining work is documentation closeout, its separately approved
+Production build/push/smoke sequence, and the final release decision.
 
 ### Clean-Start Decision
 
@@ -436,10 +429,10 @@ The master spec confirms **Option A — start fresh with Firebase**:
 
 | Sub-Phase | Title | Key Deliverables |
 |-----------|-------|------------------|
-| 6A | Firebase Foundation & Google Auth | Firebase SDK + emulator config, env validation, deny-all Firestore Rules + smoke test, Google popup sign-in, auth-state gate, signed-out screen, user area in sidebar, before-sign-out guard seam. Tasks/ideas stay localStorage. **Status: complete.** |
-| 6B | Secure Firestore Data Foundation | `users/{uid}/tasks/{taskId}` and `users/{uid}/ideas/{ideaId}` paths, converters/repositories, default-deny owner-only Rules, focused Rules/converter tests, single-field index exemptions. UI content stays localStorage. **Status: complete.** |
-| 6C | Task Cloud Sync | Replace task localStorage with Firestore persistence. Shared task listener, all CRUD writes, YouTube playback throttling, cross-session sync, error states, regression testing. |
-| 6D | Quick Ideas, Reliability & Release | Move Quick Ideas to Firestore, global offline/reconnect states, final Rules/reliability review, separate Vercel v2 deployment, README/docs update, release. **Status: spec approved for planning (implementation not started).** |
+| 6A | Firebase Foundation & Google Auth | Firebase SDK, validated environment configuration, emulator support, Google popup sign-in, auth-state gate, signed-out screen, and account area. **Status: complete.** |
+| 6B | Secure Firestore Data Foundation | User-scoped paths, converters/repositories, default-deny owner-only Rules, tests, and field overrides. **Status: complete.** |
+| 6C | Task Cloud Sync | Firestore task persistence, shared listener, CRUD, playback handling, cross-session sync, and error states. **Status: complete.** |
+| 6D | Quick Ideas, Reliability & Release | Firestore Quick Ideas cutover, reliability behavior, separate v1/v2 release topology, Rules/index deployment, and focused Preview/Production acceptance. **Status: release verification complete; final approval pending.** |
 
 ### Phase 6 Packages (Pre-Approved)
 
