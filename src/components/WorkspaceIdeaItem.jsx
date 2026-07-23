@@ -11,6 +11,9 @@ export default function WorkspaceIdeaItem({
   isNotesDirty,
   draftNotes,
   notesSavedAt,
+  pendingAction,
+  operationError,
+  mutationDisabled,
   onToggleExpand,
   onEditStart,
   onEditSave,
@@ -31,6 +34,9 @@ export default function WorkspaceIdeaItem({
   const isConfirm =
     action && action.id === idea.id && action.type === 'confirm';
   const hasAction = Boolean(action);
+  const titlePending = pendingAction === 'edit';
+  const notesPending = pendingAction === 'notes';
+  const deletePending = pendingAction === 'delete';
 
   const [editText, setEditText] = useState(idea.text ?? '');
 
@@ -68,6 +74,10 @@ export default function WorkspaceIdeaItem({
     const trimmed = editText.trim();
     if (!trimmed) {
       editTextRef.current?.focus();
+      return;
+    }
+    if (trimmed === idea.text) {
+      handleEditCancel();
       return;
     }
     onEditSave(idea.id, { text: trimmed });
@@ -122,6 +132,7 @@ export default function WorkspaceIdeaItem({
                 onKeyDown={handleEditKeyDown}
                 rows={2}
                 aria-label={`Edit title: ${idea.text}`}
+                disabled={titlePending || mutationDisabled}
               />
             </div>
             <div className="qi-idea__title-edit-actions">
@@ -130,18 +141,22 @@ export default function WorkspaceIdeaItem({
                 className="qi-edit__save"
                 onClick={handleEditSave}
                 aria-label="Save title"
+                disabled={titlePending || mutationDisabled || editText.trim().length === 0}
+                aria-busy={titlePending}
               >
-                Save title
+                {titlePending ? 'Syncing title...' : 'Save title'}
               </button>
               <button
                 type="button"
                 className="qi-edit__cancel"
                 onClick={handleEditCancel}
                 aria-label="Cancel editing"
+                disabled={titlePending}
               >
                 Cancel
               </button>
             </div>
+            {operationError && <p className="qi-operation-error" role="alert">{operationError}</p>}
             <span className="qi-idea__time">
               {formatRelativeTime(idea.createdAt)}
             </span>
@@ -157,7 +172,7 @@ export default function WorkspaceIdeaItem({
               aria-expanded={expanded}
               aria-label={expanded ? `Collapse idea: ${idea.text}` : `Expand idea: ${idea.text}`}
               onClick={() => onToggleExpand(idea.id)}
-              disabled={hasAction || isNotesDirty}
+              disabled={hasAction || isNotesDirty || mutationDisabled}
             >
               <svg
                 className="qi-idea__icon"
@@ -180,7 +195,7 @@ export default function WorkspaceIdeaItem({
                   type="button"
                   className="qi-idea__edit-title"
                   aria-label={`Edit title: ${idea.text}`}
-                  disabled={muted || isNotesDirty}
+                  disabled={muted || isNotesDirty || mutationDisabled}
                   onClick={() => {
                     setEditText(idea.text ?? '');
                     onEditStart(idea.id);
@@ -205,7 +220,7 @@ export default function WorkspaceIdeaItem({
                   type="button"
                   className="qi-idea__delete-title"
                   aria-label={`Delete idea: ${idea.text}`}
-                  disabled={muted || isNotesDirty}
+                  disabled={muted || isNotesDirty || mutationDisabled}
                   onClick={() => {
                     if (!expanded) {
                       onToggleExpand(idea.id);
@@ -258,21 +273,23 @@ export default function WorkspaceIdeaItem({
               placeholder="Add notes..."
               rows={4}
               aria-label={`Notes for idea: ${idea.text}`}
+              disabled={notesPending || mutationDisabled}
             />
             <div className="qi-idea__notes-actions">
               <button
                 type="button"
                 className="qi-edit__save"
-                disabled={!isNotesDirty}
+                disabled={!isNotesDirty || notesPending || mutationDisabled}
                 onClick={handleNotesSave}
                 aria-label="Save notes"
+                aria-busy={notesPending}
               >
-                Save notes
+                {notesPending ? 'Syncing notes...' : 'Save notes'}
               </button>
               <button
                 type="button"
                 className="qi-edit__cancel"
-                disabled={!isNotesDirty}
+                disabled={!isNotesDirty || notesPending}
                 onClick={handleNotesCancel}
                 aria-label="Discard unsaved note changes"
               >
@@ -285,6 +302,7 @@ export default function WorkspaceIdeaItem({
                 Notes saved at {notesSavedAt}
               </p>
             )}
+            {operationError && <p className="qi-operation-error" role="alert">{operationError}</p>}
           </div>
 
           <div className="qi-idea__actions">
@@ -292,7 +310,7 @@ export default function WorkspaceIdeaItem({
               ref={deleteBtnRef}
               type="button"
               className="qi-idea__action qi-idea__action--danger"
-              disabled={isNotesDirty}
+              disabled={isNotesDirty || mutationDisabled}
               aria-label={`Delete idea: ${idea.text}`}
               onClick={() => onDeleteStart(idea.id)}
             >
@@ -307,6 +325,9 @@ export default function WorkspaceIdeaItem({
           idea={idea}
           onConfirm={onDeleteConfirm}
           onCancel={handleDeleteCancel}
+          pending={deletePending}
+          error={operationError}
+          disabled={mutationDisabled}
         />
       )}
     </article>

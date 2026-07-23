@@ -349,6 +349,27 @@ describe('Owner CRUD — Ideas', () => {
     );
   });
 
+  test('Can update only the title of own idea', async () => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await context
+        .firestore()
+        .collection('users')
+        .doc('user1')
+        .collection('ideas')
+        .doc('i1')
+        .set(validIdeaData());
+    });
+    const db = testEnv.authenticatedContext('user1').firestore();
+    await assertSucceeds(
+      db
+        .collection('users')
+        .doc('user1')
+        .collection('ideas')
+        .doc('i1')
+        .update({ text: 'Updated title', updatedAt: serverTimestamp() }),
+    );
+  });
+
   test('Can delete own idea', async () => {
     await testEnv.withSecurityRulesDisabled(async (context) => {
       await context

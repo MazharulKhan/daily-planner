@@ -10,41 +10,49 @@ export function TaskSurfacePlaceholder({ message = 'Loading your cloud tasks...'
 }
 
 export default function TaskCloudStatus({
-  status,
-  isConfirmedEmpty,
-  listenerError,
-  notices,
-  onRetry,
+  globalStatus,
+  taskListenerError,
+  taskNotices,
+  ideaNotices,
+  onRetryTasks,
   onSignOut,
-  onDismissNotice,
+  onDismissTaskNotice,
+  onDismissIdeaNotice,
 }) {
   let liveMessage = '';
-  if (status === 'initial-loading') liveMessage = 'Loading your cloud tasks...';
-  if (status === 'offline') liveMessage = "You're offline. Task changes will sync when the connection returns.";
-  if (status === 'reconnecting') liveMessage = 'Reconnecting to task cloud sync...';
-  if (status === 'ready' && isConfirmedEmpty) {
-    liveMessage = 'Your cloud task list starts empty. Tasks from the local edition were not imported.';
+  if (globalStatus === 'offline') {
+    liveMessage = "You're offline. Changes made in this tab will sync when the connection returns.";
   }
+  if (globalStatus === 'reconnecting') liveMessage = 'Reconnecting to your cloud workspace...';
+  if (globalStatus === 'cloud-issue') liveMessage = 'Some cloud data is unavailable. Retry the affected section.';
+
+  const notices = [
+    ...taskNotices.map((notice) => ({ ...notice, stream: 'task' })),
+    ...ideaNotices.map((notice) => ({ ...notice, stream: 'idea' })),
+  ];
 
   return (
     <div className="cloud-status">
       {liveMessage && (
-        <div className={`cloud-status__notice cloud-status__notice--${status}`} aria-live="polite">
+        <div
+          className={`cloud-status__notice cloud-status__notice--${globalStatus}`}
+          aria-live="polite"
+        >
           {liveMessage}
         </div>
       )}
 
-      {listenerError && (
+      {taskListenerError && (
         <div className="cloud-status__alert" role="alert">
           <span>
             Cloud tasks could not be loaded.
-            {listenerError.code?.includes('permission-denied')
-              ? ` ${listenerError.userMessage}`
+            {taskListenerError.code?.includes('permission-denied')
+              ? ` ${taskListenerError.userMessage}`
               : ''}
           </span>
           <div className="cloud-status__actions">
-            <button type="button" onClick={onRetry}>Retry</button>
-            <button type="button" onClick={onSignOut}>Sign out</button>
+            <button type="button" onClick={onRetryTasks}>Retry tasks</button>
+            <button type="button" onClick={() => onSignOut()}>Sign out</button>
           </div>
         </div>
       )}
@@ -55,8 +63,12 @@ export default function TaskCloudStatus({
           <button
             type="button"
             className="cloud-status__dismiss"
-            aria-label="Dismiss task sync message"
-            onClick={() => onDismissNotice(notice.id)}
+            aria-label={`Dismiss ${notice.stream} sync message`}
+            onClick={() => (
+              notice.stream === 'task'
+                ? onDismissTaskNotice(notice.id)
+                : onDismissIdeaNotice(notice.id)
+            )}
           >
             Dismiss
           </button>

@@ -22,11 +22,15 @@ export function subscribeToIdeas(uid, { onData, onError }) {
 
   return onSnapshot(
     collectionRef,
+    { includeMetadataChanges: true },
     (snapshot) => {
       try {
         const ideas = snapshot.docs.map((docSnap) => ideaFromFirestore(docSnap));
         if (typeof onData === 'function') {
-          onData(ideas);
+          onData(ideas, {
+            fromCache: snapshot.metadata.fromCache,
+            hasPendingWrites: snapshot.metadata.hasPendingWrites,
+          });
         }
       } catch (err) {
         if (typeof onError === 'function') {
@@ -42,15 +46,16 @@ export function subscribeToIdeas(uid, { onData, onError }) {
   );
 }
 
-export async function createIdea(uid, ideaInput) {
+export function createIdea(uid, ideaInput, { onWriteQueued } = {}) {
   validateUid(uid);
   const data = ideaToFirestoreCreate(ideaInput);
   const docRef = doc(getUserIdeasCollection(uid));
-  await setDoc(docRef, data);
-  return { id: docRef.id };
+  const acknowledgement = setDoc(docRef, data);
+  onWriteQueued?.({ id: docRef.id });
+  return acknowledgement.then(() => ({ id: docRef.id, written: true }));
 }
 
-export async function updateIdeaContent(uid, ideaId, currentIdea, patch) {
+export function updateIdeaContent(uid, ideaId, currentIdea, patch, { onWriteQueued } = {}) {
   const docRef = getUserIdeaDoc(uid, ideaId);
   const firestorePatch = buildIdeaContentPatch(currentIdea, patch);
 
@@ -58,11 +63,14 @@ export async function updateIdeaContent(uid, ideaId, currentIdea, patch) {
     return { written: false };
   }
 
-  await updateDoc(docRef, firestorePatch);
-  return { written: true };
+  const acknowledgement = updateDoc(docRef, firestorePatch);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }
 
-export async function deleteIdea(uid, ideaId) {
+export function deleteIdea(uid, ideaId, { onWriteQueued } = {}) {
   const docRef = getUserIdeaDoc(uid, ideaId);
-  await deleteDoc(docRef);
+  const acknowledgement = deleteDoc(docRef);
+  onWriteQueued?.();
+  return acknowledgement.then(() => ({ written: true }));
 }

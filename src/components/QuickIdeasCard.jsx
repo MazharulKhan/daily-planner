@@ -3,6 +3,7 @@ import '../styles/ideas.css';
 import IdeaRow from './IdeaRow';
 import AddIdeaForm from './AddIdeaForm';
 import EmptyState from './EmptyState';
+import { TaskSurfacePlaceholder } from './TaskCloudStatus';
 
 export default function QuickIdeasCard({
   ideas,
@@ -11,6 +12,12 @@ export default function QuickIdeasCard({
   onRequestAdd,
   onCloseAdd,
   onOpenWorkspace,
+  hasServerSnapshot,
+  status,
+  listenerError,
+  canMutate,
+  onRetry,
+  onSignOut,
 }) {
   const newest = [...ideas]
     .sort(
@@ -24,13 +31,14 @@ export default function QuickIdeasCard({
       <div className="card__header">
         <div className="card__title-row">
           <h2 className="card__title">Quick Ideas</h2>
-          <span className="card__count">{ideas.length}</span>
+          <span className="card__count">{hasServerSnapshot ? ideas.length : '—'}</span>
         </div>
         <button
           type="button"
           className="card__header-action"
           aria-label="Add a quick idea"
           onClick={onRequestAdd}
+          disabled={!canMutate}
         >
           <svg
             width="16"
@@ -53,9 +61,20 @@ export default function QuickIdeasCard({
           onAdd={onAdd}
           onClose={onCloseAdd}
           onRequestOpen={onRequestAdd}
+          disabled={!canMutate}
         />
 
-        {ideas.length === 0 ? (
+        {!hasServerSnapshot && !listenerError ? (
+          <TaskSurfacePlaceholder message="Loading your cloud Quick Ideas..." />
+        ) : !hasServerSnapshot && listenerError ? (
+          <div className="idea-cloud-state idea-cloud-state--error" role="alert">
+            <p>Cloud Quick Ideas could not be loaded.</p>
+            <div className="idea-cloud-state__actions">
+              <button type="button" onClick={onRetry}>Retry Quick Ideas</button>
+              <button type="button" onClick={() => onSignOut()}>Sign out</button>
+            </div>
+          </div>
+        ) : ideas.length === 0 ? (
           <EmptyState
             title="No ideas captured yet"
             hint="Jot down a thought — it stays here for later."
@@ -71,6 +90,17 @@ export default function QuickIdeasCard({
                 onOpen={() => onOpenWorkspace?.(idea.id)}
               />
             ))}
+          </div>
+        )}
+
+        {hasServerSnapshot && listenerError && (
+          <div className="idea-cloud-state idea-cloud-state--degraded" role="alert">
+            <span>
+              {status === 'listener-error'
+                ? 'Quick Ideas are reconnecting. Showing the last confirmed list.'
+                : 'Quick Ideas cloud data is temporarily unavailable.'}
+            </span>
+            <button type="button" onClick={onRetry}>Retry Quick Ideas</button>
           </div>
         )}
 

@@ -340,6 +340,21 @@ describe('Idea Converter Unit Tests', () => {
       };
       assert.throws(() => ideaFromFirestore(mockSnapshot), /missing valid createdAt/);
     });
+
+    test('throws if updatedAt is missing or invalid', () => {
+      const missingSnapshot = {
+        id: 'idea-missing-updated',
+        data: () => ({ text: 'Text', notes: '', createdAt: mockTimestamp }),
+      };
+      const invalidSnapshot = {
+        id: 'idea-invalid-updated',
+        data: () => ({
+          text: 'Text', notes: '', createdAt: mockTimestamp, updatedAt: 'not-a-timestamp',
+        }),
+      };
+      assert.throws(() => ideaFromFirestore(missingSnapshot), /missing valid updatedAt/);
+      assert.throws(() => ideaFromFirestore(invalidSnapshot), /missing valid updatedAt/);
+    });
   });
 
   describe('ideaToFirestoreCreate', () => {

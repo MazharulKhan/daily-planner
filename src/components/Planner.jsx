@@ -11,10 +11,10 @@ import CompletedPage from './CompletedPage';
 import AddTaskModal from './AddTaskModal';
 import TaskCloudStatus from './TaskCloudStatus';
 import PendingWritesSignOutConfirm from './PendingWritesSignOutConfirm';
-import { useLocalIdeas } from '../hooks/useLocalIdeas';
+import { useIdeaCloud } from '../hooks/useIdeaCloud';
 import { useTaskCloud } from '../hooks/useTaskCloud';
-import { makeSampleIdeas } from '../data/sampleData';
 import { storage } from '../data/storage';
+import { deriveCloudStatus } from '../utils/ideaCloud';
 
 export default function Planner({
   user,
@@ -26,6 +26,7 @@ export default function Planner({
   onToggleTheme,
 }) {
   const taskCloud = useTaskCloud(user.uid);
+  const ideaCloud = useIdeaCloud(user.uid);
   const {
     tasks,
     createTask: addTask,
@@ -35,7 +36,12 @@ export default function Planner({
     saveTaskDetail,
     savePlaybackPosition,
   } = taskCloud;
-  const { ideas, addIdea, editIdea, deleteIdea } = useLocalIdeas(makeSampleIdeas());
+  const {
+    ideas,
+    createIdea: addIdea,
+    updateIdeaContent: editIdea,
+    deleteIdea,
+  } = ideaCloud;
 
   const [taskAddOpen, setTaskAddOpen] = useState(false);
   const [ideaAddOpen, setIdeaAddOpen] = useState(false);
@@ -56,6 +62,7 @@ export default function Planner({
   );
 
   const detailOpen = selectedTaskId !== null;
+  const globalCloudStatus = deriveCloudStatus(taskCloud.status, ideaCloud.status);
 
   useEffect(() => {
     storage.saveActiveView(view);
@@ -82,6 +89,10 @@ export default function Planner({
 
   const closeAddIdea = useCallback(() => {
     setIdeaAddOpen(false);
+  }, []);
+
+  const clearSelectedIdea = useCallback(() => {
+    setSelectedIdeaId(null);
   }, []);
 
   const openWorkspace = useCallback((ideaId = null) => {
@@ -155,11 +166,12 @@ export default function Planner({
     setIdeaAddOpen(false);
     setSelectedIdeaId(null);
     taskCloud.clearSession();
-  }, [taskCloud]);
+    ideaCloud.clearSession();
+  }, [taskCloud, ideaCloud]);
 
   const performSignOut = useCallback(async (confirmed) => {
     const result = await onSignOut({
-      hasPendingWrites: taskCloud.hasPendingWrites,
+      hasPendingWrites: taskCloud.hasPendingWrites || ideaCloud.hasPendingWrites,
       confirmed,
       beforeSignOut: clearPlannerSession,
     });
@@ -171,9 +183,12 @@ export default function Planner({
       setPendingNavTarget(null);
       setTaskAddOpen(false);
       taskCloud.resumeSession();
+      ideaCloud.resumeSession();
+    } else if (result?.status === 'success') {
+      storage.saveActiveView('dashboard');
     }
     return result;
-  }, [onSignOut, taskCloud, clearPlannerSession]);
+  }, [onSignOut, taskCloud, ideaCloud, clearPlannerSession]);
 
   const requestSignOut = useCallback((triggerElement = null) => {
     signOutTriggerRef.current = triggerElement || document.activeElement;
@@ -225,6 +240,12 @@ export default function Planner({
         requestAddIdea={requestAddIdea}
         closeAddIdea={closeAddIdea}
         tasksReady={taskCloud.hasServerSnapshot}
+        ideasReady={ideaCloud.hasServerSnapshot}
+        ideaStatus={ideaCloud.status}
+        ideaListenerError={ideaCloud.listenerError}
+        ideasCanMutate={ideaCloud.canMutate}
+        onRetryIdeas={ideaCloud.retry}
+        onSignOut={requestSignOut}
       />
     );
   } else if (view === 'today') {
@@ -270,6 +291,14 @@ export default function Planner({
         onEditIdea={editIdea}
         onDeleteIdea={deleteIdea}
         selectedIdeaId={selectedIdeaId}
+        hasServerSnapshot={ideaCloud.hasServerSnapshot}
+        status={ideaCloud.status}
+        listenerError={ideaCloud.listenerError}
+        canMutate={ideaCloud.canMutate}
+        onRetry={ideaCloud.retry}
+        onSignOut={requestSignOut}
+        onRemoteDeletion={ideaCloud.notifyRemoteDeletion}
+        onActiveIdeaRemoved={clearSelectedIdea}
       />
     );
   }
@@ -298,13 +327,14 @@ export default function Planner({
         />
         <main className="app-content">
           <TaskCloudStatus
-            status={taskCloud.status}
-            isConfirmedEmpty={taskCloud.isConfirmedEmpty}
-            listenerError={taskCloud.listenerError}
-            notices={taskCloud.mutationNotices}
-            onRetry={taskCloud.retry}
+            globalStatus={globalCloudStatus}
+            taskListenerError={taskCloud.listenerError}
+            taskNotices={taskCloud.mutationNotices}
+            ideaNotices={ideaCloud.mutationNotices}
+            onRetryTasks={taskCloud.retry}
             onSignOut={requestSignOut}
-            onDismissNotice={taskCloud.dismissNotice}
+            onDismissTaskNotice={taskCloud.dismissNotice}
+            onDismissIdeaNotice={ideaCloud.dismissNotice}
           />
           {content}
         </main>

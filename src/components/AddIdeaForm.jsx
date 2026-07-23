@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { makeId } from '../utils/dateTime';
+import { getIdeaErrorMessage } from '../utils/ideaCloud';
 import '../styles/ideas.css';
 
-export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
+export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen, disabled = false }) {
   const [text, setText] = useState('');
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -12,20 +14,25 @@ export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
     }
   }, [open]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const trimmed = text.trim();
-    if (!trimmed) return;
-    const now = new Date().toISOString();
-    onAdd({
-      id: makeId('idea'),
-      text: trimmed,
-      notes: '',
-      createdAt: now,
-      updatedAt: now,
-    });
-    setText('');
-    onClose?.();
+    if (!trimmed || pending || disabled) return;
+    setPending(true);
+    setError('');
+    try {
+      await onAdd({ text: trimmed, notes: '' });
+      setText('');
+      onClose?.();
+    } catch (submissionError) {
+      setError(getIdeaErrorMessage(
+        submissionError,
+        'This Quick Idea could not be added. Try again.',
+      ));
+      inputRef.current?.focus();
+    } finally {
+      setPending(false);
+    }
   }
 
   if (!open) {
@@ -34,6 +41,7 @@ export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
         type="button"
         className="add-idea add-idea--closed"
         onClick={onRequestOpen}
+        disabled={disabled}
       >
         + Capture a quick idea
       </button>
@@ -49,11 +57,20 @@ export default function AddIdeaForm({ open, onAdd, onClose, onRequestOpen }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         aria-label="Idea text"
+        disabled={disabled || pending}
         rows={2}
       />
-      <button type="submit" className="add-idea__submit">
-        Save
-      </button>
+      <div className="add-idea__actions">
+        <button
+          type="submit"
+          className="add-idea__submit"
+          disabled={disabled || pending || text.trim().length === 0}
+          aria-busy={pending}
+        >
+          {pending ? 'Syncing...' : 'Save'}
+        </button>
+        {error && <p className="add-idea__error" role="alert">{error}</p>}
+      </div>
     </form>
   );
 }

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "emulators": "firebase emulators:start --only auth,firestore",
-    "test:rules": "firebase emulators:exec --only firestore \"node --test tests/firestore-rules.test.mjs tests/firestore-converters.test.mjs tests/task-cloud-sync.test.mjs\""
+    "test:rules": "firebase emulators:exec --only firestore \"node --test tests/firestore-rules.test.mjs tests/firestore-converters.test.mjs tests/task-cloud-sync.test.mjs tests/idea-cloud-sync.test.mjs\""
   },
   "dependencies": {
     "firebase": "^12.16.0",

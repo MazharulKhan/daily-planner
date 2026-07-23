@@ -15,8 +15,46 @@
 }
 
 .cloud-status__notice--offline,
-.cloud-status__notice--reconnecting {
+.cloud-status__notice--reconnecting,
+.cloud-status__notice--cloud-issue {
   border-color: var(--color-warning, #c58a20);
+}
+
+.idea-cloud-state {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-soft);
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.idea-cloud-state--error {
+  border-color: var(--color-danger, #c74646);
+  color: var(--color-text);
+}
+
+.idea-cloud-state--degraded {
+  border-color: var(--color-warning, #c58a20);
+}
+
+.idea-cloud-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.idea-cloud-state button {
+  min-height: 38px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-3);
 }
 
 .cloud-status__alert {
@@ -90,5 +128,6 @@
 
 @media (max-width: 640px) {
   .cloud-status__alert { align-items: stretch; flex-direction: column; }
+  .idea-cloud-state { align-items: stretch; flex-direction: column; }
   .pending-signout__actions { flex-direction: column; }
 }

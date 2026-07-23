@@ -46,7 +46,7 @@ export default function PendingWritesSignOutConfirm({ open, onKeepSyncing, onSig
         aria-labelledby={titleId}
       >
         <h2 id={titleId}>Changes are still syncing. Sign out anyway?</h2>
-        <p>Signing out now may leave these task changes unconfirmed by the cloud.</p>
+        <p>Signing out now may leave changes unconfirmed by the cloud.</p>
         <div className="pending-signout__actions">
           <button ref={keepRef} type="button" onClick={onKeepSyncing}>
             Keep syncing

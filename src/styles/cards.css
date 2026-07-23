@@ -102,6 +102,16 @@
   outline-offset: 1px;
 }
 
+.card__header-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.card__header-action:disabled:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
 @media (max-width: 760px) {
   .card {
     border-radius: var(--radius-md);

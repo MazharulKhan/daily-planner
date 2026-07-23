@@ -22,6 +22,12 @@ export default function Dashboard({
   requestAddIdea,
   closeAddIdea,
   tasksReady,
+  ideasReady,
+  ideaStatus,
+  ideaListenerError,
+  ideasCanMutate,
+  onRetryIdeas,
+  onSignOut,
 }) {
   const [activeTaskAction, setActiveTaskAction] = useState(null);
   const lastTriggerRef = useRef(null);
@@ -104,6 +110,12 @@ export default function Dashboard({
           onRequestAdd={requestAddIdea}
           onCloseAdd={closeAddIdea}
           onOpenWorkspace={onOpenWorkspace}
+          hasServerSnapshot={ideasReady}
+          status={ideaStatus}
+          listenerError={ideaListenerError}
+          canMutate={ideasCanMutate}
+          onRetry={onRetryIdeas}
+          onSignOut={onSignOut}
         />
       </div>
       <div className="dashboard__cell">
