@@ -12,7 +12,7 @@ Daily Planner has two separately deployed editions:
   Google Authentication and per-account Cloud Firestore sync. Its accepted
   release SHA is `cc7222bf480b4be9703cd19bc9ce0d2c00cbb086` on `main`.
 
-Release verification is complete; final release approval is still pending.
+Phase 6D is complete and the Firebase Cloud Edition is released. Final release approval has been granted.
 
 ![Dashboard in light mode](docs/screenshots/dashboard-light.png)
 
@@ -168,8 +168,8 @@ and Vercel Production maps to Production Firebase (`daily-planner-mk-prod`).
 
 ## Project Status and Future Roadmap
 
-**Status:** v1 remains complete and preserved. Phase 6 v2 implementation and
-release verification are complete; final release approval is pending.
+**Status:** v1 remains complete and preserved. Phase 6 v2 Firebase Cloud Edition is
+complete and released. Final release approval has been granted.
 
 Completed phases include dashboard foundation, task management and
 organization, Quick Ideas, standard and YouTube task detail workspaces,
@@ -178,8 +178,8 @@ workspace persistence, completed-task display refinement, Quick Idea
 notes refinement, responsive/accessibility/visual polish, dark mode
 preference, and mobile layout polish.
 
-**Next:** complete the remaining documentation and final approval gates. Do
-not treat v2 as finally released until those gates are accepted.
+**Next:** maintain live v1 localStorage and v2 Firebase Cloud editions. Any
+future work requires new approved specifications.
 
 Deferred future improvements include rich-text notes, global search,
 recurring tasks, notifications, and AI features.

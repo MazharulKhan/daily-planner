@@ -389,15 +389,15 @@ updated. No app code changes, no new packages, no data-shape changes.
   improvement; do not hand-build a fragile editor; no editor package
   without explicit approval)
 
-Phase 6 — Firebase Cloud Edition is the next active planned phase
-(separate section below).
+Phase 6 — Firebase Cloud Edition is complete and released (separate section
+below).
 
 ## Phase 6 — Firebase / Cloud Sync Planning and Implementation
 
 ### Status
 
-Phase 6 implementation and release verification are complete. Final Phase 6D
-release approval remains pending.
+Phase 6 implementation, release verification, and final release approval are
+complete. Phase 6 Firebase Cloud Edition is released.
 
 The accepted release candidate is
 `cc7222bf480b4be9703cd19bc9ce0d2c00cbb086`. v1 remains the localStorage
@@ -413,8 +413,8 @@ deployments, and focused acceptance. Preview maps to `daily-planner-mk-dev`;
 Production maps to `daily-planner-mk-prod`. Both Firebase projects remain on
 Spark/no billing.
 
-The remaining work is documentation closeout, its separately approved
-Production build/push/smoke sequence, and the final release decision.
+Final release approval was granted; v1 localStorage and v2 Firebase Cloud
+editions are both live and independently preserved.
 
 ### Clean-Start Decision
 
@@ -432,7 +432,7 @@ The master spec confirms **Option A — start fresh with Firebase**:
 | 6A | Firebase Foundation & Google Auth | Firebase SDK, validated environment configuration, emulator support, Google popup sign-in, auth-state gate, signed-out screen, and account area. **Status: complete.** |
 | 6B | Secure Firestore Data Foundation | User-scoped paths, converters/repositories, default-deny owner-only Rules, tests, and field overrides. **Status: complete.** |
 | 6C | Task Cloud Sync | Firestore task persistence, shared listener, CRUD, playback handling, cross-session sync, and error states. **Status: complete.** |
-| 6D | Quick Ideas, Reliability & Release | Firestore Quick Ideas cutover, reliability behavior, separate v1/v2 release topology, Rules/index deployment, and focused Preview/Production acceptance. **Status: release verification complete; final approval pending.** |
+| 6D | Quick Ideas, Reliability & Release | Firestore Quick Ideas cutover, reliability behavior, separate v1/v2 release topology, Rules/index deployment, and focused Preview/Production acceptance. **Status: complete.** |
 
 ### Phase 6 Packages (Pre-Approved)
 

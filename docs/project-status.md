@@ -2,9 +2,10 @@
 
 ## Current Phase
 
-Phase 6 - Firebase Cloud Edition implementation and release verification are
-complete. **Final Phase 6D release approval is pending.** Do not mark Phase
-6D complete or announce the release before that approval.
+Phase 6 — Firebase Cloud Edition implementation, verification, and release are
+complete. **Final Phase 6D release approval has been granted.** Both v1
+localStorage and v2 Firebase Cloud editions are live and independently
+preserved.
 
 The accepted v2 release candidate is
 `cc7222bf480b4be9703cd19bc9ce0d2c00cbb086` on `main`.
@@ -58,10 +59,8 @@ emulator mode disabled. No API-key or unauthorized-domain error was observed.
 
 ## Next Exact Step
 
-Prepare and review the four-file documentation closeout diff. A separate
-approval is required before staging or committing it, followed by separate
-approvals for the documentation-triggered Production build, push, focused
-post-documentation smoke test, and final release decision.
+Maintain live v1 localStorage and v2 Firebase Cloud editions. Any future work
+requires new approved specifications.
 
 ## Completed Phase Checklist
 
@@ -71,7 +70,7 @@ post-documentation smoke test, and final release decision.
 | 6A | Firebase Foundation and Google Authentication | Complete |
 | 6B | Secure Firestore Data Foundation | Complete |
 | 6C | Task Cloud Sync | Complete |
-| 6D | Quick Ideas, Reliability & Release | Release verification complete; final approval pending |
+| 6D | Quick Ideas, Reliability & Release | Complete |
 
 ## Current Constraints
 

@@ -1,11 +1,11 @@
 # Phase 6D — Quick Ideas, Reliability, and Cloud Release Specification
 
-**Status:** RELEASE VERIFICATION COMPLETE - FINAL RELEASE APPROVAL PENDING. The approved contract remains in force; no final release, documentation commit, push, or announcement is authorized without its separate gate.
+**Status:** PHASE 6D COMPLETE — FIREBASE CLOUD EDITION RELEASED. Final release approval has been granted. v1 localStorage and v2 Firebase Cloud editions are both live and independently preserved.
 **Parent specification:** `docs/phase-6-firebase-cloud-edition-spec.md`
 **Previous phase:** Phase 6C — Task Cloud Sync, implemented and verified
 **Implementation branch:** `feature/phase-6-firebase` (preserved)
 **Accepted release branch and SHA:** `main` at `cc7222bf480b4be9703cd19bc9ce0d2c00cbb086`
-**Release verification:** v1 remains localStorage-only on `release/v1-local` at https://daily-planner-olive-zeta.vercel.app; v2 Production is https://daily-planner-v2-seven.vercel.app and maps to `daily-planner-mk-prod`. Preview maps only to `daily-planner-mk-dev`. Focused Preview and Production acceptance passed; final approval is pending.
+**Release verification:** v1 remains localStorage-only on `release/v1-local` at https://daily-planner-olive-zeta.vercel.app; v2 Production is https://daily-planner-v2-seven.vercel.app and maps to `daily-planner-mk-prod`. Preview maps only to `daily-planner-mk-dev`. Focused Preview and Production acceptance passed; final release approval is granted.
 **Recorded limitation:** two Vercel build-warning indicators for the corrective Production deployment had no visible details in the current dashboard/build-log view; the deployment is Ready and no build or runtime failure was observed.
 **Hard constraint:** Firebase must remain on Spark with no billing account
 
@@ -1177,5 +1177,4 @@ Phase 6D is done only after:
 - the user explicitly approves the final commit, push, merge, and release
   actions.
 
-Until then, Phase 6D remains in progress and the cloud edition is not considered
-released.
+Phase 6D is complete and the Firebase Cloud Edition is released.
